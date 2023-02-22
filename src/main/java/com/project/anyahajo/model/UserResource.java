@@ -14,7 +14,7 @@ public class UserResource {
 
     public User getUser(Long id){
         return users.stream()
-                .filter(contact -> id.equals(contact.id()))
+                .filter(user-> id.equals(user.getId()))
                 .findAny()
                 .orElse(null);
     }

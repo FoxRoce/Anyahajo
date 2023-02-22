@@ -1,4 +1,14 @@
 package com.project.anyahajo.model;
 
-public record User(Long id, String email, String password) {
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class User {
+
+    private Long id;
+    private String name;
+    private String email;
+    private String password;
 }

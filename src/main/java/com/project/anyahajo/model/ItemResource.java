@@ -14,7 +14,7 @@ public class ItemResource {
 
     public Item getItem(Long id){
         return items.stream()
-                .filter(contact -> id.equals(contact.id()))
+                .filter(item -> id.equals(item.getId()))
                 .findAny()
                 .orElse(null);
     }
