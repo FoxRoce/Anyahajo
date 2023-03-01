@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - uj targy</title>
+</head>
+<body>
+<h1>Uj targy felvetel</h1>
+<form data-th-object="${newItem}" data-th-action="@{admin/ujTargyFelvetel}" action="/admin/ujTargyFelvetel" method="post">
+    <label for="name">Nev</label>
+    <input id="name" type="text" data-th-field="*{name}">
+    <p
+            style="color: red"
+            data-th-if="${#fields.hasErrors('name')}"
+            data-th-error="*{name}"
+    ></p>
+
+
+    <label for="dateOfRent">Date of rent</label>
+    <input id="dateOfRent" type="date" data-th-field="*{dateOfRent}">
+    <p
+            style="color: red"
+            data-th-if="${#fields.hasErrors('dateOfRent')}"
+            data-th-error="*{dateOfRent}"
+    ></p>
+
+    <input type="submit" value="Save">
+</form>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kolcsonzesek</title>
+</head>
+<body>
+<h1>Kolcsonzes lista:</h1>
+
+<p data-th-if="${#lists.isEmpty(items)}" >
+    Nincs kolcsonozheto targy
+</p>
+
+<ul data-th-unless="${#lists.isEmpty(items)}" >
+    <li data-th-each="item: ${items}">
+        <b> <p data-th-text="${items.name}"> Targy nev </p> </b>
+
+        <p data-th-text="${items.active}"> Elerheto-e </p>
+
+<!--        <form method="post" data-th-action="@{/item-active}">-->
+<!--            <label data-th-for="${item.getId() + 'active'}">Elerheto-e</label>-->
+<!--            <input type="checkbox" name="active" data-th-id="${item.getId() + 'active'}">-->
+<!--        </form>-->
+
+        <p data-th-text="${item.dateOfRent}"> Kolcsonozve </p>
+    </li>
+</ul>
+
+</body>
+</html>
