@@ -11,7 +11,6 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @RequiredArgsConstructor
-@NoArgsConstructor
 @ToString
 @Entity
 public class Item {

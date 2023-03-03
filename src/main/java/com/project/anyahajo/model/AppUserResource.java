@@ -7,12 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class UserResource {
+public class AppUserResource {
 
     @Getter
-    private List<User> users = new ArrayList<>();
+    private List<AppUser> users = new ArrayList<>();
 
-    public User getUser(Long id){
+    public AppUser getUser(Long id){
         return users.stream()
                 .filter(user-> id.equals(user.getId()))
                 .findAny()

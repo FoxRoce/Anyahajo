@@ -17,14 +17,25 @@
 
         <p data-th-text="${items.active}"> Elerheto-e </p>
 
-<!--        <form method="post" data-th-action="@{/item-active}">-->
+<!--        <form data-th-id="${item.getId() + 'activeform'}" method="post" data-th-action="@{/item-active}">-->
 <!--            <label data-th-for="${item.getId() + 'active'}">Elerheto-e</label>-->
-<!--            <input type="checkbox" name="active" data-th-id="${item.getId() + 'active'}">-->
+<!--            <input type="checkbox" name="active" data-th-checked="${item.getActive()}" data-th-id="${item.getId() + 'active'}" onchange="submitCheck(event)">-->
+<!--        </form>-->
+<!--        -->
+<!--        <form method="post" data-th-action="@{/item-delete}" action="/item-delete">-->
+<!--            <input type="hidden" name="item_id" data-th-value="${item.getId()}">-->
+<!--            <input type="submit" value="Torol">-->
 <!--        </form>-->
 
         <p data-th-text="${item.dateOfRent}"> Kolcsonozve </p>
     </li>
 </ul>
+
+<!--<script>-->
+<!--    function submitCheck(event) {-->
+<!--        event.target.parentElement.submit();-->
+<!--    }-->
+<!--</script>-->
 
 </body>
 </html>
