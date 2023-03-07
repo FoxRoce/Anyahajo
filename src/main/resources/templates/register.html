@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+</head>
+<body>
+<h1>Register</h1>
+<form data-th-object="${newUser}" data-th-action="@{register}" action="/register" method="post">
+  <label for="email">E-mail</label>
+  <input id="email" type="email" data-th-field="*{email}">
+  <p
+          style="color: red;"
+          data-th-if="${#fields.hasErrors('email')}"
+          data-th-errors="*{name}"
+  ></p>
+
+  <label for="password">Password</label>
+  <input id="password" type="password" data-th-field="*{password}">
+  <p
+          style="color: red;"
+          data-th-if="${#fields.hasErrors('password')}"
+          data-th-errors="*{password}"
+  ></p>
+
+  <input type="submit" value="Save">
+</form>
+</body>
+</html>

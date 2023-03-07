@@ -1,4 +1,4 @@
-package com.project.anyahajo;
+package com.project.anyahajo.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
