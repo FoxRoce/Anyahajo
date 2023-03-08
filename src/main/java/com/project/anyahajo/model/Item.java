@@ -1,9 +1,6 @@
 package com.project.anyahajo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -13,6 +10,7 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 @ToString
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Item {
 //    ez kell legyen az ososzaly, szoval a targyfelvetel nem jo
 //    itemController - postMapping - saveItem
