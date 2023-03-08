@@ -21,8 +21,9 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Availability availability;
     private String name;
-    private Category category;
+    private Byte[] picture;
     private boolean active = false;
     private LocalDate dateOfRent;
 
