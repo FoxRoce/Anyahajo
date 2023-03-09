@@ -1,11 +1,11 @@
 package com.project.anyahajo.repository;
 
-import com.project.anyahajo.model.AppUser;
+import com.project.anyahajo.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface AppUserRepository extends JpaRepository<AppUser, Long> {
+public interface AppUserRepository extends JpaRepository<User, Long> {
 
-    Optional<AppUser> findByEmail(String email);
+    Optional<User> findByEmail(String email);
 }

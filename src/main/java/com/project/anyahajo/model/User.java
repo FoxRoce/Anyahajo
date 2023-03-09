@@ -13,15 +13,14 @@ import java.util.Collections;
 @Entity
 @Getter
 @Setter
-public class AppUser implements UserDetails {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Embedded
     @Getter
-    private String firstName;
-    @Getter
-    private String lastName;
+    private Name name;
     private String email;
     private String password;
     private Boolean locked = false;
