@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kolcsonzesek</title>
+</head>
+<body>
+<h1>Kolcsonzes lista:</h1>
+
+<p data-th-if="${#lists.isEmpty(items)}" >
+    Nincs kolcsonozheto targy
+</p>
+
+<ul data-th-unless="${#lists.isEmpty(items)}" >
+    <li data-th-each="item: ${items}">
+        <b> <p data-th-text="${item.name}"> Targy nev </p> </b>
+        <p data-th-text="${item.id}"> Id </p>
+        <p data-th-text="${item.availability}"> Foglalas </p>
+        <p data-th-text="${item.description}"> Leiras </p>
+        <p data-th-text="${item.picture}"> Kep </p>
+        <p data-th-text="${item.isActive}"> Elerheto-e </p>
+        <p data-th-text="${item.dateOfRent}"> Kolcsonozve </p>
+
+        <td th:text="${item.author} ? ${item.author} : 'null value!'"> Szerzo </td>
+        <p></p>
+
+        <td th:text="${item.babycareBrand} ? ${item.babycareBrand} : 'null value!'"> Marka </td>
+        <p></p>
+
+        <td th:text="${item.type} ? ${item.type} : 'null value!'"> Tipus </td>
+        <p></p>
+        <td th:text="${item.carrierBrand} ? ${item.carrierBrand} : 'null value!'"> Marka </td>
+        <p></p>
+        <td th:text="${item.size} ? ${item.size} : 'null value!'"> Meret </td>
+        <p></p>
+
+
+<!--        <span data-th-if="${item.author != null}"-->
+<!--        <p data-th-text="${item.author}"> Szerzo </p>-->
+<!--        </span>-->
+
+<!--        <span data-th-if="${item.babycareBrand != null}"-->
+<!--        <p data-th-text="${item.babycareBrand}"> Marka </p>-->
+<!--        </span>-->
+
+<!--        <span data-th-if="${item.type != null}"-->
+<!--         <p data-th-text="${item.type}"> Tipus </p>-->
+<!--         <p data-th-text="${item.carrierBrand}"> Marka </p>-->
+<!--         <p data-th-text="${item.size}"> Meret </p>-->
+<!--        </span>-->
+
+
+    </li>
+</ul>
+
+
+</body>
+</html>

@@ -26,7 +26,7 @@ public class ItemController {
     public String listItems(Model model){
         List<Item> items = itemRepository.findAll();
         model.addAttribute("items", items);
-        return "lendList";
+        return "all-items";
     }
 
     @GetMapping(path = {"/admin/ujTargyFelvetel"})
