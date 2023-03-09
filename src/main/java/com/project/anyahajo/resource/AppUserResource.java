@@ -1,6 +1,6 @@
 package com.project.anyahajo.resource;
 
-import com.project.anyahajo.model.AppUser;
+import com.project.anyahajo.model.User;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 
@@ -11,9 +11,9 @@ import java.util.List;
 public class AppUserResource {
 
     @Getter
-    private List<AppUser> users = new ArrayList<>();
+    private List<User> users = new ArrayList<>();
 
-    public AppUser getUser(Long id){
+    public User getUser(Long id){
         return users.stream()
                 .filter(user-> id.equals(user.getId()))
                 .findAny()

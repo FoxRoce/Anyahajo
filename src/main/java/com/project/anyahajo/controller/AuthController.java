@@ -1,7 +1,7 @@
 package com.project.anyahajo.controller;
 
 import com.project.anyahajo.form.RegistrationForm;
-import com.project.anyahajo.model.AppUser;
+import com.project.anyahajo.model.User;
 import com.project.anyahajo.repository.AppUserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -45,7 +45,7 @@ public class AuthController {
             return "register";
         }
 //        String encodePw = passwordEncoder.encode(password);
-        AppUser user = new AppUser();
+        User user = new User();
         user.setEmail(registrationForm.getEmail());
         user.setPassword(passwordEncoder.encode(registrationForm.getPassword()));
         user.setEnabled(true);
