@@ -2,7 +2,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${PDB_HOST:localhost}:${PDB_PORT:3306}/${PDB_DB_NAME}
+    url: jdbc:mysql://${PDB_HOST:localhost}:${PDB_PORT:16603}/${PDB_DB_NAME}
     username: ${PDB_USERNAME}
     password: ${PDB_PASSWORD}
 

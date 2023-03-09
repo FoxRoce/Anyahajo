@@ -1,4 +1,4 @@
-package com.project.anyahajo.controller;
+package com.project.anyahajo.form;
 
 import jakarta.validation.constraints.Future;
 import lombok.Getter;

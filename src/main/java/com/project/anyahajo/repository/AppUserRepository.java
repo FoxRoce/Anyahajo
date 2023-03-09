@@ -1,5 +1,6 @@
-package com.project.anyahajo.model;
+package com.project.anyahajo.repository;
 
+import com.project.anyahajo.model.AppUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

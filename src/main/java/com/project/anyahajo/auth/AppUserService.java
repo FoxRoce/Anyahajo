@@ -1,6 +1,6 @@
 package com.project.anyahajo.auth;
 
-import com.project.anyahajo.model.AppUserRepository;
+import com.project.anyahajo.repository.AppUserRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,7 +1,8 @@
 package com.project.anyahajo.controller;
 
+import com.project.anyahajo.form.RegistrationForm;
 import com.project.anyahajo.model.AppUser;
-import com.project.anyahajo.model.AppUserRepository;
+import com.project.anyahajo.repository.AppUserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
