@@ -13,13 +13,13 @@ import java.util.Collections;
 @Entity
 @Getter
 @Setter
+@Table(name = "ah_user")
 public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Embedded
-    @Getter
     private Name name;
     private String email;
     private String password;
