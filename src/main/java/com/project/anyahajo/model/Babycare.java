@@ -9,5 +9,5 @@ import lombok.Setter;
 @Setter
 public class Babycare extends Item{
 
-    private String brand;
+    private String babycareBrand;
 }
