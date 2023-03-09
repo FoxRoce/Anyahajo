@@ -1,6 +1,6 @@
 package com.project.anyahajo.controller;
 
-import com.project.anyahajo.model.AppUserRepository;
+import com.project.anyahajo.repository.AppUserRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

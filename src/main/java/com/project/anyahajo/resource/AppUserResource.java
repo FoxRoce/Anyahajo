@@ -1,5 +1,6 @@
-package com.project.anyahajo.model;
+package com.project.anyahajo.resource;
 
+import com.project.anyahajo.model.AppUser;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 
