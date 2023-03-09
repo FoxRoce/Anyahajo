@@ -10,8 +10,9 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 @ToString
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Table(name = "ah_item")
 public class Item {
+//    ez kell legyen az ososzaly, szoval a targyfelvetel nem jo
 //    itemController - postMapping - saveItem
 
     @Id
