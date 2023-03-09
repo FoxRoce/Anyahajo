@@ -23,6 +23,7 @@ public class Item {
     private String name;
     private Byte[] picture;
     private boolean active = false;
+
     private LocalDate dateOfRent;
 
 }
