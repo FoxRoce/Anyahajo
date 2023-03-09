@@ -10,6 +10,6 @@ import lombok.Setter;
 public class Carrier extends Item {
 
     private CarrierType type;
-    private String brand;
+    private String carrierBrand;
     private String size;
 }
