@@ -12,18 +12,22 @@ import java.time.LocalDate;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Item {
-//    ez kell legyen az ososzaly, szoval a targyfelvetel nem jo
 //    itemController - postMapping - saveItem
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Availability availability;
     private String name;
+    private Availability availability;
+    private LocalDate dateOfRent;
+    private String description;
+    private String shortDescription;
     private Byte[] picture;
     private boolean active = false;
 
-    private LocalDate dateOfRent;
+//    @ManyToOne
+//    @JoinColumn(name = "rent_id")
+//    private Rent rent;
 
 }
