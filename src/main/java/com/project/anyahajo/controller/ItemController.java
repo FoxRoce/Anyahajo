@@ -1,7 +1,8 @@
 package com.project.anyahajo.controller;
 
+import com.project.anyahajo.form.ItemForm;
 import com.project.anyahajo.model.Item;
-import com.project.anyahajo.model.ItemRepository;
+import com.project.anyahajo.repository.ItemRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
