@@ -13,6 +13,7 @@ import java.util.Collections;
 @Entity
 @Getter
 @Setter
+@Table(name = "ah_user")
 public class AppUser implements UserDetails {
 
     @Id
@@ -22,6 +23,7 @@ public class AppUser implements UserDetails {
     private String firstName;
     @Getter
     private String lastName;
+    @Getter
     private String email;
     private String password;
     private Boolean locked = false;
