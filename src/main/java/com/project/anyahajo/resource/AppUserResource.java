@@ -15,7 +15,7 @@ public class AppUserResource {
 
     public User getUser(Long id){
         return users.stream()
-                .filter(user-> id.equals(user.getId()))
+                .filter(user-> id.equals(user.getUser_id()))
                 .findAny()
                 .orElse(null);
     }

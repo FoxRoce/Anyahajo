@@ -18,7 +18,7 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long user_id;
     @Embedded
     private Name name;
     private String email;

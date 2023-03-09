@@ -8,9 +8,12 @@ import java.time.LocalDate;
 @Table(name = "ah_rent")
 public class Rent {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @EmbeddedId
+    private RentId rent_id = new RentId();
+    @ManyToOne
+    private Item item;
+    @ManyToOne
+    private User user;
 
     private LocalDate startOfRent;
     private LocalDate endOfRent;
