@@ -1,18 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hu">
 <head>
     <meta charset="UTF-8">
-    <title>Register</title>
+    <title>Regisztráció</title>
+  <style>
+    body{
+      text-align: center;
+      background-image: url("/ahboritobig.jpg");
+    }
+
+  </style>
 </head>
 <body>
-<h1>Register</h1>
+<h1>Regisztráció</h1>
 <form data-th-object="${newUser}" data-th-action="@{register}" action="/register" method="post">
   <label for="email">E-mail</label>
   <input id="email" type="email" data-th-field="*{email}">
   <p
           style="color: red;"
           data-th-if="${#fields.hasErrors('email')}"
-          data-th-errors="*{name}"
+          data-th-errors="*{email}"
   ></p>
 
   <label for="password">Password</label>

@@ -3,7 +3,7 @@ package com.project.anyahajo.model;
 public enum Availability {
     Available("Szabad"),
     Reserved("Foglalt"),
-    NotAvailable("Nem élérhető");
+    NotAvailable("Nem elérhető");
 
     public final String hunName;
 

@@ -1,14 +1,19 @@
 package com.project.anyahajo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.time.LocalDate;
 
 @Entity
+@Table(name = "ah_rent")
 public class Rent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
+
+    private LocalDate startOfRent;
+    private LocalDate endOfRent;
+
+
 }

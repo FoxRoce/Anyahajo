@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 @ToString
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Table(name = "ah_item")
 public class Item {
 //    itemController - postMapping - saveItem
 
@@ -18,16 +18,14 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
     private Availability availability;
-    private LocalDate dateOfRent;
+    private String name;
     private String description;
-    private String shortDescription;
     private Byte[] picture;
-    private boolean active = false;
+    private boolean isActive = false;
+    private LocalDate dateOfRent;
 
 //    @ManyToOne
 //    @JoinColumn(name = "rent_id")
 //    private Rent rent;
-
 }
