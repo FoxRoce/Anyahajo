@@ -24,7 +24,6 @@ public class Item {
     private String description;
     private Byte[] picture;
     private boolean isActive = false;
-    private LocalDate dateOfRent;
 
 //    @ManyToOne
 //    @JoinColumn(name = "rent_id")
