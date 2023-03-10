@@ -1,7 +1,7 @@
 package com.project.anyahajo.controller;
 
 import com.project.anyahajo.form.ItemForm;
-import com.project.anyahajo.model.Item;
+import com.project.anyahajo.model.*;
 import com.project.anyahajo.repository.ItemRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -45,10 +46,31 @@ public class ItemController {
         if (bindingResult.hasErrors()){
             return "admin-add-item";
         }
+        Item entity;
 
-        Item entity = new Item();
+        if (itemForm.getBabycareBrand() != null){
+            entity = new Babycare();
+            ((Babycare) entity).setBabycareBrand(itemForm.getBabycareBrand());
+        } else if (itemForm.getAuthor() != null){
+            entity = new Book();
+            ((Book) entity).setAuthor(itemForm.getAuthor());
+        } else if (itemForm.getCarrierBrand() != null){
+            entity = new Carrier();
+            ((Carrier) entity).setCarrierBrand(itemForm.getCarrierBrand());
+            ((Carrier) entity).setType(itemForm.getType());
+            ((Carrier) entity).setSize(itemForm.getSize());
+        } else {
+            entity = new Item();
+        }
+
         entity.setName(itemForm.getName());
         entity.setDateOfRent(itemForm.getDateOfRent());
+        entity.setAvailability(itemForm.getAvailability());
+        entity.setDescription(itemForm.getDescription());
+        entity.setPicture(itemForm.getPicture());
+        entity.setActive(itemForm.isActive());
+
+//        itemRepository.insertInto
 
         return "redirect:/kolcsonzes";
     }
