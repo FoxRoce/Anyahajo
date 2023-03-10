@@ -15,7 +15,7 @@ public class RegistrationForm {
     @Email
     private String email;
 
-    @Size(min = 8, max = 15)
+    @Size(min = 5, max = 15)
     private String password;
 
 }

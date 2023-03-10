@@ -16,14 +16,14 @@ public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long item_id;
 
     private Availability availability;
     private String name;
     private String description;
     private Byte[] picture;
     private boolean isActive = false;
-    private LocalDate dateOfRent;
+    private LocalDate dateOfAdd;
 
 //    @ManyToOne
 //    @JoinColumn(name = "rent_id")

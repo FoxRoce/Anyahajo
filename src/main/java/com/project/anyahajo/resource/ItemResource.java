@@ -15,7 +15,7 @@ public class ItemResource {
 
     public Item getItem(Long id){
         return items.stream()
-                .filter(item -> id.equals(item.getId()))
+                .filter(item -> id.equals(item.getItem_id()))
                 .findAny()
                 .orElse(null);
     }
