@@ -12,8 +12,9 @@ import java.time.LocalDate;
 @Table(name = "ah_rent")
 public class Rent {
 
-    @EmbeddedId
-    private RentId rent_id = new RentId();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long rent_id;
     @ManyToOne
     @MapsId("item_id")
     private Item item;
