@@ -17,7 +17,7 @@ public class ItemForm {
 
     @Future
     @DateTimeFormat(pattern = "YYYY-MM-DD")
-    private LocalDate dateOfRent;
+    private LocalDate dateOfAdd;
 
     private Availability availability;
     private String description;
