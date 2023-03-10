@@ -64,7 +64,6 @@ public class ItemController {
         }
 
         entity.setName(itemForm.getName());
-        entity.setDateOfAdd(itemForm.getDateOfAdd());
         entity.setAvailability(itemForm.getAvailability());
         entity.setDescription(itemForm.getDescription());
         entity.setPicture(itemForm.getPicture());

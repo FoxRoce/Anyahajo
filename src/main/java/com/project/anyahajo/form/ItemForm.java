@@ -16,8 +16,6 @@ public class ItemForm {
     private String name;
 
     @Future
-    @DateTimeFormat(pattern = "YYYY-MM-DD")
-    private LocalDate dateOfAdd;
 
     private Availability availability;
     private String description;
