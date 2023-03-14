@@ -8,30 +8,21 @@ import org.springframework.stereotype.Component;
 
 @Component
 public  class BootstrapData implements CommandLineRunner{
-
-    //        private final AppUserRepository appUserRepository;            ez se kell mivel targyakkal foglalkozunk, nem userekkel
     private final ItemRepository itemRepository;
-   // private final AppUserRepository appUserRepository;
-
     public BootstrapData(AppUserRepository appUserRepository, ItemRepository itemRepository) {
-      //  this.appUserRepository = appUserRepository;
+
         this.itemRepository = itemRepository;
     }
-
     @Override
     public void run(String... args) throws Exception {
-//            Name eric = new Name();                 atneztem, ez a Userhez van, szoval itt nem kell
-//            eric.setFirstName("Eric");
-//            eric.setLastName("Evans");
 
-//        bookname.setItem_id(1L);                   Ez automatikusan general az adatbazis
         Book harryPotter = new Book();
         harryPotter.setAuthor("J.K. Rowling");
         harryPotter.setName("Harry Potter and his magic rod");
         harryPotter.setAvailability(Availability.Available);
         harryPotter.setActive(true);
         harryPotter.setDescription("DHarry Potter finds porn in the daily prophet");
-//        harryPotter.setPicture();                 eggyelore hadjuk ki
+
         Book littleprince = new Book();
         littleprince.setAuthor("Antoine de");
         littleprince.setName("The Little Prince");
@@ -45,14 +36,10 @@ public  class BootstrapData implements CommandLineRunner{
         winnie.setActive(false);
         winnie.setDescription("Simple but lovelable story");
 
-//                                                  49 - 53 sorig mindegyik targynal ezek lesznek, csak az author valtozik
-//                                          Carrier: setCarrierBrand(), setType(CarrierType. ), setSize()
-//                                          Babycare: setBabycareBrand()
-
         itemRepository.save(harryPotter);
         itemRepository.save(littleprince);
         itemRepository.save(winnie);
-//        nem kell olyat beallitani ami nincs,pl publisher, bassza ra csak mukodjon, authornak is eleg nev
+
         Babycare powder=new Babycare();
         powder.setBabycareBrand("Hellobello");
         powder.setName("Premium baby powder");
@@ -107,29 +94,5 @@ public  class BootstrapData implements CommandLineRunner{
         itemRepository.save(buckle);
         itemRepository.save(others);
 
-/*
-            ericSaved.getBooks().add(dddSaved);
-            rodSaved.getBooks().add(noEJBSaved);
-            dddSaved.getAuthors().add(ericSaved);
-            noEJBSaved.getAuthors().add(rodSaved);
-
-            Publisher publisher = new Publisher();
-            publisher.setPublisherName("My Publisher");
-            publisher.setAddress("123 Main");
-            Publisher savedPublisher = publisherRepository.save(publisher);
-
-            dddSaved.setPublisher(savedPublisher);
-            noEJBSaved.setPublisher(savedPublisher);
-
-            authorRepository.save(ericSaved);
-            authorRepository.save(rodSaved);
-            bookRepository.save(dddSaved);
-            bookRepository.save(noEJBSaved);
-
-            System.out.println("In Bootstrap");
-            System.out.println("Author Count: " + authorRepository.count());
-            System.out.println("Book Count: " + bookRepository.count());
-
-            System.out.println("Publisher Count: " + publisherRepository.count());*/
     }
 }
