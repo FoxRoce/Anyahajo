@@ -2,6 +2,9 @@ package com.project.anyahajo.controller;
 
 import com.project.anyahajo.form.ItemForm;
 import com.project.anyahajo.model.*;
+import com.project.anyahajo.repository.BabycareRepository;
+import com.project.anyahajo.repository.BookRepository;
+import com.project.anyahajo.repository.CarrierRepository;
 import com.project.anyahajo.repository.ItemRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDate;
@@ -20,14 +24,52 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ItemController {
 
-    @NonNull
+
     private ItemRepository itemRepository;
+    private BookRepository bookRepository;
+    private CarrierRepository carrierRepository;
+    private BabycareRepository babycareRepository;
+
+    public ItemController(ItemRepository itemRepository, BookRepository bookRepository, CarrierRepository carrierRepository, BabycareRepository babycareRepository) {
+        this.itemRepository = itemRepository;
+        this.bookRepository = bookRepository;
+        this.carrierRepository = carrierRepository;
+        this.babycareRepository = babycareRepository;
+    }
 
     @GetMapping(path = {"/kolcsonzes"})
     public String listItems(Model model){
         List<Item> items = itemRepository.findAll();
         model.addAttribute("items", items);
         return "all-items";
+    }
+
+    @GetMapping(path = {"/kolcsonzes/kony"})
+    public String listBooks(Model model){
+        List<Book> books = bookRepository.findAll();
+        model.addAttribute("books", books);
+        return "all-books";
+    }
+
+    @GetMapping(path = {"/kolcsonzes/hordozo"})
+    public String listCarriers(Model model){
+        List<Carrier> carriers = carrierRepository.findAll();
+        model.addAttribute("carriers", carriers);
+        return "all-carriers";
+    }
+
+    @GetMapping(path = {"/kolcsonzes/babaapolas"})
+    public String listBabycares(Model model){
+        List<Babycare> babycares = babycareRepository.findAll();
+        model.addAttribute("babycares", babycares);
+        return "all-babycares";
+    }
+
+    @GetMapping("/kolcsonzes/kereses/{text}")
+    public String searchItems(Model model, @PathVariable String text) {
+        List<Item> items = itemRepository.findByText(text);
+        model.addAttribute("items", items);
+        return "items-search";
     }
 
     @GetMapping(path = {"/admin/ujTargyFelvetel"})
