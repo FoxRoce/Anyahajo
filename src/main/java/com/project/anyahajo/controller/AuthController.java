@@ -57,6 +57,7 @@ public class AuthController {
         Name name = new Name();
         name.setLastName(registrationForm.getLastName());
         name.setFirstName(registrationForm.getFirstName());
+        user.setName(name);
         user.setEmail(registrationForm.getEmail());
         user.setPassword(passwordEncoder.encode(registrationForm.getPassword()));
         user.setEnabled(true);
