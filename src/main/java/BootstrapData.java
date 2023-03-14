@@ -7,17 +7,19 @@ import org.springframework.stereotype.Component;
 @Component
     public abstract class BootstrapData implements ItemRepository,CommandLineRunner{
 
-        private final AppUserRepository appUserRepository;
+//        private final AppUserRepository appUserRepository;            ez se kell mivel targyakkal foglalkozunk, nem userekkel
         private final ItemRepository itemRepository;
-    private Availability availability;
-    private Babycare babycare;
-    private Book book;
-    private Carrier carrier;
-    private CarrierType carrierType;
-    private Item item;
-    private Name name;
-    private Rent rent;
-    private User user;
+//    private Availability availability;
+//    private Babycare babycare;
+//    private Book book;
+//    private Carrier carrier;
+//    private CarrierType carrierType;
+//    private Item item;
+//    private Name name;
+//    private Rent rent;
+//    private User user;
+
+//                       ezek nem kellenek
 
     public BootstrapData(AppUserRepository appUserRepository, ItemRepository itemRepository, Availability availability, Babycare babycare,
          Book book, Carrier carrier, CarrierType carrierType, Item item, Name name, Rent rent,  User user) {
@@ -36,15 +38,27 @@ import org.springframework.stereotype.Component;
 
     @Override
         public void run(String... args) throws Exception {
-            Name eric = new Name();
-            eric.setFirstName("Eric");
-            eric.setLastName("Evans");
+//            Name eric = new Name();                 atneztem, ez a Userhez van, szoval itt nem kell
+//            eric.setFirstName("Eric");
+//            eric.setLastName("Evans");
 
-        Book bookname=new Book();
-        bookname.setItem_id(1L);
-        bookname.setAuthor("Rowlins");
-        bookname.setName("Elso konyvem");
+        Book harryPotter = new Book();
+//        bookname.setItem_id(1L);                   Ez automatikusan general az adatbazis
+        harryPotter.setAuthor("J.K. Rowling");
 
+        harryPotter.setName("Harry Potter and his magic rod");
+        harryPotter.setAvailability(Availability.Available);
+        harryPotter.setActive(true);
+//        harryPotter.setPicture();                 eggyelore hadjuk ki
+        harryPotter.setDescription("Harry Potter finds porn in the daily prophet");
+
+//                                                  49 - 53 sorig mindegyik targynal ezek lesznek, csak az author valtozik
+//                                          Carrier: setCarrierBrand(), setType(CarrierType. ), setSize()
+//                                          Babycare: setBabycareBrand()
+
+        itemRepository.save(harryPotter);
+
+//        nem kell olyat beallitani ami nincs,pl publisher, bassza ra csak mukodjon, authornak is eleg nev
 
             Name rod = new Name();
             rod.setFirstName("Rod");
