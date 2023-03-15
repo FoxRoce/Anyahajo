@@ -12,10 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -65,11 +62,11 @@ public class ItemController {
         return "all-babycares";
     }
 
-    @GetMapping("/kolcsonzes/kereses/{text}")
-    public String searchItems(Model model, @PathVariable String text) {
+    @GetMapping("/kolcsonzes/kereses")
+    public String searchItems(Model model, @RequestParam(value = "text") String text) {
         List<Item> items = itemRepository.findByText(text);
         model.addAttribute("items", items);
-        return "items-search";
+        return "all-items";
     }
 
     @GetMapping(path = {"/admin/ujTargyFelvetel"})
