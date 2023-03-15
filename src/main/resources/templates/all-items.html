@@ -9,6 +9,12 @@
 
 <p th:if="${#lists.isEmpty(items)}">Nincs kolcsonozheto targy</p>
 
+<div>
+    <form th:action="@{/kolcsonzes/kereses}" class="form-inline my-2 my-lg-0 mb-3">
+        <input name="text" class="form-control mr-sm-2 mb-5" type="search" placeholder="Keresés" aria-label="Search">
+    </form>
+</div>
+
 <ul th:unless="${#lists.isEmpty(items)}">
     <li th:each="item: ${items}">
         <b><p th:text="${item.name}">Targy nev</p></b>
