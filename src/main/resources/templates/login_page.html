@@ -31,7 +31,7 @@
       padding: 20px 25px;
     }
 
-    input[type=email],[type=text], input[type=password]{
+    input[type=email], input[type=password]{
       width: 100%;
       margin: 10px 0;
       border-radius: 5px;
@@ -123,43 +123,41 @@
 </head>
 <body>
 <h1>Belépés az Anyahajó kölcsönzés oldalára</h1>
-<form data-th-object="${newUser}" data-th-action="@{register}" action="/register" method="post">
-  <div class="container">
-    <h1>Regisztráció</h1>
-    <p>Kérjük, töltse ki ezt az űrlapot fiókja létrehozásához.</p>
-    <hr>
+<form action="/login" method="POST">
 
-    <label for="lastName"><b>Vezetéknév</b></label>
-    <input id="lastName" type="text" placeholder="Vezetéknév" data-th-field="*{lastName}">
-    <p style="color: red;" data-th-if="${#fields.hasErrors('lastName')}" data-th-errors="*{lastName}"></p>
-
-    <label for="firstName"><b>Keresztnév</b></label>
-    <input id="firstName" type="text" placeholder="Keresztnév" data-th-field="*{firstName}">
-    <p style="color: red;" data-th-if="${#fields.hasErrors('firstName')}" data-th-errors="*{firstName}"></p>
-
-    <label for="email"><b>Email</b></label>
-    <input id="email" type="email" placeholder="Email" data-th-field="*{email}">
-    <p style="color: red;" data-th-if="${#fields.hasErrors('email')}" data-th-errors="*{email}"></p>
-
-    <label for="password"><b>Jelszó</b></label>
-    <input id="password" type="password" placeholder="Jelszó" data-th-field="*{password}">
-    <p
-            style="color: red;"
-            data-th-if="${#fields.hasErrors('password')}"
-            data-th-errors="*{password}"
-    ></p>
-
-    <label for="passwordCheck"><b>Jelszó megerősítés</b></label>
-    <input id="passwordCheck" type="password" placeholder="Jelszó megerősítés" data-th-field="*{passwordCheck}">
-    <p style="color: red;" data-th-if="${#fields.hasErrors('passwordCheck')}" data-th-errors="*{passwordCheck}"></p>
-    <hr>
-
-    <button type="submit" value="Save" class="registerbtn">Regisztráció</button>
+  <div class="headingsContainer">
+    <h3>Belépés</h3>
+    <p>Belépés e-mail és jelszóval</p>
   </div>
-  <div class="container signin">
-    <p>Már van fiókja?<a data-th-href="@{'/login_page'}">Belépés</a>.</p>
-    <a data-th-href="@{'/home'}">Vissza a főoldalra.</a>
+
+
+  <div class="mainContainer">
+
+    <label for="email">Email cím:</label>
+    <input type="email" placeholder="E-mail cím" id="email" name="email" required>
+
+    <br><br>
+
+    <label for="password">Jelszó:</label>
+    <input type="password" placeholder="Jelszó" id="password" name="password" required>
+
+
+<!--    <div class="subcontainer">-->
+<!--      <label>-->
+<!--        <input type="checkbox" checked="checked" name="remember"> Remember me-->
+<!--      </label>-->
+<!--      <p class="forgotpsd"> <a href="#">Forgot Password?</a></p>-->
+<!--    </div>-->
+
+
+
+    <button type="submit">Belépés</button>
+
+
+    <p class="register">Még nem regisztrált? <a data-th-href="@{'/register'}">Regisztráljon itt!</a></p>
+
   </div>
+
 </form>
 </body>
 </html>
