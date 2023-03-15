@@ -12,10 +12,15 @@ public class RegistrationForm {
 //    @NotBlank
 //    private String name;
 
+    private String lastName;
+    private String firstName;
     @Email
     private String email;
 
     @Size(min = 5, max = 15)
     private String password;
+
+    @Size(min = 5, max = 15)
+    private String passwordCheck;
 
 }
