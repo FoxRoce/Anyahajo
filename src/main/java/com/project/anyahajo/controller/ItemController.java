@@ -18,7 +18,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Controller
-//@RequiredArgsConstructor
+@RequiredArgsConstructor
 public class ItemController {
 
     @NonNull
@@ -30,12 +30,6 @@ public class ItemController {
     @NonNull
     private BabycareRepository babycareRepository;
 
-    public ItemController(ItemRepository itemRepository, BookRepository bookRepository, CarrierRepository carrierRepository, BabycareRepository babycareRepository) {
-        this.itemRepository = itemRepository;
-        this.bookRepository = bookRepository;
-        this.carrierRepository = carrierRepository;
-        this.babycareRepository = babycareRepository;
-    }
 
     @GetMapping(path = {"/kolcsonzes"})
     public String listItems(Model model) {
