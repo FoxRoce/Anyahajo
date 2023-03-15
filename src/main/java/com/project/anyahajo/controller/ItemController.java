@@ -18,13 +18,16 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Controller
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class ItemController {
 
-
+    @NonNull
     private ItemRepository itemRepository;
+    @NonNull
     private BookRepository bookRepository;
+    @NonNull
     private CarrierRepository carrierRepository;
+    @NonNull
     private BabycareRepository babycareRepository;
 
     public ItemController(ItemRepository itemRepository, BookRepository bookRepository, CarrierRepository carrierRepository, BabycareRepository babycareRepository) {
@@ -35,28 +38,28 @@ public class ItemController {
     }
 
     @GetMapping(path = {"/kolcsonzes"})
-    public String listItems(Model model){
+    public String listItems(Model model) {
         List<Item> items = itemRepository.findAll();
         model.addAttribute("items", items);
         return "all-items";
     }
 
     @GetMapping(path = {"/kolcsonzes/kony"})
-    public String listBooks(Model model){
+    public String listBooks(Model model) {
         List<Book> books = bookRepository.findAll();
         model.addAttribute("books", books);
         return "all-books";
     }
 
     @GetMapping(path = {"/kolcsonzes/hordozo"})
-    public String listCarriers(Model model){
+    public String listCarriers(Model model) {
         List<Carrier> carriers = carrierRepository.findAll();
         model.addAttribute("carriers", carriers);
         return "all-carriers";
     }
 
     @GetMapping(path = {"/kolcsonzes/babaapolas"})
-    public String listBabycares(Model model){
+    public String listBabycares(Model model) {
         List<Babycare> babycares = babycareRepository.findAll();
         model.addAttribute("babycares", babycares);
         return "all-babycares";
@@ -70,7 +73,7 @@ public class ItemController {
     }
 
     @GetMapping(path = {"/admin/ujTargyFelvetel"})
-    public String newItem(Model model){
+    public String newItem(Model model) {
         model.addAttribute("newItem", new ItemForm());
         return "admin-add-item";
     }
@@ -81,19 +84,19 @@ public class ItemController {
             @Validated
             ItemForm itemForm,
             BindingResult bindingResult
-    ){
-        if (bindingResult.hasErrors()){
+    ) {
+        if (bindingResult.hasErrors()) {
             return "admin-add-item";
         }
         Item entity;
 
-        if (itemForm.getBabycareBrand() != null){
+        if (itemForm.getBabycareBrand() != null) {
             entity = new Babycare();
             ((Babycare) entity).setBabycareBrand(itemForm.getBabycareBrand());
-        } else if (itemForm.getAuthor() != null){
+        } else if (itemForm.getAuthor() != null) {
             entity = new Book();
             ((Book) entity).setAuthor(itemForm.getAuthor());
-        } else if (itemForm.getCarrierBrand() != null){
+        } else if (itemForm.getCarrierBrand() != null) {
             entity = new Carrier();
             ((Carrier) entity).setCarrierBrand(itemForm.getCarrierBrand());
             ((Carrier) entity).setType(itemForm.getType());
