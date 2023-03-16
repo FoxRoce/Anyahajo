@@ -3,6 +3,7 @@ package com.project.anyahajo.form;
 import com.project.anyahajo.model.Availability;
 import com.project.anyahajo.model.CarrierType;
 import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 @Setter
 public class ItemForm {
 
+    @NotNull
     private String name;
 
     private Availability availability;
