@@ -7,16 +7,26 @@
 <body>
 <h1>Kolcsonzes lista:</h1>
 
-<p th:if="${#lists.isEmpty(items)}">Nincs kolcsonozheto targy</p>
-
 <div>
     <form th:action="@{/kolcsonzes/kereses}" class="form-inline my-2 my-lg-0 mb-3">
         <input name="text" class="form-control mr-sm-2 mb-5" type="search" placeholder="Keresés" aria-label="Search">
     </form>
 </div>
 
+<form>
+    <label for="item-type">Filter by item type:</label>
+    <select id="item-type" name="itemType" onchange="this.form.submit()">
+        <option value="">All</option>
+        <option value="Book">Book</option>
+        <option value="Carrier">Carrier</option>
+        <option value="Babycare">Babycare</option>
+    </select>
+</form>
+
+<p th:if="${#lists.isEmpty(items)}">Nincs kolcsonozheto targy</p>
+
 <ul th:unless="${#lists.isEmpty(items)}">
-    <li th:each="item: ${items}">
+    <li th:each="item: ${items}" th:if="${#strings.isEmpty(param.itemType) or #strings.equals(param.itemType, item.__class__.simpleName)}">
         <b><p th:text="${item.name}">Targy nev</p></b>
         <p th:text="${item.item_id}">Id</p>
         <p th:text="${item.availability}">Foglalas</p>

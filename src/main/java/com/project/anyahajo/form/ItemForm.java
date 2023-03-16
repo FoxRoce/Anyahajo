@@ -15,8 +15,6 @@ public class ItemForm {
 
     private String name;
 
-    @Future
-
     private Availability availability;
     private String description;
     private Byte[] picture;
