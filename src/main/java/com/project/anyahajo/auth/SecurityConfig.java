@@ -39,13 +39,13 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests()
-                .requestMatchers("/home","/register","/kolcsonzes","/admin/ujTargyFelvetel")
+                .requestMatchers("/home","/register","/kolcsonzes")
                 .permitAll()
                 .requestMatchers("/admin").hasRole("ADMIN")
 
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/login_page").loginProcessingUrl("/login_page").permitAll().and()
+                .formLogin(Customizer.withDefaults())
                 .logout()
                 .permitAll()
                 .and();

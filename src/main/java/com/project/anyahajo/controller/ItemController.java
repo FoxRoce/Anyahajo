@@ -90,7 +90,7 @@ public class ItemController {
         } else if (itemForm.getAuthor() != null) {
             entity = new Book();
             ((Book) entity).setAuthor(itemForm.getAuthor());
-        } else if (itemForm.getCarrierBrand() != null) {
+        } else if (itemForm.getType() != null) {
             entity = new Carrier();
             ((Carrier) entity).setCarrierBrand(itemForm.getCarrierBrand());
             ((Carrier) entity).setType(itemForm.getType());
@@ -105,7 +105,7 @@ public class ItemController {
         entity.setPicture(itemForm.getPicture());
         entity.setActive(itemForm.isActive());
 
-//        itemRepository.insertInto
+        itemRepository.save(entity);
 
         return "redirect:/kolcsonzes";
     }
