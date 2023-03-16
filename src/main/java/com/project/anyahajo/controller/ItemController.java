@@ -2,9 +2,6 @@ package com.project.anyahajo.controller;
 
 import com.project.anyahajo.form.ItemForm;
 import com.project.anyahajo.model.*;
-import com.project.anyahajo.repository.BabycareRepository;
-import com.project.anyahajo.repository.BookRepository;
-import com.project.anyahajo.repository.CarrierRepository;
 import com.project.anyahajo.repository.ItemRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -23,40 +20,12 @@ public class ItemController {
 
     @NonNull
     private ItemRepository itemRepository;
-    @NonNull
-    private BookRepository bookRepository;
-    @NonNull
-    private CarrierRepository carrierRepository;
-    @NonNull
-    private BabycareRepository babycareRepository;
-
 
     @GetMapping(path = {"/kolcsonzes"})
     public String listItems(Model model) {
         List<Item> items = itemRepository.findAll();
         model.addAttribute("items", items);
         return "all-items";
-    }
-
-    @GetMapping(path = {"/kolcsonzes/kony"})
-    public String listBooks(Model model) {
-        List<Book> books = bookRepository.findAll();
-        model.addAttribute("books", books);
-        return "all-books";
-    }
-
-    @GetMapping(path = {"/kolcsonzes/hordozo"})
-    public String listCarriers(Model model) {
-        List<Carrier> carriers = carrierRepository.findAll();
-        model.addAttribute("carriers", carriers);
-        return "all-carriers";
-    }
-
-    @GetMapping(path = {"/kolcsonzes/babaapolas"})
-    public String listBabycares(Model model) {
-        List<Babycare> babycares = babycareRepository.findAll();
-        model.addAttribute("babycares", babycares);
-        return "all-babycares";
     }
 
     @GetMapping("/kolcsonzes/kereses")

@@ -45,7 +45,8 @@ public class SecurityConfig {
 
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/login_page").loginProcessingUrl("/login_page").permitAll().and()
+//                .formLogin().loginPage("/login_page").loginProcessingUrl("/login_page").permitAll().and()
+                .formLogin(Customizer.withDefaults())
                 .logout()
                 .permitAll()
                 .and();
