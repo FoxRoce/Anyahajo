@@ -9,8 +9,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -27,10 +25,6 @@ public class User implements UserDetails {
     private String password;
     private Boolean locked = false;
     private Boolean enabled = false;
-
-    @ElementCollection
-    @CollectionTable(name = "ah_user_basket", joinColumns = @JoinColumn(name = "owner_id"))
-    private Set<Long> basket = new LinkedHashSet<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
