@@ -9,9 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -24,14 +22,21 @@ public class ItemController {
     private ItemRepository itemRepository;
 
     @GetMapping(path = {"/kolcsonzes"})
-    public String listItems(Model model){
+    public String listItems(Model model) {
         List<Item> items = itemRepository.findAll();
         model.addAttribute("items", items);
         return "all-items";
     }
 
+    @GetMapping("/kolcsonzes/kereses")
+    public String searchItems(Model model, @RequestParam(value = "text") String text) {
+        List<Item> items = itemRepository.findByText(text);
+        model.addAttribute("items", items);
+        return "all-items";
+    }
+
     @GetMapping(path = {"/admin/ujTargyFelvetel"})
-    public String newItem(Model model){
+    public String newItem(Model model) {
         model.addAttribute("newItem", new ItemForm());
         return "admin-add-item";
     }
@@ -42,19 +47,19 @@ public class ItemController {
             @Validated
             ItemForm itemForm,
             BindingResult bindingResult
-    ){
-        if (bindingResult.hasErrors()){
+    ) {
+        if (bindingResult.hasErrors()) {
             return "admin-add-item";
         }
         Item entity;
 
-        if (itemForm.getBabycareBrand() != null){
+        if (itemForm.getBabycareBrand() != null) {
             entity = new Babycare();
             ((Babycare) entity).setBabycareBrand(itemForm.getBabycareBrand());
-        } else if (itemForm.getAuthor() != null){
+        } else if (itemForm.getAuthor() != null) {
             entity = new Book();
             ((Book) entity).setAuthor(itemForm.getAuthor());
-        } else if (itemForm.getCarrierBrand() != null){
+        } else if (itemForm.getCarrierBrand() != null) {
             entity = new Carrier();
             ((Carrier) entity).setCarrierBrand(itemForm.getCarrierBrand());
             ((Carrier) entity).setType(itemForm.getType());

@@ -16,6 +16,8 @@ public  class BootstrapData implements CommandLineRunner{
     @Override
     public void run(String... args) throws Exception {
 
+        itemRepository.deleteAll();
+
         Book harryPotter = new Book();
         harryPotter.setAuthor("J.K. Rowling");
         harryPotter.setName("Harry Potter and his magic rod");
@@ -60,7 +62,7 @@ public  class BootstrapData implements CommandLineRunner{
         wipes.setAvailability(Availability.NotAvailable);
         wipes.setActive(false);
         wipes.setDescription("Baba törlő kendők ");
-        itemRepository.save(wipes);
+        itemRepository.save(powder);
         itemRepository.save(oil);
         itemRepository.save(wipes);
 
