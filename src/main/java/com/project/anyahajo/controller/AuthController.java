@@ -51,6 +51,11 @@ public class AuthController {
                     "A jelszavak nem egyeznek");
             return "register";
         }
+        if (appUserRepository.findByEmail(registrationForm.getEmail()).isPresent()) {
+            bindingResult.rejectValue("email", "registrationForm.email",
+                    "Már létező email cím");
+            return "register";
+        }
 
 //        String encodePw = passwordEncoder.encode(password);
         User user = new User();
