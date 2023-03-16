@@ -128,7 +128,7 @@
     <label for="password">Jelszó:</label>
     <input type="password" placeholder="Jelszó" id="password" name="password" required>
     <br><br>
-    <div th:if="${param.error}">
+    <div data-th-if="${param.error}">
       <p class="error-message" th:text="${param.error}"></p>
     </div>
     <button type="submit">Belépés</button>

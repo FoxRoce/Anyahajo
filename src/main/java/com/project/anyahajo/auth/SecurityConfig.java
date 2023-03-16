@@ -11,6 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.WebAttributes;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -45,10 +47,13 @@ public class SecurityConfig {
 
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/login_page").loginProcessingUrl("/login_page").permitAll().and()
-                .logout()
+                .formLogin().loginPage("/login").permitAll().and()
+                .logout().logoutSuccessUrl("/home")
                 .permitAll()
                 .and();
         return http.build();
     }
 }
+
+
+//.loginPage("/login").loginProcessingUrl("/login").permitAll().and()
