@@ -16,6 +16,8 @@ public  class BootstrapData implements CommandLineRunner{
     @Override
     public void run(String... args) throws Exception {
 
+        itemRepository.deleteAll();
+
         Book harryPotter = new Book();
         harryPotter.setAuthor("J.K. Rowling");
         harryPotter.setName("Harry Potter and his magic rod");
