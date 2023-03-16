@@ -3,7 +3,8 @@ Anyahajo project
 
 Az   Anyahajó   Anyaközpont   egy   nonprofit   szervezet,   amelyet   önkéntesek
 működtetnek.   Az   Anyahajó   Anyaközpont   egy   -   kisgyermekes   anyukák   számára
-kialakított - közösségi tér.  Célja egy helyi támogató közösség létrehozása.
+kialakított - közösségi tér. 
+Célja egy helyi támogató közösség létrehozása.
 Az   Anyahajó   Anyaközpontnak   van   egy   kölcsönzői   szolgáltatása   is:   nagyrészt
 hordozó   eszközöket   (hordozókendő,   csatos   hordozó   stb.)   kölcsönöznek,   hogy
 ezúton  is népszerűsítsék a hordozást, illetve vásárlás előtt ki lehessen próbálni
@@ -12,7 +13,8 @@ kiválasztását. Hordozóeszközökön kívül egyéb dolgokat is lehet kölcs�
 babamérleg).
 Megvalósítás:  az   Anyahajó   Anyaközpont   honlapjával   lesz   összekötve   a
 kölcsönző   modul   adatbázis   kapcsolattal.   A   honlapon   keresztül   lehet   belépni   a
-kölcsönző   modulba.   Itt   bejelentkezés   nélkül   le   lehet   kérdezni,   hogy   milyen
+kölcsönző   modulba.   
+Itt   bejelentkezés   nélkül   le   lehet   kérdezni,   hogy   milyen
 kölcsönözhető eszközök vannak (lehet szűrni termékcsoportra, márkára stb.) és
 az   egyes   eszközök   állapotát   (kölcsönözhető/ki   van   kölcsönözve).   Bejelentkezés
 után   lehet   eszközt   igényelni,   amiről   az   adminok   üzenetet   kapnak.   Az   adminok
