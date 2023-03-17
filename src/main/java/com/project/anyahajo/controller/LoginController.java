@@ -14,8 +14,8 @@ import java.util.Optional;
 @Controller
 public class LoginController {
 
-    @Autowired
-    private AppUserRepository userRepository;
+    /*@Autowired
+    private AppUserRepository userRepository;*/
 
     @GetMapping("/login")
     public String showLoginForm(Model model) {
@@ -23,7 +23,7 @@ public class LoginController {
         return "login";
     }
 
-    @PostMapping("/login")
+    /*@PostMapping("/login")
     public String login(@ModelAttribute("user") User user, Model model) {
         Optional<User> dbUser = userRepository.findByEmail(user.getEmail());
         if (dbUser.isPresent() && dbUser.get().getPassword().equals(user.getPassword())) {
@@ -32,6 +32,6 @@ public class LoginController {
             model.addAttribute("error", "Hibás email vagy jelszó!");
             return "login";
         }
-    }
+    }*/
 }
 

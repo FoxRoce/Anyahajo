@@ -41,15 +41,18 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests()
-                .requestMatchers("/home","/register","/kolcsonzes")
-                .permitAll()
+                .requestMatchers("/", "/home","/register","/kolcsonzes")
+                    .permitAll()
                 .requestMatchers("/admin").hasRole("ADMIN")
 
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/login").permitAll().and()
-                .logout().logoutSuccessUrl("/home")
-                .permitAll()
+                .formLogin()
+                    .loginPage("/login")
+                    .defaultSuccessUrl("/home")
+                    .permitAll()
+                .and()
+                .logout().logoutSuccessUrl("/home").permitAll()
                 .and();
         return http.build();
     }

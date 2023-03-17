@@ -115,15 +115,21 @@
 </head>
 <body>
 <h1>Belépés az Anyahajó kölcsönzés oldalára</h1>
-<form method="post" action="/login_page">
+<form method="post" data-th-action="@{/login}">
   <div class="headingsContainer">
     <h3>Belépés</h3>
     <p>Belépés e-mail és jelszóval</p>
   </div>
 
   <div class="mainContainer">
+    <div th:if="${param.error}">
+      Invalid username and password.
+    </div>
+    <div th:if="${param.logout}">
+      You have been logged out.
+    </div>
     <label for="email">Email cím:</label>
-    <input type="email" placeholder="E-mail cím" id="email" name="email" required>
+    <input type="email" placeholder="E-mail cím" id="email" name="username" required>
     <br><br>
     <label for="password">Jelszó:</label>
     <input type="password" placeholder="Jelszó" id="password" name="password" required>
