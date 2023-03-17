@@ -27,6 +27,10 @@ public class ItemController {
         model.addAttribute("items", items);
         return "all-items";
     }
+    @GetMapping(path = {"/books"})
+    public String listItems() {
+        return "redirect:/kolcsonzes?itemType=Book";
+    }
 
     @GetMapping("/kolcsonzes/kereses")
     public String searchItems(Model model, @RequestParam(value = "text") String text) {
