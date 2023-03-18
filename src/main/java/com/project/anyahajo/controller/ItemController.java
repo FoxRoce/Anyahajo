@@ -68,6 +68,7 @@ public class ItemController {
 
     @GetMapping(path = {"/admin/ujTargyFelvetel"})
     public String newItem(Model model) {
+        System.out.println("Inside Get mapping");
         model.addAttribute("newItem", new ItemForm());
         return "admin-add-item";
     }
@@ -79,33 +80,61 @@ public class ItemController {
             ItemForm itemForm,
             BindingResult bindingResult
     ) {
+        System.out.println("Inside post mapping");
         if (bindingResult.hasErrors()) {
             return "admin-add-item";
         }
-        Item entity;
+//        Item entity;
 
         if (itemForm.getBabycareBrand() != null) {
-            entity = new Babycare();
-            ((Babycare) entity).setBabycareBrand(itemForm.getBabycareBrand());
+            Babycare entity = new Babycare();
+            entity.setBabycareBrand(itemForm.getBabycareBrand());
+
+            entity.setName(itemForm.getName());
+            entity.setAvailability(itemForm.getAvailability());
+            entity.setDescription(itemForm.getDescription());
+            entity.setPicture(itemForm.getPicture());
+            entity.setActive(itemForm.isActive());
+
+            itemRepository.save(entity);
+
         } else if (itemForm.getAuthor() != null) {
-            entity = new Book();
-            ((Book) entity).setAuthor(itemForm.getAuthor());
+            Book entity = new Book();
+            entity.setAuthor(itemForm.getAuthor());
+
+            entity.setName(itemForm.getName());
+            entity.setAvailability(itemForm.getAvailability());
+            entity.setDescription(itemForm.getDescription());
+            entity.setPicture(itemForm.getPicture());
+            entity.setActive(itemForm.isActive());
+
+            itemRepository.save(entity);
+
         } else if (itemForm.getType() != null) {
-            entity = new Carrier();
-            ((Carrier) entity).setCarrierBrand(itemForm.getCarrierBrand());
-            ((Carrier) entity).setType(itemForm.getType());
-            ((Carrier) entity).setSize(itemForm.getSize());
+            Carrier entity = new Carrier();
+            entity.setCarrierBrand(itemForm.getCarrierBrand());
+            entity.setType(itemForm.getType());
+            entity.setSize(itemForm.getSize());
+
+            entity.setName(itemForm.getName());
+            entity.setAvailability(itemForm.getAvailability());
+            entity.setDescription(itemForm.getDescription());
+            entity.setPicture(itemForm.getPicture());
+            entity.setActive(itemForm.isActive());
+
+            itemRepository.save(entity);
+
         } else {
-            entity = new Item();
+            Item entity = new Item();
+
+            entity.setName(itemForm.getName());
+            entity.setAvailability(itemForm.getAvailability());
+            entity.setDescription(itemForm.getDescription());
+            entity.setPicture(itemForm.getPicture());
+            entity.setActive(itemForm.isActive());
+
+            itemRepository.save(entity);
         }
-
-        entity.setName(itemForm.getName());
-        entity.setAvailability(itemForm.getAvailability());
-        entity.setDescription(itemForm.getDescription());
-        entity.setPicture(itemForm.getPicture());
-        entity.setActive(itemForm.isActive());
-
-        itemRepository.save(entity);
 
         return "redirect:/kolcsonzes";
     }

@@ -6,10 +6,11 @@
 </head>
 <body>
 <h1>Uj targy felvetel</h1>
-<form data-th-object="${newItem}" data-th-action="@{admin/ujTargyFelvetel}" action="/admin/ujTargyFelvetel" method="post">
+<form data-th-object="${newItem}" data-th-action="@{ujTargyFelvetel}" action="/admin/ujTargyFelvetel" method="post">
 
     <label for="type">Tipus</label>
     <select id="type" name="type" onchange="showFields()">
+        <option value="">Choose an option</option>
         <option value="book">Book</option>
         <option value="carrier">Carrier</option>
         <option value="babycare">Babycare</option>
@@ -71,27 +72,27 @@
 
     <div id="bookFields" style="display: none;">
         <label for="author">Szerzo</label>
-        <input id="author" type="text" data-th-field="*{author}"required><br><br>
+        <input id="author" type="text" data-th-field="*{author}">
         <p style="color: red" data-th-if="${#fields.hasErrors('author')}" data-th-error="*{author}"></p>
     </div>
 
     <div id="carrierFields" style="display: none;">
         <label for="carrierType">Tipus</label>
-        <input id="carrierType" type="text" data-th-field="*{type}"required><br><br>
+        <input id="carrierType" type="text" data-th-field="*{type}">
         <p style="color: red" data-th-if="${#fields.hasErrors('type')}" data-th-error="*{type}"></p>
 
         <label for="carrierBrand">Marka</label>
-        <input id="carrierBrand" type="text" data-th-field="*{carrierBrand}"required><br><br>
+        <input id="carrierBrand" type="text" data-th-field="*{carrierBrand}">
         <p style="color: red" data-th-if="${#fields.hasErrors('carrierBrand')}" data-th-error="*{carrierBrand}"></p>
 
         <label for="size">Meret</label>
-        <input id="size" type="text" data-th-field="*{size}"required><br><br>
+        <input id="size" type="text" data-th-field="*{size}">
         <p style="color: red" data-th-if="${#fields.hasErrors('size')}" data-th-error="*{size}"></p>
     </div>
 
     <div id="babycareFields" style="display: none;">
         <label for="babycareBrand">Marka</label>
-        <input id="babycareBrand" type="text" data-th-field="*{babycareBrand}"required><br><br>
+        <input id="babycareBrand" type="text" data-th-field="*{babycareBrand}">
         <p style="color: red" data-th-if="${#fields.hasErrors('babycareBrand')}" data-th-error="*{babycareBrand}"></p>
     </div>
 
