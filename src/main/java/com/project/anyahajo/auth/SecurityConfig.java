@@ -11,6 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.WebAttributes;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -39,17 +41,22 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests()
-                .requestMatchers("/home","/register","/kolcsonzes","/books")
-                .permitAll()
+                .requestMatchers("/","/home","/register","/kolcsonzes","/books")
+                    .permitAll()
                 .requestMatchers("/admin").hasRole("ADMIN")
 
                 .anyRequest().authenticated()
                 .and()
-//                .formLogin().loginPage("/login_page").loginProcessingUrl("/login_page").permitAll().and()
-                .formLogin(Customizer.withDefaults())
-                .logout()
-                .permitAll()
+                .formLogin()
+                    .loginPage("/login")
+                    .defaultSuccessUrl("/home")
+                    .permitAll()
+                .and()
+                .logout().logoutSuccessUrl("/home").permitAll()
                 .and();
         return http.build();
     }
 }
+
+
+//.loginPage("/login").loginProcessingUrl("/login").permitAll().and()

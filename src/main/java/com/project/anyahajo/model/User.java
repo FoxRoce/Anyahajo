@@ -24,7 +24,7 @@ public class User implements UserDetails {
     private String email;
     private String password;
     private Boolean locked = false;
-    private Boolean enabled = false;
+    private Boolean enabled = true;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
