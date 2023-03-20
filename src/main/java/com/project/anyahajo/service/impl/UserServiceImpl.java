@@ -24,12 +24,6 @@ public class UserServiceImpl implements UserService {
         return users.stream().map(user -> mapToUserForm(user)).toList();
     }
 
-    @Override
-    public void updateIsadmin(Boolean admin, Long id) {
-
-        userRepository.updateDoneByIdAndOwner(admin, id);
-    }
-
     private UserForm mapToUserForm(User user) {
 
         return UserForm.builder()
@@ -37,7 +31,7 @@ public class UserServiceImpl implements UserService {
                 .name(user.getName())
                 .email(user.getEmail())
                 .phoneNumber(user.getPhoneNumber())
-                .isAdmin(user.isAdmin())
+                .admin(user.isAdmin())
                 .locked(user.getLocked())
                 .enabled(user.isEnabled())
                 .build();

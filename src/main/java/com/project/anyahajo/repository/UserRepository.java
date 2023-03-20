@@ -12,8 +12,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByEmail(String email);
 
-    @Transactional
-    @Modifying
-    @Query("update User u set u.isAdmin = ?1 where u.user_id = ?2")
-    void updateDoneByIdAndOwner(boolean admin, Long id);
 }

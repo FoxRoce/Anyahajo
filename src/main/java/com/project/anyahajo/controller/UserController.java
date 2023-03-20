@@ -25,13 +25,4 @@ public class UserController {
         model.addAttribute("users", users);
         return "all-users";
     }
-
-    @PostMapping("user-admin")
-    public String UserIsAdmin(@RequestParam("user_id") Long id,
-                           @RequestParam(value = "admin", required = false) Boolean admin) {
-        admin = admin != null;
-        userService.updateIsadmin(admin, id);
-
-        return "redirect:/home";
-    }
 }
