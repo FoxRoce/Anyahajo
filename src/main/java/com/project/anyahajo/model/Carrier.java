@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 public class Carrier extends Item {
 
-    private CarrierType type;
+    private CarrierType carrierType;
     private String carrierBrand;
     private String size;
 }

@@ -68,7 +68,7 @@ public  class BootstrapData implements CommandLineRunner{
 
         Carrier wraps=new Carrier();
         wraps.setCarrierBrand("Meitais");
-        wraps.setType(CarrierType.Wrap);
+        wraps.setCarrierType(CarrierType.Wrap);
         wraps.setSize("small");
         wraps.setName("Small wrap");
         wraps.setAvailability(Availability.Available);
@@ -77,7 +77,7 @@ public  class BootstrapData implements CommandLineRunner{
 
         Carrier buckle=new Carrier();
         buckle.setCarrierBrand("Hellobello");
-        buckle.setType(CarrierType.Buckle);
+        buckle.setCarrierType(CarrierType.Buckle);
         buckle.setSize("medium");
         buckle.setName("Medium buckle");
         buckle.setAvailability(Availability.Reserved);
@@ -86,7 +86,7 @@ public  class BootstrapData implements CommandLineRunner{
 
         Carrier others=new Carrier();
         others.setCarrierBrand("Rituals");
-        others.setType(CarrierType.OtherShaped);
+        others.setCarrierType(CarrierType.OtherShaped);
         others.setSize("large");
         others.setName("Large type of carrier");
         others.setAvailability(Availability.NotAvailable);
