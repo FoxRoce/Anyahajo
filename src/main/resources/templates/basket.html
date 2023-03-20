@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kosár</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        table.center {
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+
+</head>
+<body>
+<h1>A kosár tartalma:</h1>
+<p data-th-if="${#lists.isEmpty(user.basket)}">
+    Üres a kosarad.
+</p>
+<table data-th-unless="${#lists.isEmpty(user.basket)}">
+    <tr>
+        <td>Név</td>
+        <td>Leírás</td>
+        <td>Termék</td>
+        <td>Eltávolítás a kosárból</td>
+    </tr>
+    <tr data-th-each="item: ${user.basket}">
+        <td data-th-text="${item.name}"></td>
+        <td data-th-text="${item.description}"></td>
+        <td>
+            <a data-th-href="@{/egytermekmegjelenitesedemegnincskesz}" href="/egytermekmegjelenitesedemegnincskesz">Termék
+                linkje</a>
+        </td>
+        <td>
+            <button onclick="removeFromCart()">Eltávolítás a kosárból</button>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>
