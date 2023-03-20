@@ -41,7 +41,7 @@
         <div th:if="${item instanceof T(com.project.anyahajo.model.Carrier)}">
             <p th:text="${item.carrierBrand}">Marka</p>
             <p th:text="${item.size}">Meret</p>
-            <p th:text="${item.type}">Tipus</p>
+            <p th:text="${item.carrierType}">Tipus</p>
         </div>
 
         <div th:if="${item instanceof T(com.project.anyahajo.model.Babycare)}">

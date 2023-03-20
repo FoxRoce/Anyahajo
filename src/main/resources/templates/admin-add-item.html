@@ -77,9 +77,17 @@
     </div>
 
     <div id="carrierFields" style="display: none;">
-        <label for="carrierType">Tipus</label>
-        <input id="carrierType" type="text" data-th-field="*{type}">
-        <p style="color: red" data-th-if="${#fields.hasErrors('type')}" data-th-error="*{type}"></p>
+<!--        <label for="carrierType">Tipus</label>-->
+<!--        <input id="carrierType" type="text" data-th-field="*{carrierType}">-->
+<!--        <p style="color: red" data-th-if="${#fields.hasErrors('carrierType')}" data-th-error="*{carrierType}"></p>-->
+
+        <label for="carrierType">Tipus:</label>
+        <select id="carrierType" name="carrierType">
+            <option value="">Choose an option</option>
+            <option value="Wrap">Wrap</option>
+            <option value="Buckle">Buckle</option>
+            <option value="OtherShaped">OtherShaped</option>
+        </select><br><br>
 
         <label for="carrierBrand">Marka</label>
         <input id="carrierBrand" type="text" data-th-field="*{carrierBrand}">
