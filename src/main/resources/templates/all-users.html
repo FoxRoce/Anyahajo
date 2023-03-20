@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Felhasználók</title>
+</head>
+<body>
+<h1>Felhasználók: </h1>
+
+<p data-th-if="${#lists.isEmpty(users)}">
+  Nincsenek felvett teendok.
+</p>
+<ul data-th-unless="${#lists.isEmpty(users)}">
+  <li data-th-each="user: ${users}">
+    <b><p data-th-text="${user.name}">Név</p></b>
+    <p data-th-text="${user.email}">E-mail</p>
+    <p data-th-text="${user.phoneNumber}">Telefonszám</p>
+    <p data-th-text="${user.isAdmin}">Admin-e</p>
+    <form
+            data-th-id="${user.getId() + 'doneform'}"
+            method="post"
+            data-th-action="@{/user-admin}"
+            action="/user-admin"
+    >
+      <input type="hidden" name="user_id" data-th-value="${user.getId()}">
+      <!--            <input type="hidden" name="done" data-th-value="${todo.isDone()}">-->
+      <label data-th-for="${user.getId() + 'admin'}">Admin-e</label>
+      <!--            <label data-th-if="${todo.isDone()}">Kész</label>-->
+      <!--            <label data-th-unless="${todo.isDone()}">Még nincs kész</label>-->
+      <input type="checkbox"
+             name="done"
+             data-th-checked="${user.admin()}"
+             data-th-id="${user.getId() + 'admin'}"
+             onchange="submitCheck(event)"
+      >
+    </form>
+<!--    <form-->
+<!--            method="post"-->
+<!--            data-th-action="@{/todo-delete}"-->
+<!--            action="/todo-delete"-->
+<!--    >-->
+<!--      <input type="hidden" name="todo_id" data-th-value="${todo.getId()}">-->
+<!--      <input type="submit" value="Töröl">-->
+<!--    </form>-->
+  </li>
+</ul>
+<!--<script>-->
+<!--  function submitCheck(event) {-->
+<!--    event.target.parentElement.submit();-->
+<!--  }-->
+<!--</script>-->
+</body>
+</html>
+
+
+
+
+
+
+
+
+

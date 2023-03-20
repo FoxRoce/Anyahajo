@@ -1,7 +1,7 @@
 package com.project.anyahajo;
 
 import com.project.anyahajo.model.*;
-import com.project.anyahajo.repository.AppUserRepository;
+import com.project.anyahajo.repository.UserRepository;
 import com.project.anyahajo.repository.ItemRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public  class BootstrapData implements CommandLineRunner{
     private final ItemRepository itemRepository;
-    public BootstrapData(AppUserRepository appUserRepository, ItemRepository itemRepository) {
+    public BootstrapData(UserRepository appUserRepository, ItemRepository itemRepository) {
 
         this.itemRepository = itemRepository;
     }
