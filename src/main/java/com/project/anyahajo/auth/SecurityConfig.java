@@ -1,5 +1,6 @@
 package com.project.anyahajo.auth;
 
+import com.project.anyahajo.model.Role;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -43,7 +44,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers("/","/home","/register","/kolcsonzes","/books")
                     .permitAll()
-                .requestMatchers("/admin").hasRole("ADMIN")
+                .requestMatchers("/admin").hasRole(Role.Code.ADMIN)  // "ADMIN"
 
                 .anyRequest().authenticated()
                 .and()
