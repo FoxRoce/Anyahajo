@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:c="http://www.w3.org/1999/XSL/Transform" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <style>
@@ -166,6 +166,13 @@
                     </div>
                     <div class = 'nav_list_item'>
                         <li><a data-th-href="@{'/register'}">Regisztráció</a></li>
+                    </div>
+                    <div  sec:authorize="hasRole('ADMIN')" class="nav_list_item">
+<!--                        <c:if test="${isAdmin}">-->
+                            <li><a data-th-href="@{'/admin-add-item'}">Új tárgy felvétele</a></li>
+                            <li>Felhasználok listája</li>
+                            <li>Kölcsönzések Igénylése</li>
+<!--                        </c:if>-->
                     </div>
                     <div class = 'nav_list_item'>
                         <li><a data-th-href="@{'https://www.anyahajokozpont.hu/'}">Vissza az Anyahajó oldalára</a></li>
