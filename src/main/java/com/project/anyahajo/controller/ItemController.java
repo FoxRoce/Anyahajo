@@ -11,7 +11,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -85,6 +84,19 @@ public class ItemController {
         itemRepository.save(entity);
 
         return "redirect:/kolcsonzes";
+    }
+
+
+    @GetMapping("/kolcsonzes/{id}")
+    public String getItem(@PathVariable("id") String id, Model model) {
+        List<Item> items = itemRepository.findAll();
+        for(Item i : items){
+            if(i.getItem_id() == Integer.parseInt(id)){
+                model.addAttribute("item", i);
+                return "item";
+            }
+        }
+        return "redirect:/cart";
     }
 
 
