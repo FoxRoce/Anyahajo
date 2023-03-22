@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="center">
+    <div class="item">
+        <img src="https://picsum.photos/id/234/200/300" data-th-src="${item.getName()}" />
+        <div class="product-info">
+            <p>A termék neve: </p>
+            <p data-th-text="${item.name}" ></p>
+            <p>A termék ára: </p>
+            <p data-th-text="${item.isActive()}"></p>
+            <a href="/cart">
+                <input type="submit" value="Vissza">
+            </a>
+            <a href="/home">
+                <input type="submit" value="Home">
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
