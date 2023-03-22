@@ -7,10 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Getter
@@ -34,8 +31,14 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority("USER");
-        return Collections.singleton(authority);
+        final List<SimpleGrantedAuthority> authorities = new LinkedList<>();
+        if (enabled) {
+            if (this.role.equals(Role.ADMIN)) {
+                authorities.add(new SimpleGrantedAuthority(Role.Code.ADMIN));
+            }
+            authorities.add(new SimpleGrantedAuthority(Role.Code.USER));
+        }
+        return authorities;
     }
 
     @Override
