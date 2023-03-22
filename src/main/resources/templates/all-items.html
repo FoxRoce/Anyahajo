@@ -48,6 +48,10 @@
             <p th:text="${item.babycareBrand}">Marka</p>
         </div>
 
+        <form th:action="@{'/rents/'+${rent.rent_id}+'/reserve'}" method="post">
+            <button type="submit" name="Make rent">Make rent</button>
+        </form>
+
     </li>
 </ul>
 </body>
