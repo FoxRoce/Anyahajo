@@ -22,14 +22,14 @@
         <p th:text="${rent.deposit}">Deposit</p>
         <p th:text="${rent.payBackAmount}">Pay back amount</p>
 
-        <p th:if="${rent.item.availability == 'Reserved'}">
+        <div th:if="${rent.item.availability == T(com.project.anyahajo.model.Availability).Reserved}">
         <form th:action="@{'/rents/'+${rent.rent_id}+'/accept'}" method="post">
             <button type="submit" name="accept">Accept</button>
         </form>
         <form th:action="@{'/rents/'+${rent.rent_id}+'/decline'}" method="post">
             <button type="submit" name="decline">Decline</button>
         </form>
-        </p>
+        </div>
 
     </li>
 </ul>
