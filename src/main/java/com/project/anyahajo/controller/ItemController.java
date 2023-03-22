@@ -44,6 +44,7 @@ public class ItemController {
 
     @GetMapping(path = {"/admin/ujTargyFelvetel"})
     public String newItem(Model model) {
+//        System.out.println("Inside Get mapping");
         model.addAttribute("newItem", new ItemForm());
         return "admin-add-item";
     }
@@ -55,21 +56,24 @@ public class ItemController {
             ItemForm itemForm,
             BindingResult bindingResult
     ) {
+//        System.out.println("Inside post mapping");
         if (bindingResult.hasErrors()) {
+            System.out.println(bindingResult);
             return "admin-add-item";
         }
+
         Item entity;
 
-        if (itemForm.getBabycareBrand() != null) {
+        if (!itemForm.getBabycareBrand().isEmpty()) {
             entity = new Babycare();
             ((Babycare) entity).setBabycareBrand(itemForm.getBabycareBrand());
-        } else if (itemForm.getAuthor() != null) {
+        } else if (!itemForm.getAuthor().isEmpty()) {
             entity = new Book();
             ((Book) entity).setAuthor(itemForm.getAuthor());
-        } else if (itemForm.getCarrierBrand() != null) {
+        } else if (!itemForm.getCarrierBrand().isEmpty()) {
             entity = new Carrier();
             ((Carrier) entity).setCarrierBrand(itemForm.getCarrierBrand());
-            ((Carrier) entity).setType(itemForm.getType());
+            ((Carrier) entity).setCarrierType(itemForm.getCarrierType());
             ((Carrier) entity).setSize(itemForm.getSize());
         } else {
             entity = new Item();
@@ -79,9 +83,9 @@ public class ItemController {
         entity.setAvailability(itemForm.getAvailability());
         entity.setDescription(itemForm.getDescription());
         entity.setPicture(itemForm.getPicture());
-        entity.setActive(itemForm.isActive());
+        entity.setActive(itemForm.getIsActive());
 
-//        itemRepository.insertInto
+        itemRepository.save(entity);
 
         return "redirect:/kolcsonzes";
     }

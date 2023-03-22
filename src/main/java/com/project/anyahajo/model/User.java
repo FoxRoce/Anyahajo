@@ -25,6 +25,10 @@ public class User implements UserDetails {
     private Name name;
     private String email;
     private String password;
+
+    private String phoneNumber;
+
+    private boolean admin = false;
     private Boolean locked = false;
     private Boolean enabled = true;
     @ElementCollection

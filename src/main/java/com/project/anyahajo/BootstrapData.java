@@ -1,7 +1,7 @@
 package com.project.anyahajo;
 
 import com.project.anyahajo.model.*;
-import com.project.anyahajo.repository.AppUserRepository;
+import com.project.anyahajo.repository.UserRepository;
 import com.project.anyahajo.repository.ItemRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public  class BootstrapData implements CommandLineRunner{
     private final ItemRepository itemRepository;
-    public BootstrapData(AppUserRepository appUserRepository, ItemRepository itemRepository) {
+    public BootstrapData(UserRepository appUserRepository, ItemRepository itemRepository) {
 
         this.itemRepository = itemRepository;
     }
@@ -68,7 +68,7 @@ public  class BootstrapData implements CommandLineRunner{
 
         Carrier wraps=new Carrier();
         wraps.setCarrierBrand("Meitais");
-        wraps.setType(CarrierType.Wrap);
+        wraps.setCarrierType(CarrierType.Wrap);
         wraps.setSize("small");
         wraps.setName("Small wrap");
         wraps.setAvailability(Availability.Available);
@@ -77,7 +77,7 @@ public  class BootstrapData implements CommandLineRunner{
 
         Carrier buckle=new Carrier();
         buckle.setCarrierBrand("Hellobello");
-        buckle.setType(CarrierType.Buckle);
+        buckle.setCarrierType(CarrierType.Buckle);
         buckle.setSize("medium");
         buckle.setName("Medium buckle");
         buckle.setAvailability(Availability.Reserved);
@@ -86,7 +86,7 @@ public  class BootstrapData implements CommandLineRunner{
 
         Carrier others=new Carrier();
         others.setCarrierBrand("Rituals");
-        others.setType(CarrierType.OtherShaped);
+        others.setCarrierType(CarrierType.OtherShaped);
         others.setSize("large");
         others.setName("Large type of carrier");
         others.setAvailability(Availability.NotAvailable);
