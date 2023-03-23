@@ -1,36 +1,150 @@
 <!DOCTYPE html>
 <html lang="hu">
 <head>
-    <meta charset="UTF-8">
-    <title>Regisztráció</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body{
-      text-align: center;
-      background-image: url("/ahboritobig.jpg");
+    body
+    {
+      font-family:sans-serif;
+      background: -webkit-linear-gradient(to right, #a75888, #1f88b4);
+      background: linear-gradient(to right, #a75888, #1f88b4);
+      color:whitesmoke;
     }
 
+
+    h1{
+      text-align: center;
+    }
+
+
+    form{
+      width:35rem;
+      margin: auto;
+      color:whitesmoke;
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      background-color: rgba(11, 15, 13, 0.582);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.125);
+      padding: 20px 25px;
+    }
+
+    input[type=email],[type=text], input[type=password]{
+      width: 100%;
+      margin: 10px 0;
+      border-radius: 5px;
+      padding: 15px 18px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #030804;
+      color: white;
+      padding: 14px 20px;
+      border-radius: 5px;
+      margin: 7px 0;
+      width: 100%;
+      font-size: 18px;
+    }
+
+    button:hover {
+      opacity: 0.6;
+      cursor: pointer;
+    }
+
+    .headingsContainer p{
+      color: gray;
+    }
+
+    .subcontainer a{
+      font-size: 16px;
+      margin-bottom: 12px;
+    }
+
+    span.forgotpsd a {
+      float: right;
+      color: whitesmoke;
+      padding-top: 16px;
+    }
+
+    .forgotpsd a{
+      color: rgb(74, 146, 235);
+    }
+
+    .forgotpsd a:link{
+      text-decoration: none;
+    }
+
+
+
+    .register a{
+      color: rgb(74, 146, 235);
+    }
+
+    .register a:link{
+      text-decoration: none;
+    }
+
+
+    @media screen and (max-width: 600px) {
+      form{
+        width: 25rem;
+      }
+    }
+
+    @media screen and (max-width: 400px) {
+      form{
+        width: 20rem;
+      }
+    }
   </style>
+
+  <title>Login page in HTML</title>
 </head>
 <body>
-<h1>Regisztráció</h1>
+<h1>Belépés az Anyahajó kölcsönzés oldalára</h1>
 <form data-th-object="${newUser}" data-th-action="@{register}" action="/register" method="post">
-  <label for="email">E-mail</label>
-  <input id="email" type="email" data-th-field="*{email}">
-  <p
-          style="color: red;"
-          data-th-if="${#fields.hasErrors('email')}"
-          data-th-errors="*{email}"
-  ></p>
+  <div class="container">
+    <h1>Regisztráció</h1>
+    <p>Kérjük, töltse ki ezt az űrlapot fiókja létrehozásához.</p>
+    <hr>
 
-  <label for="password">Password</label>
-  <input id="password" type="password" data-th-field="*{password}">
-  <p
-          style="color: red;"
-          data-th-if="${#fields.hasErrors('password')}"
-          data-th-errors="*{password}"
-  ></p>
+    <label for="lastName"><b>Vezetéknév</b></label>
+    <input id="lastName" type="text" placeholder="Vezetéknév" data-th-field="*{lastName}">
+    <p style="color: red;" data-th-if="${#fields.hasErrors('lastName')}" data-th-errors="*{lastName}"></p>
 
-  <input type="submit" value="Save">
+    <label for="firstName"><b>Keresztnév</b></label>
+    <input id="firstName" type="text" placeholder="Keresztnév" data-th-field="*{firstName}">
+    <p style="color: red;" data-th-if="${#fields.hasErrors('firstName')}" data-th-errors="*{firstName}"></p>
+
+    <label for="email"><b>Email</b></label>
+    <input id="email" type="email" placeholder="Email" data-th-field="*{email}">
+    <p style="color: red;" data-th-if="${#fields.hasErrors('email')}" data-th-errors="*{email}"></p>
+
+    <label for="text"><b>Telefonszám</b></label>
+    <input id="text" type="text" placeholder="Nem kötelező, de örülünk ha megadod! :)" data-th-field="*{phoneNumber}">
+
+    <label for="password"><b>Jelszó</b></label>
+    <input id="password" type="password" placeholder="Jelszó" data-th-field="*{password}">
+    <p
+            style="color: red;"
+            data-th-if="${#fields.hasErrors('password')}"
+            data-th-errors="*{password}"
+    ></p>
+
+    <label for="passwordCheck"><b>Jelszó megerősítés</b></label>
+    <input id="passwordCheck" type="password" placeholder="Jelszó megerősítés" data-th-field="*{passwordCheck}">
+    <p style="color: red;" data-th-if="${#fields.hasErrors('passwordCheck')}" data-th-errors="*{passwordCheck}"></p>
+    <hr>
+
+    <button type="submit" value="Save" class="registerbtn">Regisztráció</button>
+  </div>
+  <div class="container signin">
+    <p>Már van fiókja?<a data-th-href="@{'/login_page'}">Belépés</a>.</p>
+    <a data-th-href="@{'/home'}">Vissza a főoldalra.</a>
+  </div>
 </form>
 </body>
 </html>

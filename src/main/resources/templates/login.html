@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body
+    {
+      font-family:sans-serif;
+      background: -webkit-linear-gradient(to right, #a75888, #1f88b4);
+      background: linear-gradient(to right, #a75888, #1f88b4);
+      color:whitesmoke;
+    }
+
+
+    h1{
+      text-align: center;
+    }
+
+
+    form{
+      width:35rem;
+      margin: auto;
+      color:whitesmoke;
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      background-color: rgba(11, 15, 13, 0.582);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.125);
+      padding: 20px 25px;
+    }
+
+    input[type=email], input[type=password]{
+      width: 100%;
+      margin: 10px 0;
+      border-radius: 5px;
+      padding: 15px 18px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #030804;
+      color: white;
+      padding: 14px 20px;
+      border-radius: 5px;
+      margin: 7px 0;
+      width: 100%;
+      font-size: 18px;
+    }
+
+    button:hover {
+      opacity: 0.6;
+      cursor: pointer;
+    }
+
+    .headingsContainer{
+      text-align: center;
+    }
+
+    .headingsContainer p{
+      color: gray;
+    }
+    .mainContainer{
+      padding: 16px;
+    }
+
+
+    .subcontainer a{
+      font-size: 16px;
+      margin-bottom: 12px;
+    }
+
+    span.forgotpsd a {
+      float: right;
+      color: whitesmoke;
+      padding-top: 16px;
+    }
+
+    .forgotpsd a{
+      color: rgb(74, 146, 235);
+    }
+
+    .forgotpsd a:link{
+      text-decoration: none;
+    }
+
+    .register{
+      color: white;
+      text-align: center;
+    }
+
+    .register a{
+      color: rgb(74, 146, 235);
+    }
+
+    .register a:link{
+      text-decoration: none;
+    }
+
+    @media screen and (max-width: 600px) {
+      form{
+        width: 25rem;
+      }
+    }
+
+    @media screen and (max-width: 400px) {
+      form{
+        width: 20rem;
+      }
+    }
+  </style>
+
+  <title>Login page in HTML</title>
+</head>
+<body>
+<h1>Belépés az Anyahajó kölcsönzés oldalára</h1>
+<form method="post" data-th-action="@{/login}">
+  <div class="headingsContainer">
+    <h3>Belépés</h3>
+    <p>Belépés e-mail és jelszóval</p>
+  </div>
+
+  <div class="mainContainer">
+    <div th:if="${param.error}">
+      Invalid username and password.
+    </div>
+    <div th:if="${param.logout}">
+      You have been logged out.
+    </div>
+    <label for="email">Email cím:</label>
+    <input type="email" placeholder="E-mail cím" id="email" name="username" required>
+    <br><br>
+    <label for="password">Jelszó:</label>
+    <input type="password" placeholder="Jelszó" id="password" name="password" required>
+    <br><br>
+    <div data-th-if="${param.error}">
+      <p class="error-message" th:text="${param.error}"></p>
+    </div>
+    <button type="submit">Belépés</button>
+    <p class="register">Még nem regisztrált? <a data-th-href="@{'/register'}">Regisztráljon itt!</a></p>
+  </div>
+</form>
+</body>
+</html>
+
+
+<!--    <div class="subcontainer">-->
+<!--      <label>-->
+<!--        <input type="checkbox" checked="checked" name="remember"> Remember me-->
+<!--      </label>-->
+<!--      <p class="forgotpsd"> <a href="#">Forgot Password?</a></p>-->
+<!--    </div>-->

@@ -1,8 +1,10 @@
 package com.project.anyahajo.controller;
 
 import com.project.anyahajo.form.RegistrationForm;
+import com.project.anyahajo.model.Name;
+import com.project.anyahajo.model.Role;
 import com.project.anyahajo.model.User;
-import com.project.anyahajo.repository.AppUserRepository;
+import com.project.anyahajo.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,20 +19,21 @@ public class AuthController {
 
     public AuthController(
             PasswordEncoder passwordEncoder,
-            AppUserRepository appUserRepository
+            UserRepository appUserRepository
     ) {
         this.passwordEncoder = passwordEncoder;
         this.appUserRepository = appUserRepository;
     }
 
     private final PasswordEncoder passwordEncoder;
-    private final AppUserRepository appUserRepository;
+    private final UserRepository appUserRepository;
 
     @GetMapping("/register")
     public String newUser(
             Model model
     ){
-        model.addAttribute("newUser", new RegistrationForm());
+        RegistrationForm registrationForm = new RegistrationForm();
+        model.addAttribute("newUser", registrationForm);
         return "register";
     }
 
@@ -44,12 +47,30 @@ public class AuthController {
         if (bindingResult.hasErrors()){
             return "register";
         }
+        if (!registrationForm.getPassword().equals(registrationForm.getPasswordCheck())) {
+            bindingResult.rejectValue("passwordCheck", "registrationForm.passwordCheck",
+                    "A jelszavak nem egyeznek");
+            return "register";
+        }
+        if (appUserRepository.findByEmail(registrationForm.getEmail()).isPresent()) {
+            bindingResult.rejectValue("email", "registrationForm.email",
+                    "Már létező email cím");
+            return "register";
+        }
+
 //        String encodePw = passwordEncoder.encode(password);
         User user = new User();
+        Name name = new Name();
+        name.setLastName(registrationForm.getLastName());
+        name.setFirstName(registrationForm.getFirstName());
+        user.setName(name);
         user.setEmail(registrationForm.getEmail());
+        user.setPhoneNumber(registrationForm.getPhoneNumber());
         user.setPassword(passwordEncoder.encode(registrationForm.getPassword()));
         user.setEnabled(true);
         user.setLocked(false);
+
+        user.setRole(Role.USER);
 
         appUserRepository.save(user);
 

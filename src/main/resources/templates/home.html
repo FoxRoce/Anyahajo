@@ -1,30 +1,195 @@
 <!DOCTYPE html>
-<html lang="hu">
+<html lang="en"  xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
 
+        .container {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            scroll-behavior: smooth;
+            background: #1f88b4;
+            font-family:'Helvetica Neue', sans-serif;
+        }
 
-    <title> Anyahajó Anyaközpont - Kölcsönzés</title>
+        h1 a {
+            font-size: 80px;
+            color: #fff;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
 
+        .popover {
+            display: none;
+            box-shadow: 0px 6px 8px rgba(19, 19, 19, .7);
+        }
 
+        .popover:target {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .popover .content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            width: 0;
+            height: 0;
+            color: #fff;
+            background: #a75888;
+            animation: 1s grow ease forwards;
+            text-align: center;
+        }
+
+        .nav_list  {
+            list-style-type: none;
+        }
+
+        .nav_list a {
+            text-decoration: none;
+            font-size: 35px;
+            color: #fff;
+        }
+
+        .nav_list_item {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .nav_list li {
+            padding: 15px 0;
+            text-transform: uppercase;
+            transform: translateY(200px);
+            opacity: 0;
+            animation: 2s slideUp ease forwards .5s;
+            position: relative;
+        }
+      .nav_list_itemb{
+          text-decoration: none;
+          font-size: 25px;
+          color: #fff;
+      }
+
+        .nav_list li::before {
+            content: '';
+            position: absolute;
+            height: 2px;
+            width: 0px;
+            left: 0;
+            bottom: 10px;
+            background: #1f88b4;
+            transition: all .5s ease;
+        }
+
+        .nav_list li:hover:before {
+            width: 100%;
+        }
+
+        .popover p {
+            padding: 50px;
+            opacity: 0;
+            animation: 1s fadeIn ease forwards 1s;
+        }
+
+        .popover .close::after {
+            right: 0;
+            top: 0;
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            display: flex;
+            z-index: 1;
+            font-size: 30px;
+            align-items: center;
+            justify-content: center;
+            background-color: #a75888;
+            color: #1f88b4;
+            content: "×";
+            cursor: pointer;
+            opacity: 0;
+            animation: 1s fadeIn ease forwards .5s;
+        }
+
+        @keyframes grow {
+            100% {
+                height: 90%;
+                width: 90%;
+            }
+        }
+
+        @keyframes fadeIn {
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+    <title>Title</title>
 </head>
 <body>
-<h1 class="welcome">Ez itt az Anyahajó Anyahajóközpont Kölcsönzés oldala!</h1>
-<a class="links" data-th-href="home">Home</a>
-<a class="links" data-th-href="@{'/kolcsonzes'}">Kölcsönzések</a>
-<a class="links" data-th-href="register">Regisztráció</a>
-<div class="post">
-    <h3>Egy boring leírás, hogy legalább lássunk valamit</h3>
-    <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical
-        Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney
-        College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage,
-        and going through the cites of the word in classical literature, discovered the undoubtable source.
-        Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum"
-        (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during
-        the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-        The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from
-        "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the
-        1914 translation by H. Rackham.</p>
+<div class="container">
+    <h1>
+        <a href="#menu">Kattints ide</a>
+    </h1>
+
+    <div class="popover" id="menu">
+        <div class = 'content'>
+            <a href="#" class="close"></a>
+            <div class = 'nav'>
+                <ul class = 'nav_list'>
+
+                    <div class = 'nav_list_item'>
+                        <li><a data-th-href="@{'/home'}">Főoldal</a></li>
+                    </div>
+                    <div class = 'nav_list_item'>
+                        <li><a href="https://www.anyahajokozpont.hu/sample-page/">About</a></li>
+                    </div>
+                    <div class = 'nav_list_item'>
+                        <li><a data-th-href="@{'/kolcsonzes'}">Termékek</a></li>
+                    </div>
+                    <div class = 'nav_list_item'>
+                        <li><a data-th-href="@{'/login'}">Bejelentkezés</a></li>
+                    </div>
+                    <div class = 'nav_list_item'>
+                        <li><a data-th-href="@{'/register'}">Regisztráció</a></li>
+                    </div>
+                    <div  sec:authorize="hasRole('ADMIN')" class="nav_list_item">
+                            <li><a style="font-size:20px;" data-th-href="@{'/admin/ujTargyFelvetel'}">Új tárgy felvétele</a></li>
+                            <li><a style="font-size:20px;" data-th-href="@{'/admin/users'}">Felhasználok listája</a></li>
+                            <li>Kölcsönzések Igénylése</li>
+                        <li><a style="font-size:20px;" data-th-href="@{'/admin/add_new_rent'}">Új kölcsönzés hozzáadása</a></li>
+                        <li><a  style="font-size:20px;" data-th-href="@{'/admin/rents'}">Kölcsönzések</a></li>
+                    </div>
+                    <div class = 'nav_list_item'>
+                        <li><a data-th-href="@{'/logout'}">Kijelentkezés</a></li>
+                    </div>
+                    <div class = 'nav_list_item'>
+                        <li><a data-th-href="@{'https://www.anyahajokozpont.hu/'}">Vissza az Anyahajó oldalára</a></li>
+                    </div>
+
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>

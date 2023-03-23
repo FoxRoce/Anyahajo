@@ -9,9 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -24,14 +22,26 @@ public class ItemController {
     private ItemRepository itemRepository;
 
     @GetMapping(path = {"/kolcsonzes"})
-    public String listItems(Model model){
+    public String listItems(Model model) {
         List<Item> items = itemRepository.findAll();
+        model.addAttribute("items", items);
+        return "all-items";
+    }
+    @GetMapping(path = {"/books"})
+    public String listItems() {
+        return "redirect:/kolcsonzes?itemType=Book";
+    }
+
+    @GetMapping("/kolcsonzes/kereses")
+    public String searchItems(Model model, @RequestParam(value = "text") String text) {
+        List<Item> items = itemRepository.findByText(text);
         model.addAttribute("items", items);
         return "all-items";
     }
 
     @GetMapping(path = {"/admin/ujTargyFelvetel"})
-    public String newItem(Model model){
+    public String newItem(Model model) {
+//        System.out.println("Inside Get mapping");
         model.addAttribute("newItem", new ItemForm());
         return "admin-add-item";
     }
@@ -42,22 +52,25 @@ public class ItemController {
             @Validated
             ItemForm itemForm,
             BindingResult bindingResult
-    ){
-        if (bindingResult.hasErrors()){
+    ) {
+//        System.out.println("Inside post mapping");
+        if (bindingResult.hasErrors()) {
+            System.out.println(bindingResult);
             return "admin-add-item";
         }
+
         Item entity;
 
-        if (itemForm.getBabycareBrand() != null){
+        if (!itemForm.getBabycareBrand().isEmpty()) {
             entity = new Babycare();
             ((Babycare) entity).setBabycareBrand(itemForm.getBabycareBrand());
-        } else if (itemForm.getAuthor() != null){
+        } else if (!itemForm.getAuthor().isEmpty()) {
             entity = new Book();
             ((Book) entity).setAuthor(itemForm.getAuthor());
-        } else if (itemForm.getCarrierBrand() != null){
+        } else if (!itemForm.getCarrierBrand().isEmpty()) {
             entity = new Carrier();
             ((Carrier) entity).setCarrierBrand(itemForm.getCarrierBrand());
-            ((Carrier) entity).setType(itemForm.getType());
+            ((Carrier) entity).setCarrierType(itemForm.getCarrierType());
             ((Carrier) entity).setSize(itemForm.getSize());
         } else {
             entity = new Item();
@@ -67,11 +80,12 @@ public class ItemController {
         entity.setAvailability(itemForm.getAvailability());
         entity.setDescription(itemForm.getDescription());
         entity.setPicture(itemForm.getPicture());
-        entity.setActive(itemForm.isActive());
+        entity.setActive(itemForm.getIsActive());
 
-//        itemRepository.insertInto
+        itemRepository.save(entity);
 
         return "redirect:/kolcsonzes";
     }
+
 
 }
