@@ -87,7 +87,7 @@ public class ItemController {
     }
 
 
-    @GetMapping("/kolcsonzes/{id}")
+    @GetMapping("/item/{id}")
     public String getItem(@PathVariable("id") String id, Model model) {
         List<Item> items = itemRepository.findAll();
         for(Item i : items){
@@ -96,7 +96,7 @@ public class ItemController {
                 return "item";
             }
         }
-        return "redirect:/cart";
+        return "redirect:/kolcsonzes";
     }
 
 
