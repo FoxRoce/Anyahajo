@@ -10,7 +10,7 @@
     <p th:text="${user.email}">E-mail</p>
     <p th:text="${user.phoneNumber}">Telefonszám</p>
     <p th:text="${user.role}">Role</p>
-    <form th:action="@{'/users/'+${user.id}+'/role'}" method="post">
+    <form th:action="@{'/users/'+${user.user_id}+'/role'}" method="post">
       <button type="submit" name="role">
         Change Role
       </button>
