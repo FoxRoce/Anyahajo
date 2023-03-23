@@ -1,6 +1,7 @@
 package com.project.anyahajo.service.impl;
 
 import com.project.anyahajo.form.UserForm;
+import com.project.anyahajo.model.Role;
 import com.project.anyahajo.model.User;
 import com.project.anyahajo.repository.UserRepository;
 import com.project.anyahajo.service.UserService;
@@ -24,6 +25,16 @@ public class UserServiceImpl implements UserService {
         return users.stream().map(user -> mapToUserForm(user)).toList();
     }
 
+    @Override
+    public void updateUserRole(Long id, Role role) {
+        userRepository.updateRoleByUser_id(id,role);
+    }
+
+    @Override
+    public User findUserByUser_id(Long id) {
+        return userRepository.findByUser_id(id);
+    }
+
     private UserForm mapToUserForm(User user) {
 
         return UserForm.builder()
@@ -31,7 +42,7 @@ public class UserServiceImpl implements UserService {
                 .name(user.getName())
                 .email(user.getEmail())
                 .phoneNumber(user.getPhoneNumber())
-                .admin(user.isAdmin())
+                .role(user.getRole())
                 .locked(user.getLocked())
                 .enabled(user.isEnabled())
                 .build();
