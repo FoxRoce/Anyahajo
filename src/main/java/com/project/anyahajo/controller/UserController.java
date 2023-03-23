@@ -1,8 +1,10 @@
 package com.project.anyahajo.controller;
 
 import com.project.anyahajo.form.UserForm;
+import com.project.anyahajo.model.Rent;
 import com.project.anyahajo.model.Role;
 import com.project.anyahajo.model.User;
+import com.project.anyahajo.repository.RentRepository;
 import com.project.anyahajo.service.UserService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,9 +19,12 @@ import java.util.List;
 public class UserController {
 
     private UserService userService;
+    private final RentRepository rentRepository;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService,
+                          RentRepository rentRepository) {
         this.userService = userService;
+        this.rentRepository = rentRepository;
     }
 
     @GetMapping(path = {"/admin/users"})
@@ -28,6 +33,20 @@ public class UserController {
         model.addAttribute("users", users);
         return "all-users";
     }
+
+    @GetMapping(path = {"/admin/users/{id}"})
+    public String showUserDetails(
+            Model model,
+            @PathVariable("id") Long id
+    ) {
+        User user = userService.findUserByUser_id(id);
+        model.addAttribute("user", user);
+
+        List<Rent> rents = rentRepository.findByUser_id(user);
+        model.addAttribute("rents", rents);
+        return "user-detail";
+    }
+
     @PostMapping("/users/{id}/role")
     public String updateUserRole(
             @PathVariable("id") Long id

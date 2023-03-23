@@ -12,7 +12,8 @@
 </p>
 <ul th:unless="${#lists.isEmpty(rents)}">
     <li th:each="rent: ${rents}">
-        <b><p th:text="${rent.user.name}">user name</p></b>
+        <b><p th:text="${rent.user.email}">user email</p></b>
+        <b><p th:text="${rent.user.name} ? ${rent.user.name} : 'User has no name'">user name</p></b>
         <p th:text="${rent.item.name}">item name</p>
         <p th:text="${rent.item.availability}">item availability</p>
         <p th:text="${rent.startOfRent}">Starting date</p>

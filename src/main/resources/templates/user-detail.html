@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Felhasználó</title>
+</head>
+<body>
+<h1>[[user.name]]</h1>
+    <b><p th:text="${user.name}">Név</p></b>
+    <p th:text="${user.email}">E-mail</p>
+    <p th:text="${user.phoneNumber}">Telefonszám</p>
+    <p th:text="${user.role}">Role</p>
+    <form th:action="@{'/users/'+${user.id}+'/role'}" method="post">
+      <button type="submit" name="role">
+        Change Role
+      </button>
+    </form>
+
+<p th:if="${#lists.isEmpty(rents)}">
+  Nincsenek kolcsonzesek
+</p>
+<ul th:unless="${#lists.isEmpty(rents)}">
+  <li th:each="rent: ${rents}">
+    <p th:text="${rent.item.name}">item name</p>
+    <p th:text="${rent.item.availability}">item availability</p>
+    <p th:text="${rent.startOfRent}">Starting date</p>
+    <p th:text="${rent.endOfRent}">End Date</p>
+    <p th:text="${rent.isExtended}">Extended</p>
+    <p th:text="${rent.price}">Price</p>
+    <p th:text="${rent.deposit}">Deposit</p>
+    <p th:text="${rent.payBackAmount}">Pay back amount</p>
+
+  </li>
+</ul>
+</body>
+</html>

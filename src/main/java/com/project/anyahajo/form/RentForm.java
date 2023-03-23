@@ -13,8 +13,8 @@ import java.time.LocalDate;
 @Setter
 public class RentForm {
 
-    private Long item_id;
-    private Long user_id;
+    private Item item;
+    private User user;
 
     private LocalDate startOfRent;
     private LocalDate endOfRent;
