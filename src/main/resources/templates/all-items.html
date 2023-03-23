@@ -54,18 +54,18 @@
 <div>
     <form th:action="@{/kolcsonzes/kereses}" class="form-inline my-2 my-lg-0 mb-3">
         <input name="text" class="form-control mr-sm-2 mb-5" type="search" placeholder="Keresés" aria-label="Search">
+
+        <label for="item-type">Szűrés típusonként:</label>
+        <select id="item-type" name="itemType" onchange="this.form.submit()">
+            <option value="">Válassz egy opciót</option>
+            <option value="">Minden</option>
+            <option value="Book">Könyv</option>
+            <option value="Carrier">Hordozó</option>
+            <option value="Babycare">Babaápolás</option>
+        </select>
     </form>
 </div>
 
-<form>
-    <label for="item-type">Filter by item type:</label>
-    <select id="item-type" name="itemType" onchange="this.form.submit()">
-        <option value="">All</option>
-        <option value="Book">Book</option>
-        <option value="Carrier">Carrier</option>
-        <option value="Babycare">Babycare</option>
-    </select>
-</form>
 
 <p th:if="${#lists.isEmpty(items)}">Nincs kolcsonozheto targy</p>
 
