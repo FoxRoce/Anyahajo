@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Kolcsonzesek</title>
@@ -92,10 +92,11 @@
             <p th:text="${item.babycareBrand}">Marka</p>
         </div>
 
-        <form th:action="@{'/rents/'+${item.item_id}+'/reserve'}" method="post">
-            <button type="submit" name="Make rent">Make rent</button>
-        </form>
-
+        <div  sec:authorize="hasRole('ADMIN')" class="nav_list_item">
+            <form th:action="@{'/rents/'+${item.item_id}+'/reserve'}" method="post">
+                <button type="submit" name="Make rent">Make rent</button>
+            </form>
+        </div>
     </li>
 </ul>
 </body>

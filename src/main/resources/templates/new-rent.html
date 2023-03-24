@@ -8,7 +8,7 @@
     <h1>Add New Rent</h1>
     <form data-th-object="${newRent}" data-th-action="@{add_new_rent}" action="/admin/add_new_rent" method="post">
         <label for="item">Item:</label>
-        <select id="item" name="item">
+        <select id="item" data-th-field="*{item}">
             <option value="">Select an item</option>
             <th:block th:each="item : ${items}">
                 <option th:value="${item.item_id}" th:text="${item.name}"></option>
@@ -22,7 +22,13 @@
                 <option th:value="${user.user_id}" th:text="${user.email}"></option>
             </th:block>
         </select>
-        <input type="email" id="new_user_email" name="new_user_email" placeholder="Enter new user email" style="display: none;"/>
+        <input
+                style="display: block;"
+                type="email"
+                id="new_user_email"
+                name="new_user_email"
+                placeholder="Enter new user email"
+        />
         <br>
         <label for="startOfRent">Start of Rent:</label>
         <input type="date" id="startOfRent" name="startOfRent" required>
