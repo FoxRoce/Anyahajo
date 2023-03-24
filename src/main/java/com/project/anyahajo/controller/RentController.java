@@ -10,10 +10,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -36,8 +33,13 @@ public class RentController {
         return "all-rents";
     }
     @GetMapping(path = {"/admin/add_new_rent"})
-    public String addNewRent(Model model) {
-        model.addAttribute("newRent", new RentForm());
+    public String addNewRent(
+            @RequestParam(required = false) Long iid,
+            Model model
+    ) {
+        RentForm rf = new RentForm();
+        rf.setItem(itemRepository.findByItem_id(iid));
+        model.addAttribute("newRent", rf);
         List<Item> items = itemRepository.findAll();
         model.addAttribute("items", items);
         List<User> users = userRepository.findAll();
@@ -82,7 +84,7 @@ public class RentController {
         newRent.setPayBackAmount(rentForm.getPayBackAmount());
 
         rentRepository.save(newRent);
-        rentRepository.updateItemAndUserByRent_id(newRent.getItem(), newRent.getUser(), newRent.getRent_id());
+//        rentRepository.updateItemAndUserByRent_id(newRent.getItem(), newRent.getUser(), newRent.getRent_id());
 
         return "redirect:/admin/rents";
     }
@@ -91,14 +93,14 @@ public class RentController {
     public String updateRentReserve(
             @PathVariable("id") Long id
     ) {
-        Item item = itemRepository.findByItem_id(id);
+//        Item item = itemRepository.findByItem_id(id);
 //        item.setAvailability(Availability.Reserved);
 
-        System.out.println("Sends e-mail to admin...");
+//        System.out.println("Sends e-mail to admin...");
 
 //        rentRepository.updateItemByRent_id(item,id);
 
-        return "redirect:/admin/add_new_rent?item?id={id}";
+        return "redirect:/admin/add_new_rent?iid={id}";
     }
 
     @PostMapping("/rents/{id}/accept")
