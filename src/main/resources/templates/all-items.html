@@ -3,6 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <title>Kolcsonzesek</title>
+    <style>
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        select {
+            width: 14%;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+            background-color: #a2d3ef;
+        }
+
+        b {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin: 0;
+        }
+    </style>
 </head>
 <body>
 <h1>Kolcsonzes lista:</h1>
@@ -10,18 +54,18 @@
 <div>
     <form th:action="@{/kolcsonzes/kereses}" class="form-inline my-2 my-lg-0 mb-3">
         <input name="text" class="form-control mr-sm-2 mb-5" type="search" placeholder="Keresés" aria-label="Search">
+
+        <label for="item-type">Szűrés típusonként:</label>
+        <select id="item-type" name="itemType" onchange="this.form.submit()">
+            <option value="">Válassz egy opciót</option>
+            <option value="">Minden</option>
+            <option value="Book">Könyv</option>
+            <option value="Carrier">Hordozó</option>
+            <option value="Babycare">Babaápolás</option>
+        </select>
     </form>
 </div>
 
-<form>
-    <label for="item-type">Filter by item type:</label>
-    <select id="item-type" name="itemType" onchange="this.form.submit()">
-        <option value="">All</option>
-        <option value="Book">Book</option>
-        <option value="Carrier">Carrier</option>
-        <option value="Babycare">Babycare</option>
-    </select>
-</form>
 
 <p th:if="${#lists.isEmpty(items)}">Nincs kolcsonozheto targy</p>
 
@@ -51,6 +95,10 @@
             Kosárba teszem
         </button></p>
         <p type="hidden" name="item_id" data-th-value="${item.item_id}"></p>
+
+        <form th:action="@{'/rents/'+${item.item_id}+'/reserve'}" method="post">
+            <button type="submit" name="Make rent">Make rent</button>
+        </form>
 
     </li>
 </ul>

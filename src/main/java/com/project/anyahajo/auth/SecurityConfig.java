@@ -1,5 +1,6 @@
 package com.project.anyahajo.auth;
 
+import com.project.anyahajo.model.Role;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -41,9 +42,9 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests()
-                .requestMatchers("/","/home","/register","/kolcsonzes","/books")
+                .requestMatchers("/","/home","/register","/kolcsonzes","/books", "/kolcsonzes/kereses")
                     .permitAll()
-                .requestMatchers("/admin").hasRole("ADMIN")
+                .requestMatchers("/admin/**").hasRole("ADMIN")
 
                 .anyRequest().authenticated()
                 .and()

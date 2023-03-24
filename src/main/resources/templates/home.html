@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"  xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <style>
@@ -60,7 +60,7 @@
 
         .nav_list a {
             text-decoration: none;
-            font-size: 50px;
+            font-size: 35px;
             color: #fff;
         }
 
@@ -77,6 +77,11 @@
             animation: 2s slideUp ease forwards .5s;
             position: relative;
         }
+      .nav_list_itemb{
+          text-decoration: none;
+          font-size: 25px;
+          color: #fff;
+      }
 
         .nav_list li::before {
             content: '';
@@ -156,7 +161,7 @@
                         <li><a data-th-href="@{'/home'}">Főoldal</a></li>
                     </div>
                     <div class = 'nav_list_item'>
-                        <li><a href="#">About</a></li>
+                        <li><a href="https://www.anyahajokozpont.hu/sample-page/">About</a></li>
                     </div>
                     <div class = 'nav_list_item'>
                         <li><a data-th-href="@{'/kolcsonzes'}">Termékek</a></li>
@@ -166,6 +171,16 @@
                     </div>
                     <div class = 'nav_list_item'>
                         <li><a data-th-href="@{'/register'}">Regisztráció</a></li>
+                    </div>
+                    <div  sec:authorize="hasRole('ADMIN')" class="nav_list_item">
+                            <li><a style="font-size:20px;" data-th-href="@{'/admin/ujTargyFelvetel'}">Új tárgy felvétele</a></li>
+                            <li><a style="font-size:20px;" data-th-href="@{'/admin/users'}">Felhasználok listája</a></li>
+                            <li>Kölcsönzések Igénylése</li>
+                        <li><a style="font-size:20px;" data-th-href="@{'/admin/add_new_rent'}">Új kölcsönzés hozzáadása</a></li>
+                        <li><a  style="font-size:20px;" data-th-href="@{'/admin/rents'}">Kölcsönzések</a></li>
+                    </div>
+                    <div class = 'nav_list_item'>
+                        <li><a data-th-href="@{'/logout'}">Kijelentkezés</a></li>
                     </div>
                     <div class = 'nav_list_item'>
                         <li><a data-th-href="@{'https://www.anyahajokozpont.hu/'}">Vissza az Anyahajó oldalára</a></li>
