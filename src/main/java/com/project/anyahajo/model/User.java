@@ -32,10 +32,15 @@ public class User implements UserDetails {
     private Boolean locked = false;
     private Boolean enabled = true;
     @ElementCollection
-//    @Column(name = "basket")
+    @Column(name = "item_id")
     @CollectionTable(name = "ah_user_basket", joinColumns = @JoinColumn(name = "owner_id"))
     private Set<Long> basket = new LinkedHashSet<>();
-
+    public void addItemToBasket(Item item) {
+        basket.add(item.getItem_id());
+    }
+    public void deleteItemFromBasket(Item item) {
+        basket.remove(item.getItem_id());
+    }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority("USER");

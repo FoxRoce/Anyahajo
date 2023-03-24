@@ -47,6 +47,10 @@
         <div th:if="${item instanceof T(com.project.anyahajo.model.Babycare)}">
             <p th:text="${item.babycareBrand}">Marka</p>
         </div>
+        <p><button data-th-method="post" data-th-action="@{/put-in-the-basket}" action="/put-in-the-basket">
+            Kosárba teszem
+        </button></p>
+        <p type="hidden" name="item_id" data-th-value="${item.item_id}"></p>
 
     </li>
 </ul>

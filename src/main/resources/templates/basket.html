@@ -17,25 +17,36 @@
 </head>
 <body>
 <h1>A kosár tartalma:</h1>
-<p data-th-if="${#lists.isEmpty(user.basket)}">
+<p data-th-if="${#lists.isEmpty(itemsInTheBasket)}">
     Üres a kosarad.
 </p>
-<table data-th-unless="${#lists.isEmpty(user.basket)}">
+<table data-th-unless="${#lists.isEmpty(itemsInTheBasket)}">
     <tr>
         <td>Név</td>
         <td>Leírás</td>
         <td>Termék</td>
         <td>Eltávolítás a kosárból</td>
     </tr>
-    <tr data-th-each="item: ${user.basket}">
+    <tr data-th-each="item: ${itemsInTheBasket}">
         <td data-th-text="${item.name}"></td>
         <td data-th-text="${item.description}"></td>
         <td>
             <a data-th-href="@{/egytermekmegjelenitesedemegnincskesz}" href="/egytermekmegjelenitesedemegnincskesz">Termék
                 linkje</a>
         </td>
+<!--        <td>-->
+<!--            <button onclick="removeFromBasket">Eltávolítás a kosárból</button>-->
+<!--            <p type="hidden" name="item_id" data-th-value="${item.item_id}"></p>-->
+<!--        </td>-->
         <td>
-            <button onclick="removeFromCart()">Eltávolítás a kosárból</button>
+            <form
+                    method="post"
+                    data-th-action="@{/kosar/delete}"
+                    action="/kosar/delete"
+            >
+                <input type="hidden" name="item_id" data-th-value="${item.getItem_id()}">
+                <input type="submit" value="Töröl">
+            </form>
         </td>
     </tr>
 </table>

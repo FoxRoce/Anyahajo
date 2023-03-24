@@ -18,4 +18,5 @@ public interface ItemRepository extends JpaRepository<Item,Long> {
     @Query("SELECT i FROM Item i WHERE i.name LIKE CONCAT('%', :text, '%')")
     List<Item> findByText(String text);
 
+
 }

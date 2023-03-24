@@ -1,8 +1,9 @@
 package com.project.anyahajo.controller;
 
+import com.project.anyahajo.auth.AppUserService;
 import com.project.anyahajo.form.ItemForm;
 import com.project.anyahajo.model.*;
-import com.project.anyahajo.repository.AppUserRepository;
+import com.project.anyahajo.repository.UserRepository;
 import com.project.anyahajo.repository.ItemRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +13,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +25,10 @@ public class ItemController {
 
     @NonNull
     private ItemRepository itemRepository;
-    private AppUserRepository appUserRepository;
+    @NonNull
+    private UserRepository appUserRepository;
+    @NonNull
+    private AppUserService appUserService;
 
     @GetMapping(path = {"/kolcsonzes"})
     public String listItems(Model model) {
@@ -89,9 +95,34 @@ public class ItemController {
 
         return "redirect:/kolcsonzes";
     }
-    @GetMapping(path = "/{userId}/kosar")
-    public String showBasket(@PathVariable("userId") Long userId, Model model) {
-        model.addAttribute("user", appUserRepository.findById(userId));
+    @PostMapping(path = {"/kolcsonzes", "/kolcsonzes/kereses"})//("put-in-the-basket")
+    public String putInTheBasket(@RequestParam("item_id") Long id, Principal principal) {
+        System.out.println("put in the basket1");
+        User owner = (User) appUserService.loadUserByUsername(principal.getName());
+        owner.getBasket().add(id);
+        System.out.println("put in the basket2");
+        return "redirect:/kolcsonzes";
+    }
+    @PostMapping("kosar/delete")
+    public String removeFromBasket(@RequestParam("item_id") Long id, Principal principal) {
+        System.out.println("55555555555555");
+        User owner = (User) appUserService.loadUserByUsername(principal.getName());
+//        appUserRepository.deleteByUser_id(owner.getUser_id(), id);
+//        appUserRepository.findById(owner.getUser_id());
+        owner.getBasket().remove(id);
+        return "redirect:/kosar";
+    }
+    @GetMapping(path = "/kosar")
+    public String showBasket(Principal principal, Model model) {
+        User owner = (User) appUserService.loadUserByUsername(principal.getName());
+        List <Item> itemsInTheBasket = owner.getBasket().stream().map(x -> {
+            if(itemRepository.findById(x).isPresent()) {
+                return itemRepository.findById(x).get();
+            } else {
+                return null;
+            }
+        }).toList();
+        model.addAttribute("itemsInTheBasket", itemsInTheBasket);
         return "basket";
     }
 
