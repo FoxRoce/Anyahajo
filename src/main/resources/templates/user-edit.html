@@ -1,0 +1,45 @@
+<html
+        xmlns:th="http://thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+<head>
+  <title>Adatmódosítások</title>
+</head>
+<body class="d-flex flex-column h-100">
+<main class="flex-shrink-0">
+  <section layout:fragment="body" class="py-5">
+    <div class="container">
+      <form role="form" method="post" th:action="@{/user/{userId}/edit(userId=${user.id})}" th:object="${user}">
+        <input type="hidden" th:field="*{id}">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="email">Email</label>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="email"
+                    name="email"
+                    th:field="*{email}"
+                    placeholder="Email">
+            <p th:if="${#fields.hasErrors('email')}" class="text-danger" th:errors="*{email}"></p>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="password">Jelszó</label>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="password"
+                    name="password"
+                    th:field="*{password}"
+                    placeholder="Jelszó">
+            <p th:if="${#fields.hasErrors('password')}" class="text-danger" th:errors="*{password}"></p>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Mentés</button>
+      </form>
+    </div>
+  </section>
+</main>
+</body>
+</html>

@@ -6,10 +6,12 @@ import com.project.anyahajo.model.Role;
 import com.project.anyahajo.model.User;
 import com.project.anyahajo.repository.RentRepository;
 import com.project.anyahajo.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -63,5 +65,29 @@ public class UserController {
         }
 
         return "redirect:/admin/users";
+    }
+
+    @GetMapping("/user/{userId}/edit")
+    public String editUserForm(@PathVariable("userId") long userId, Model model) {
+        UserForm user = userService.findUserById(userId);
+        model.addAttribute("user", user);
+        return "user-edit";
+    }
+
+    @PostMapping("/user/{userId}/edit")
+    public String updateClub(@PathVariable("userId") Long userId,
+                             @Valid @ModelAttribute("user") UserForm user,
+                             BindingResult bindingResult,
+                             Model model) {
+
+        if(bindingResult.hasErrors()) {
+            model.addAttribute("user", user);
+            return "user-edit";
+        }
+
+        user.setId(userId);
+        userService.updateUser(user);
+
+        return "redirect:/home";
     }
 }

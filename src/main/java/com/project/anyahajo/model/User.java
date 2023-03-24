@@ -1,8 +1,7 @@
 package com.project.anyahajo.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,6 +11,8 @@ import java.util.*;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "ah_user")
 public class User implements UserDetails {
 
@@ -26,7 +27,6 @@ public class User implements UserDetails {
     private String phoneNumber;
     private Boolean locked = false;
     private Boolean enabled = true;
-
     private Role role;
 
     @Override

@@ -13,4 +13,8 @@ public interface UserService {
     void updateUserRole(Long id, Role tole);
 
     User findUserByUser_id(Long id);
+
+    UserForm findUserById(long userId);
+
+    void updateUser(UserForm user);
 }

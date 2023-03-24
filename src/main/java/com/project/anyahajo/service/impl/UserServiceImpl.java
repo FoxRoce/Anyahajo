@@ -27,12 +27,36 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUserRole(Long id, Role role) {
-        userRepository.updateRoleByUser_id(id,role);
+        userRepository.updateRoleByUser_id(id, role);
     }
 
     @Override
     public User findUserByUser_id(Long id) {
         return userRepository.findByUser_id(id);
+    }
+
+    @Override
+    public UserForm findUserById(long userId) {
+        User user = userRepository.findById(userId).get();
+        return mapToUserForm(user);
+    }
+
+    @Override
+    public void updateUser(UserForm userForm) {
+        User user = mapToUser(userForm);
+        userRepository.save(user);
+    }
+
+    private User mapToUser(UserForm userForm) {
+
+        return new User(userForm.getId(),
+                userForm.getName(),
+                userForm.getEmail(),
+                userForm.getPassword(),
+                userForm.getPhoneNumber(),
+                userForm.getLocked(),
+                userForm.getEnabled(),
+                userForm.getRole());
     }
 
     private UserForm mapToUserForm(User user) {
@@ -41,6 +65,7 @@ public class UserServiceImpl implements UserService {
                 .id(user.getUser_id())
                 .name(user.getName())
                 .email(user.getEmail())
+                .password(user.getPassword())
                 .phoneNumber(user.getPhoneNumber())
                 .role(user.getRole())
                 .locked(user.getLocked())

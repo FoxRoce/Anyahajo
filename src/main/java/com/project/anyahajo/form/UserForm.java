@@ -18,6 +18,7 @@ public class UserForm {
     private Long id;
     private Name name;
     private String email;
+    private String password;
     private String phoneNumber;
     private Role role;
     private Boolean locked = false;
