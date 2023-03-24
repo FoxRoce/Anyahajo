@@ -84,7 +84,6 @@ public class RentController {
         newRent.setPayBackAmount(rentForm.getPayBackAmount());
 
         rentRepository.save(newRent);
-//        rentRepository.updateItemAndUserByRent_id(newRent.getItem(), newRent.getUser(), newRent.getRent_id());
 
         return "redirect:/admin/rents";
     }

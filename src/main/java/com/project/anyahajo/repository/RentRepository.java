@@ -25,11 +25,6 @@ public interface RentRepository extends JpaRepository<Rent,Long> {
     @Query("update Rent r set r.item = ?1 where r.rent_id = ?2")
     int updateItemByRent_id(Item item, Long rent_id);
 
-    @Transactional
-    @Modifying
-    @Query("update Rent r set r.item = ?1, r.user = ?2 where r.rent_id = ?3")
-    int updateItemAndUserByRent_id(Item item, User user, Long rent_id);
-
     @Query("select r from Rent r where r.user = ?1")
     List<Rent> findByUser_id(User user);
 
