@@ -12,7 +12,7 @@
 </p>
 <ul th:unless="${#lists.isEmpty(users)}">
   <li th:each="user: ${users}">
-    <b><p th:text="${user.name}">Név</p></b>
+    <a th:href="@{'/admin/users/'+${user.id}}"><b><p th:text="${user.name}">Név</p></b></a>
     <p th:text="${user.email}">E-mail</p>
     <p th:text="${user.phoneNumber}">Telefonszám</p>
     <p th:text="${user.role}">Role</p>
@@ -20,19 +20,8 @@
       <button type="submit" name="role">
         Change Role
       </button>
-<!--      <button type="submit" name="role" th:value="${user.role == 'USER' ? 'ADMIN' : 'USER'}" th:text="${user.role == 'USER' ? 'Make Admin' : 'Make User'}"></button>-->
     </form>
   </li>
 </ul>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-

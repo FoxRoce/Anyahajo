@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kolcsonzesek</title>
+</head>
+<body>
+<h1>Kolcsonzesek: </h1>
+
+<p th:if="${#lists.isEmpty(rents)}">
+    Nincsenek kolcsonzesek
+</p>
+<ul th:unless="${#lists.isEmpty(rents)}">
+    <li th:each="rent: ${rents}">
+        <b><p th:text="${rent.user.email}">user email</p></b>
+        <b><p th:text="${rent.user.name} ? ${rent.user.name} : 'User has no name'">user name</p></b>
+        <p th:text="${rent.item.name}">item name</p>
+        <p th:text="${rent.item.availability}">item availability</p>
+        <p th:text="${rent.startOfRent}">Starting date</p>
+        <p th:text="${rent.endOfRent}">End Date</p>
+        <p th:text="${rent.isExtended}">Extended</p>
+        <p th:text="${rent.price}">Price</p>
+        <p th:text="${rent.deposit}">Deposit</p>
+        <p th:text="${rent.payBackAmount}">Pay back amount</p>
+
+        <div th:if="${rent.item.availability == T(com.project.anyahajo.model.Availability).Reserved}">
+        <form th:action="@{'/rents/'+${rent.rent_id}+'/accept'}" method="post">
+            <button type="submit" name="accept">Accept</button>
+        </form>
+        <form th:action="@{'/rents/'+${rent.rent_id}+'/decline'}" method="post">
+            <button type="submit" name="decline">Decline</button>
+        </form>
+        </div>
+
+    </li>
+</ul>
+</body>
+</html>
