@@ -1,5 +1,6 @@
 package com.project.anyahajo.controller;
 
+import com.project.anyahajo.auth.AppUserService;
 import com.project.anyahajo.form.UserForm;
 import com.project.anyahajo.model.Rent;
 import com.project.anyahajo.model.Role;
@@ -21,12 +22,13 @@ import java.util.List;
 public class UserController {
 
     private UserService userService;
-    private final RentRepository rentRepository;
+    private RentRepository rentRepository;
+    private AppUserService userDetailService;
 
-    public UserController(UserService userService,
-                          RentRepository rentRepository) {
+    public UserController(UserService userService, RentRepository rentRepository, AppUserService userDetailService) {
         this.userService = userService;
         this.rentRepository = rentRepository;
+        this.userDetailService = userDetailService;
     }
 
     @GetMapping(path = {"/admin/users"})
@@ -89,5 +91,15 @@ public class UserController {
         userService.updateUser(user, userId);
 
         return "redirect:/home";
+    }
+
+    @GetMapping(path = {"/rents"})
+    public String lisToDos(Model model, Principal principal) {
+
+        User user = (User) userDetailService.loadUserByUsername(principal.getName());
+
+        List<Rent> rents = rentRepository.findByUser(user);
+        model.addAttribute("rents", rents);
+        return "all-rents";
     }
 }

@@ -34,4 +34,6 @@ public interface RentRepository extends JpaRepository<Rent,Long> {
     List<Rent> findByUser_id(User user);
 
 
+    @Query("select r from Rent r where r.user = ?1")
+    List<Rent> findByUser(User user);
 }
