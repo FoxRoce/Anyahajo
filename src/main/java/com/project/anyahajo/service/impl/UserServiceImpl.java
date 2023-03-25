@@ -5,6 +5,7 @@ import com.project.anyahajo.model.Role;
 import com.project.anyahajo.model.User;
 import com.project.anyahajo.repository.UserRepository;
 import com.project.anyahajo.service.UserService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,9 +14,11 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -42,9 +45,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUser(UserForm userForm) {
-        User user = mapToUser(userForm);
-        userRepository.save(user);
+    public void updateUser(UserForm userForm, Long userId) {
+        User user = userRepository.findById(userId).get();
+
+        userForm.setName(user.getName());
+        userForm.setPhoneNumber(user.getPhoneNumber());
+        userForm.setEnabled(user.getEnabled());
+        userForm.setLocked(user.getLocked());
+        userForm.setRole(user.getRole());
+        User UpdatedUser = mapToUser(userForm);
+        userRepository.save(UpdatedUser);
     }
 
     private User mapToUser(UserForm userForm) {
@@ -52,7 +62,7 @@ public class UserServiceImpl implements UserService {
         return new User(userForm.getId(),
                 userForm.getName(),
                 userForm.getEmail(),
-                userForm.getPassword(),
+                passwordEncoder.encode(userForm.getPassword()),
                 userForm.getPhoneNumber(),
                 userForm.getLocked(),
                 userForm.getEnabled(),

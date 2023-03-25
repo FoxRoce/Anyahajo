@@ -11,6 +11,7 @@ import java.util.*;
 @Entity
 @Getter
 @Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "ah_user")

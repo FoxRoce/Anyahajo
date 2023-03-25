@@ -86,7 +86,7 @@ public class UserController {
         }
 
         user.setId(userId);
-        userService.updateUser(user);
+        userService.updateUser(user, userId);
 
         return "redirect:/home";
     }

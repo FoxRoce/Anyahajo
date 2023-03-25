@@ -16,5 +16,5 @@ public interface UserService {
 
     UserForm findUserById(long userId);
 
-    void updateUser(UserForm user);
+    void updateUser(UserForm user, Long userId);
 }
