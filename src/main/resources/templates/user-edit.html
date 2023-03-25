@@ -24,6 +24,17 @@
             <p th:if="${#fields.hasErrors('email')}" class="text-danger" th:errors="*{email}"></p>
           </div>
           <div class="form-group col-md-6">
+            <label for="phoneNumber">Telefonszám</label>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="phoneNumber"
+                    name="phoneNumber"
+                    th:field="*{phoneNumber}"
+                    placeholder="Telefonszám">
+            <p th:if="${#fields.hasErrors('phoneNumber')}" class="text-danger" th:errors="*{phoneNumber}"></p>
+          </div>
+          <div class="form-group col-md-6">
             <label for="password">Jelszó</label>
             <input
                     type="text"

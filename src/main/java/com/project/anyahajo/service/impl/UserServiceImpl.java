@@ -49,7 +49,6 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(userId).get();
 
         userForm.setName(user.getName());
-        userForm.setPhoneNumber(user.getPhoneNumber());
         userForm.setEnabled(user.getEnabled());
         userForm.setLocked(user.getLocked());
         userForm.setRole(user.getRole());
