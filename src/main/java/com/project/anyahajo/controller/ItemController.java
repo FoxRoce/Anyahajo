@@ -31,9 +31,13 @@ public class ItemController {
     private AppUserService appUserService;
 
     @GetMapping(path = {"/kolcsonzes"})
-    public String listItems(Model model) {
+    public String listItems(Model model, Principal principal) {
         List<Item> items = itemRepository.findAll();
         model.addAttribute("items", items);
+        if (principal != null) {
+            User owner = (User) appUserService.loadUserByUsername(principal.getName());
+            model.addAttribute("basket", owner.getBasket());
+        }
         return "all-items";
     }
     @GetMapping(path = {"/books"})
@@ -95,21 +99,20 @@ public class ItemController {
 
         return "redirect:/kolcsonzes";
     }
-    @PostMapping(path = {"/kolcsonzes", "/kolcsonzes/kereses"})//("put-in-the-basket")
+    @PostMapping(path = {"/kolcsonzes/putInTheBasket", "/kolcsonzes/kereses/putInTheBasket"})//("put-in-the-basket")
     public String putInTheBasket(@RequestParam("item_id") Long id, Principal principal) {
         System.out.println("put in the basket1");
         User owner = (User) appUserService.loadUserByUsername(principal.getName());
         owner.getBasket().add(id);
+        appUserRepository.save(owner);
         System.out.println("put in the basket2");
         return "redirect:/kolcsonzes";
     }
     @PostMapping("kosar/delete")
     public String removeFromBasket(@RequestParam("item_id") Long id, Principal principal) {
-        System.out.println("55555555555555");
         User owner = (User) appUserService.loadUserByUsername(principal.getName());
-//        appUserRepository.deleteByUser_id(owner.getUser_id(), id);
-//        appUserRepository.findById(owner.getUser_id());
         owner.getBasket().remove(id);
+        appUserRepository.save(owner);
         return "redirect:/kosar";
     }
     @GetMapping(path = "/kosar")

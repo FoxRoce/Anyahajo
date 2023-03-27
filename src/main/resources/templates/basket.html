@@ -34,10 +34,6 @@
             <a data-th-href="@{/egytermekmegjelenitesedemegnincskesz}" href="/egytermekmegjelenitesedemegnincskesz">Termék
                 linkje</a>
         </td>
-<!--        <td>-->
-<!--            <button onclick="removeFromBasket">Eltávolítás a kosárból</button>-->
-<!--            <p type="hidden" name="item_id" data-th-value="${item.item_id}"></p>-->
-<!--        </td>-->
         <td>
             <form
                     method="post"
@@ -50,6 +46,8 @@
         </td>
     </tr>
 </table>
-
+<a href="/kolcsonzes" data-th-href="@{/kolcsonzes}">
+    <button>Termékek listája</button>
+</a>
 </body>
 </html>

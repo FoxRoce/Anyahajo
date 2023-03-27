@@ -91,10 +91,20 @@
         <div th:if="${item instanceof T(com.project.anyahajo.model.Babycare)}">
             <p th:text="${item.babycareBrand}">Marka</p>
         </div>
-        <p><button data-th-method="post" data-th-action="@{/put-in-the-basket}" action="/put-in-the-basket">
-            Kosárba teszem
-        </button></p>
-        <p type="hidden" name="item_id" data-th-value="${item.item_id}"></p>
+
+        <form
+                data-sec-authorize="isAuthenticated()"
+                data-th-unless="${#lists.contains(basket, item.item_id)}"
+
+                method="post"
+                data-th-action="@{(${#lists.contains(basket, id)} ? '/kosar/delete' : '/kolcsonzes/putInTheBasket')}"
+                action="/kolcsonzes/putInTheBasket"
+        >
+            <input type="hidden" name="item_id" data-th-value="${item.getItem_id()}">
+            <input type="submit" data-th-unless="${#lists.contains(basket, item.item_id)}" value="Kosárba teszem">
+            <input type="submit" data-th-if="${#lists.contains(basket, item.item_id)}" value="Kiveszem a kosárból">
+
+        </form>
 
         <form th:action="@{'/rents/'+${item.item_id}+'/reserve'}" method="post">
             <button type="submit" name="Make rent">Make rent</button>
