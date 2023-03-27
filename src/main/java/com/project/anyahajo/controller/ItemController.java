@@ -99,26 +99,26 @@ public class ItemController {
 
         return "redirect:/kolcsonzes";
     }
-
-
     @GetMapping("/item/{id}")
-    public String getItem(@PathVariable("id") String id, Model model) {
-        List<Item> items = itemRepository.findAll();
-        for(Item i : items){
-            if(i.getItem_id() == Integer.parseInt(id)){
-                model.addAttribute("item", i);
-                return "item";
-            }
+    public String getItem(@PathVariable("id") String id, Model model, Principal principal) {
+        Item item = itemRepository.findByItem_id(Long.parseLong(id));
+        if(principal != null && item != null) {
+            model.addAttribute("item", item);
+            User owner = (User) appUserService.loadUserByUsername(principal.getName());
+            model.addAttribute("basket", owner.getBasket());
+            return "item";
+        }
+        if (item != null) {
+            model.addAttribute("item", item);
+            return "item";
         }
         return "redirect:/kolcsonzes";
     }
-    @PostMapping(path = {"/kolcsonzes/putInTheBasket", "/kolcsonzes/kereses/putInTheBasket"})//("put-in-the-basket")
+    @PostMapping(path = {"/kolcsonzes/putInTheBasket", "/kolcsonzes/kereses/putInTheBasket"})
     public String putInTheBasket(@RequestParam("item_id") Long id, Principal principal) {
-        System.out.println("put in the basket1");
         User owner = (User) appUserService.loadUserByUsername(principal.getName());
         owner.getBasket().add(id);
         appUserRepository.save(owner);
-        System.out.println("put in the basket2");
         return "redirect:/kolcsonzes";
     }
     @PostMapping("kosar/delete")

@@ -12,6 +12,11 @@
             margin-left: auto;
             margin-right: auto;
         }
+         body
+         {
+             background: -webkit-linear-gradient(to right, #a75888, #1f88b4);
+             background: linear-gradient(to right, #a75888, #1f88b4);
+         }
     </style>
 
 </head>
@@ -31,8 +36,8 @@
         <td data-th-text="${item.name}"></td>
         <td data-th-text="${item.description}"></td>
         <td>
-            <a data-th-href="@{/egytermekmegjelenitesedemegnincskesz}" href="/egytermekmegjelenitesedemegnincskesz">Termék
-                linkje</a>
+            <a data-th-href="@{/item/{id}(id=${item.item_id})}" href="/item/116">Termék
+                megtekintése</a>
         </td>
         <td>
             <form

@@ -34,10 +34,25 @@
             <p class="item"  data-th-text="${item.availability}"></p>
             <p class="info">A termék leírása: </p>
             <p class="item"  data-th-text="${item.description}"></p>
-            <a href="/kolcsonzes">
-                <input type="submit" value="Vissza">
+
+            <form
+                    data-sec-authorize="isAuthenticated()"
+                    data-th-unless="${#lists.contains(basket, item.item_id)}"
+
+                    method="post"
+                    data-th-action="@{(${#lists.contains(basket, id)} ? '/kosar/delete' : '/kolcsonzes/putInTheBasket')}"
+                    action="/kolcsonzes/putInTheBasket"
+            >
+                <input type="hidden" name="item_id" data-th-value="${item.getItem_id()}">
+                <input type="submit" data-th-unless="${#lists.contains(basket, item.item_id)}" value="Kosárba teszem">
+                <input type="submit" data-th-if="${#lists.contains(basket, item.item_id)}" value="Kiveszem a kosárból">
+
+            </form>
+
+            <a href="/kolcsonzes" data-th-href="@{/kolcsonzes}">
+                <input type="submit" value="Termékek listája">
             </a>
-            <a href="/home">
+            <a href="/home" data-th-href="@{/home}">
                 <input type="submit" value="Home">
             </a>
         </div>
