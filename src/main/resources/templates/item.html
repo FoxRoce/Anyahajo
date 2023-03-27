@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body
+        {
+            background: -webkit-linear-gradient(to right, #a75888, #1f88b4);
+            background: linear-gradient(to right, #a75888, #1f88b4);
+        }
+        .info{
+            font-family:sans-serif;
+            font-size: 20px;
+            color:whitesmoke;
+        }
+        .item{
+            font-size: 18px;
+            color: lightgoldenrodyellow;
+        }
+
+    </style>
+    <title data-th-text="${item.name}"></title>
+</head>
+<body>
+<div class="center">
+    <div class="item">
+        <img src="" data-th-src="${item.getPicture()}" />
+        <div class="product-info">
+            <p class="info">A termék neve: </p>
+            <p class="item" data-th-text="${item.name}" ></p>
+            <p class="info">A termék elérhetősége: </p>
+            <p class="item"  data-th-text="${item.availability}"></p>
+            <p class="info">A termék leírása: </p>
+            <p class="item"  data-th-text="${item.description}"></p>
+            <a href="/kolcsonzes">
+                <input type="submit" value="Vissza">
+            </a>
+            <a href="/home">
+                <input type="submit" value="Home">
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

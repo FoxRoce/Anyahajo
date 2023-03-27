@@ -99,6 +99,19 @@ public class ItemController {
 
         return "redirect:/kolcsonzes";
     }
+
+
+    @GetMapping("/item/{id}")
+    public String getItem(@PathVariable("id") String id, Model model) {
+        List<Item> items = itemRepository.findAll();
+        for(Item i : items){
+            if(i.getItem_id() == Integer.parseInt(id)){
+                model.addAttribute("item", i);
+                return "item";
+            }
+        }
+        return "redirect:/kolcsonzes";
+    }
     @PostMapping(path = {"/kolcsonzes/putInTheBasket", "/kolcsonzes/kereses/putInTheBasket"})//("put-in-the-basket")
     public String putInTheBasket(@RequestParam("item_id") Long id, Principal principal) {
         System.out.println("put in the basket1");

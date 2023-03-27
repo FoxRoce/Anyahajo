@@ -19,6 +19,7 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long item_id;
 
+//    @Enumerated(EnumType.STRING)
     private Availability availability;
     private String name;
     private String description;
