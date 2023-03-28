@@ -42,7 +42,6 @@
                     class="form-control"
                     id="password"
                     name="password"
-                    th:field="*{password}"
                     placeholder="Új Jelszó">
             <p th:if="${#fields.hasErrors('password')}" class="text-danger" th:errors="*{password}"></p>
           </div>

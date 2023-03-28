@@ -94,7 +94,7 @@ public class UserController {
     }
 
     @GetMapping(path = {"/rents"})
-    public String lisToDos(Model model, Principal principal) {
+    public String listRents(Model model, Principal principal) {
 
         User user = (User) userDetailService.loadUserByUsername(principal.getName());
 
