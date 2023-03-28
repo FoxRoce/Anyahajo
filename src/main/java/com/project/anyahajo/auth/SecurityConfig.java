@@ -45,13 +45,12 @@ public class SecurityConfig {
                 .requestMatchers("/","/home","/register","/kolcsonzes","/books", "/kolcsonzes/kereses", "/item/{id}")
                 .permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
-
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                    .loginPage("/login")
-                    .defaultSuccessUrl("/home")
-                    .permitAll()
+                .loginPage("/login")
+                .defaultSuccessUrl("/home")
+                .permitAll()
                 .and()
                 .logout().logoutSuccessUrl("/home").permitAll()
                 .and();

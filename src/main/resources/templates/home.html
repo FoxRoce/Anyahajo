@@ -166,10 +166,10 @@
                     <div class = 'nav_list_item'>
                         <li><a data-th-href="@{'/kolcsonzes'}">Termékek</a></li>
                     </div>
-                    <div class = 'nav_list_item'>
+                    <div sec:authorize="!isAuthenticated()" class = 'nav_list_item'>
                         <li><a data-th-href="@{'/login'}">Bejelentkezés</a></li>
                     </div>
-                    <div class = 'nav_list_item'>
+                    <div sec:authorize="!isAuthenticated()"  class = 'nav_list_item'>
                         <li><a data-th-href="@{'/register'}">Regisztráció</a></li>
                     </div>
                     <div  sec:authorize="hasRole('ADMIN')" class="nav_list_item">
@@ -179,7 +179,7 @@
                         <li><a style="font-size:20px;" data-th-href="@{'/admin/add_new_rent'}">Új kölcsönzés hozzáadása</a></li>
                         <li><a  style="font-size:20px;" data-th-href="@{'/admin/rents'}">Kölcsönzések</a></li>
                     </div>
-                    <div class = 'nav_list_item'>
+                    <div sec:authorize="isAuthenticated()" class = 'nav_list_item'>
                         <li><a data-th-href="@{'/logout'}">Kijelentkezés</a></li>
                     </div>
                     <div class = 'nav_list_item'>
