@@ -28,4 +28,6 @@ public class Rent {
     private int price;
     private int deposit;
     private int payBackAmount;
+
+    private boolean isHistory = false;
 }
