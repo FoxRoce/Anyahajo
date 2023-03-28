@@ -41,6 +41,8 @@ public class User implements UserDetails {
         return authorities;
     }
 
+    @Column(name = "reset_password_token")
+    private String resetPasswordToken;
     @Override
     public String getPassword() {
         return this.password;
