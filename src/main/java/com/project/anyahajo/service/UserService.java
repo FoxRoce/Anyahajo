@@ -14,5 +14,9 @@ public interface UserService {
 
     User findUserByUser_id(Long id);
 
+    UserForm findUserById(long userId);
+
+    void updateUser(UserForm user, Long userId);
+
     User findUserByUserEmail(String email);
 }

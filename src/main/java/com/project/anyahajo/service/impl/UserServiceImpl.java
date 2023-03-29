@@ -5,6 +5,7 @@ import com.project.anyahajo.model.Role;
 import com.project.anyahajo.model.User;
 import com.project.anyahajo.repository.UserRepository;
 import com.project.anyahajo.service.UserService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,9 +14,11 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -27,12 +30,41 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUserRole(Long id, Role role) {
-        userRepository.updateRoleByUser_id(id,role);
+        userRepository.updateRoleByUser_id(id, role);
     }
 
     @Override
     public User findUserByUser_id(Long id) {
         return userRepository.findByUser_id(id);
+    }
+
+    @Override
+    public UserForm findUserById(long userId) {
+        User user = userRepository.findById(userId).get();
+        return mapToUserForm(user);
+    }
+
+    @Override
+    public void updateUser(UserForm userForm, Long userId) {
+        User user = userRepository.findById(userId).get();
+
+        userForm.setEnabled(user.getEnabled());
+        userForm.setLocked(user.getLocked());
+        userForm.setRole(user.getRole());
+        User UpdatedUser = mapToUser(userForm);
+        userRepository.save(UpdatedUser);
+    }
+
+    private User mapToUser(UserForm userForm) {
+
+        return new User(userForm.getId(),
+                userForm.getName(),
+                userForm.getEmail(),
+                passwordEncoder.encode(userForm.getPassword()),
+                userForm.getPhoneNumber(),
+                userForm.getLocked(),
+                userForm.getEnabled(),
+                userForm.getRole());
     }
 
     public User findUserByUserEmail(String email) {
@@ -48,6 +80,7 @@ public class UserServiceImpl implements UserService {
                 .id(user.getUser_id())
                 .name(user.getName())
                 .email(user.getEmail())
+                .password(user.getPassword())
                 .phoneNumber(user.getPhoneNumber())
                 .role(user.getRole())
                 .locked(user.getLocked())
