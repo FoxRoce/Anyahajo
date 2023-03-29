@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Getter
 @Setter
@@ -24,5 +25,4 @@ public class Item {
     private String description;
     private Byte[] picture;
     private boolean isActive = false;
-
 }

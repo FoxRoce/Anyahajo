@@ -1,5 +1,6 @@
 package com.project.anyahajo.controller;
 
+import com.project.anyahajo.auth.AppUserService;
 import com.project.anyahajo.form.RentForm;
 import com.project.anyahajo.form.UserForm;
 import com.project.anyahajo.model.*;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,7 @@ public class RentController {
     ItemRepository itemRepository;
     @NonNull
     UserRepository userRepository;
+    @NonNull AppUserService appUserService;
 
     @GetMapping(path = {"/admin/rents"})
     public String listItems(Model model) {
@@ -211,6 +214,28 @@ public class RentController {
 
         return "redirect:/admin/rents";
     }
-
-
+    @PostMapping("/kolcsonzes/igenyles")
+    public String sendRentDemand(Principal principal) {
+        User owner = (User) appUserService.loadUserByUsername(principal.getName());
+        List<Long> fromBasketRemoveableItems = new ArrayList<>();
+        for (Long item_id : owner.getBasket()) {
+            if (itemRepository.findByItem_id(item_id) == null) {
+                return "error-item-not-found";
+            } else {
+                Item item = itemRepository.findByItem_id(item_id);
+                Rent rent = new Rent();
+                rent.setItem(item);
+                rent.setUser(owner);
+                item.setAvailability(Availability.Reserved);
+                fromBasketRemoveableItems.add(item_id);
+                rentRepository.save(rent);
+                itemRepository.save(item);
+            }
+        }
+        for (int i = 0; i < fromBasketRemoveableItems.size(); i++) {
+            owner.getBasket().remove(fromBasketRemoveableItems.get(i));
+        }
+        userRepository.save(owner);
+        return "basket";
+    }
 }
