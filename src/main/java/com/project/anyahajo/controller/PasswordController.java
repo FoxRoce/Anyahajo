@@ -1,5 +1,4 @@
 package com.project.anyahajo.controller;
-//import com.project.anyahajo.model.PasswordResetToken;
 import com.project.anyahajo.model.User;
 import com.project.anyahajo.repository.UserRepository;
 import com.project.anyahajo.service.UserService;
@@ -8,6 +7,7 @@ import com.sun.mail.util.MailConnectException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.ResponseEntity;
@@ -54,7 +54,13 @@ public class PasswordController {
             System.out.println(email + "  " + emailBody);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
-        }
+       }
+//        @GetMapping"(http://localhost:8080/reset-password?token={token}")
+//        Model model;
+//        public String newerPassword(@PathVariable("token")String token){
+//            model.addAttribute("token", showResetPasswordForm());
+//            return
+//        }
 
         // visszatérési érték a siker visszajelzéséhez a felhasználónak
         return "success-reset";

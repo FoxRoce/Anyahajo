@@ -25,7 +25,7 @@ class EmailService implements EmailSender{
                     new MimeMessageHelper(mimeMessage, "utf-8");
             helper.setText(email, true);
             helper.setTo(to);
-            helper.setSubject("Cheers from Progmatic!");
+            helper.setSubject("Jelszó változtatás!");
             helper.setFrom("dd@gmail.com");
             mailSender.send(mimeMessage);
         } catch (MessagingException e) {
