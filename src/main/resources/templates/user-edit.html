@@ -14,6 +14,28 @@
         <input type="hidden" th:field="*{id}">
         <div class="form-row">
           <div class="form-group col-md-6">
+            <label for="name.lastName">Vezetéknév</label>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="name.lastName"
+                    name="name.lastName"
+                    th:field="*{name.lastName}"
+                    placeholder="Vezetéknév">
+            <p th:if="${#fields.hasErrors('name.lastName')}" class="text-danger" th:errors="*{name.lastName}"></p>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="name.firstName">Keresztnév</label>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="name.firstName"
+                    name="name.firstName"
+                    th:field="*{name.firstName}"
+                    placeholder="Keresztnév">
+            <p th:if="${#fields.hasErrors('name.firstName')}" class="text-danger" th:errors="*{name.firstName}"></p>
+          </div>
+          <div class="form-group col-md-6">
             <label for="email">Email</label>
             <input
                     type="text"
