@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kosár</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        table.center {
+            margin-left: auto;
+            margin-right: auto;
+        }
+         body
+         {
+             background: -webkit-linear-gradient(to right, #a75888, #1f88b4);
+             background: linear-gradient(to right, #a75888, #1f88b4);
+         }
+    </style>
+
+</head>
+<body>
+<h1>A kosár tartalma:</h1>
+<p data-th-if="${#lists.isEmpty(itemsInTheBasket)}">
+    Üres a kosarad.
+</p>
+<table data-th-unless="${#lists.isEmpty(itemsInTheBasket)}">
+    <tr>
+        <td>Név</td>
+        <td>Leírás</td>
+        <td>Termék</td>
+        <td>Eltávolítás a kosárból</td>
+    </tr>
+    <tr data-th-each="item: ${itemsInTheBasket}">
+        <td data-th-text="${item.name}"></td>
+        <td data-th-text="${item.description}"></td>
+        <td>
+            <a data-th-href="@{/item/{id}(id=${item.item_id})}" href="/item/116">Termék
+                megtekintése</a>
+        </td>
+        <td>
+            <form
+                    method="post"
+                    data-th-action="@{/kosar/delete}"
+                    action="/kosar/delete"
+            >
+                <input type="hidden" name="item_id" data-th-value="${item.getItem_id()}">
+                <input type="submit" value="Töröl">
+            </form>
+        </td>
+    </tr>
+</table>
+<form method="post" data-th-action="@{/kolcsonzes/igenyles}" action="/kolcsonzes/igenyles">
+    <input data-th-unless="${#lists.isEmpty(itemsInTheBasket)}" type="submit" value="Kölcsönzési igény leadása">
+</form>
+<a href="/kolcsonzes" data-th-href="@{/kolcsonzes}">
+    <button>Termékek listája</button>
+</a>
+</body>
+</html>
