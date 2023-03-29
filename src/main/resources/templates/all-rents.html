@@ -3,6 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>Kolcsonzesek</title>
+
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        table.center {
+            margin-left: auto;
+            margin-right: auto;
+        }
+        body
+        {
+            background: -webkit-linear-gradient(to right, #a75888, #1f88b4);
+            background: linear-gradient(to right, #a75888, #1f88b4);
+        }
+    </style>
+
 </head>
 <body>
 <h1>Kolcsonzesek: </h1>
@@ -25,7 +42,7 @@
     <tr th:each="rent: ${rents}">
         <td th:text="${rent.user.email}"></td>
         <td th:text="${rent.user.name} ? ${rent.user.name} : 'User has no name'"></td>
-        <td th:text="${rent.item.name}"></td>
+        <td th:text="${rent.item.name}"><form><button type="submit" name="accept">Accept</button></form></td>
         <td th:text="${rent.startOfRent}"></td>
         <td th:text="${rent.endOfRent}"></td>
         <td th:text="${rent.isExtended}"></td>

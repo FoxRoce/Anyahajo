@@ -34,4 +34,5 @@ public class UserForm {
     private Role role;
     private Boolean locked = false;
     private Boolean enabled = true;
+
 }
