@@ -117,8 +117,9 @@ public class ItemController {
     @PostMapping(path = {"/kolcsonzes/putInTheBasket", "/kolcsonzes/kereses/putInTheBasket"})
     public String putInTheBasket(@RequestParam("item_id") Long id, Principal principal) {
         User owner = (User) appUserService.loadUserByUsername(principal.getName());
-        owner.getBasket().add(id);
-        appUserRepository.save(owner);
+        Item item = itemRepository.findByItem_id(id);
+            owner.getBasket().add(id);
+            appUserRepository.save(owner);
         return "redirect:/kolcsonzes";
     }
     @PostMapping("kosar/delete")
