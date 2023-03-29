@@ -3,6 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>Kolcsonzesek</title>
+
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        table.center {
+            margin-left: auto;
+            margin-right: auto;
+        }
+        body
+        {
+            background: -webkit-linear-gradient(to right, #a75888, #1f88b4);
+            background: linear-gradient(to right, #a75888, #1f88b4);
+        }
+    </style>
+
 </head>
 <body>
 <h1>Kolcsonzesek: </h1>
@@ -10,29 +27,83 @@
 <p th:if="${#lists.isEmpty(rents)}">
     Nincsenek kolcsonzesek
 </p>
-<ul th:unless="${#lists.isEmpty(rents)}">
-    <li th:each="rent: ${rents}">
-        <b><p th:text="${rent.user.email}">user email</p></b>
-        <b><p th:text="${rent.user.name} ? ${rent.user.name} : 'User has no name'">user name</p></b>
-        <p th:text="${rent.item.name}">item name</p>
-        <p th:text="${rent.item.availability}">item availability</p>
-        <p th:text="${rent.startOfRent}">Starting date</p>
-        <p th:text="${rent.endOfRent}">End Date</p>
-        <p th:text="${rent.isExtended}">Extended</p>
-        <p th:text="${rent.price}">Price</p>
-        <p th:text="${rent.deposit}">Deposit</p>
-        <p th:text="${rent.payBackAmount}">Pay back amount</p>
+<table th:unless="${#lists.isEmpty(rents)}">
+    <tr>
+        <td>Felhasználó e-mail címe</td>
+        <td>Felhasználó neve</td>
+        <td>Kölcsönzött tárgy neve</td>
+        <td>Kölcsönzött tárgy Elerhetosege</td>
+        <td>Foglalasra valasz</td>
+        <td>Kölcsönzés kezdete</td>
+        <td>Kezdo datum modisitas</td>
+        <td>Kölcsönzés lejárta</td>
+        <td>Lejárti datum modositas</td>
+        <td>Volt-e meghosszabbítás</td>
+        <td>Meghosszabbítás 2 hettel</td>
+        <td>Kölcsönzési díj</td>
+        <td>Kaució díja</td>
+        <td>Kaucióból visszafizetendő összeg</td>
+        <td>History</td>
+        <td>Visszaveteli datum beallitasa</td>
+    </tr>
 
-        <div th:if="${rent.item.availability == T(com.project.anyahajo.model.Availability).Reserved}">
-        <form th:action="@{'/rents/'+${rent.rent_id}+'/accept'}" method="post">
-            <button type="submit" name="accept">Accept</button>
-        </form>
-        <form th:action="@{'/rents/'+${rent.rent_id}+'/decline'}" method="post">
-            <button type="submit" name="decline">Decline</button>
-        </form>
-        </div>
+    <tr th:each="rent: ${rents}">
+        <td th:text="${rent.user.email}"></td>
+        <td th:text="${rent.user.name} ? ${rent.user.name} : 'User has no name'"></td>
+        <td th:text="${rent.item.name}"></td>
 
+        <td th:text="${rent.item.availability}"></td>
+        <td><div th:if="${rent.item.availability == T(com.project.anyahajo.model.Availability).Reserved}">
+                <form th:action="@{'/rents/'+${rent.rent_id}+'/accept'}" method="post">
+                    <button type="submit" name="accept">Accept</button>
+                </form>
+                <form th:action="@{'/rents/'+${rent.rent_id}+'/decline'}" method="post">
+                    <button type="submit" name="decline">Decline</button>
+                </form>
+            </div>
+        </td>
+
+        <td th:text="${rent.startOfRent}"></td>
+        <td><div th:if="${rent.history == null} and ${rent.startOfRent != null}">
+                <form th:action="@{'/rents/'+${rent.rent_id}+'/changeStartDate'}" method="post">
+                    <input type="date" id="newStartDate" name="newStartDate" required>
+                    <button type="submit" name="changeDate">Change date</button>
+                </form>
+            </div>
+        </td>
+
+        <td th:text="${rent.endOfRent}"></td>
+        <td><div th:if="${rent.history == null} and ${rent.endOfRent != null}">
+                <form th:action="@{'/rents/'+${rent.rent_id}+'/changeEndDate'}" method="post">
+                    <input type="date" id="newEndDate" name="newEndDate" required>
+                    <button type="submit" name="changeDate">Change date</button>
+                </form>
+            </div>
+        </td>
+
+        <td th:text="${rent.isExtended}"></td>
+        <td><div th:if="${rent.history == null} and ${rent.isExtended == false} and ${rent.endOfRent != null}">
+                <form th:action="@{'/rents/'+${rent.rent_id}+'/extend'}" method="post">
+                    <button type="submit" name="extend">Extend by 2 weeks</button>
+                </form>
+            </div>
+        </td>
+
+        <td th:text="${rent.price}"></td>
+        <td th:text="${rent.deposit}"></td>
+        <td th:text="${rent.payBackAmount}"></td>
+
+        <td th:text="${rent.history}"></td>
+        <td><div th:if="${rent.history == null} and ${rent.endOfRent != null}">
+                <form th:action="@{'/rents/'+${rent.rent_id}+'/back'}" method="post">
+                    <input type="date" id="historyDate" name="historyDate" required>
+                    <button type="submit" name="Brought back">Click here if the item is back</button>
+                </form>
+            </div>
+        </td>
+
+    </tr>
     </li>
-</ul>
+</table>
 </body>
 </html>
