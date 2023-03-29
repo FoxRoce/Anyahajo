@@ -70,7 +70,8 @@
 <p th:if="${#lists.isEmpty(items)}">Nincs kolcsonozheto targy</p>
 
 <ul data-th-unless="${#lists.isEmpty(items)}">
-    <li data-th-each="item: ${items}" th:if="${#strings.isEmpty(param.itemType) or #strings.equals(param.itemType, item.__class__.simpleName)}">
+    <li data-th-each="item: ${items}"
+        th:if="${#strings.isEmpty(param.itemType) or #strings.equals(param.itemType, item.__class__.simpleName)}">
         <a data-th-href="@{${'/item/' + item.item_id}}"><b><p data-th-text="${item.name}">Targy nev</p></b></a>
         <p th:text="${item.item_id}">Id</p>
         <p th:text="${item.availability}">Foglalas</p>
@@ -94,23 +95,32 @@
 
         <form
                 data-sec-authorize="isAuthenticated()"
-                data-th-unless="${#lists.contains(basket, item.item_id)}"
-
+                data-th-if="${item.getAvailability() == T(com.project.anyahajo.model.Availability).Available}"
                 method="post"
-                data-th-action="@{(${#lists.contains(basket, id)} ? '/kosar/delete' : '/kolcsonzes/putInTheBasket')}"
-                action="/kolcsonzes/putInTheBasket"
-        >
+                data-th-action="@{'/kolcsonzes/putInTheBasket'}"
+                action="/kolcsonzes/putInTheBasket">
             <input type="hidden" name="item_id" data-th-value="${item.getItem_id()}">
             <input type="submit" data-th-unless="${#lists.contains(basket, item.item_id)}" value="Kosárba teszem">
-            <input type="submit" data-th-if="${#lists.contains(basket, item.item_id)}" value="Kiveszem a kosárból">
 
         </form>
+
+        <!--        <form-->
+        <!--                data-sec-authorize="isAuthenticated()"-->
+        <!--                data-th-unless="${#lists.contains(basket, item.item_id)}"-->
+        <!--                method="post"-->
+        <!--                data-th-action="@{(${#lists.contains(basket, id)} ? '/kosar/delete' : '/kolcsonzes/putInTheBasket')}"-->
+        <!--                action="/kolcsonzes/putInTheBasket">-->
+        <!--            <input type="hidden" name="item_id" data-th-value="${item.getItem_id()}">-->
+        <!--            <input type="submit" data-th-unless="${#lists.contains(basket, item.item_id)}" value="Kosárba teszem">-->
+        <!--            <input type="submit" data-th-if="${#lists.contains(basket, item.item_id)}" value="Kiveszem a kosárból">-->
+
+        <!--        </form>-->
 
         <form th:action="@{'/rents/'+${item.item_id}+'/reserve'}" method="post">
             <button type="submit" name="Make rent">Make rent</button>
         </form>
 
-        <div  sec:authorize="hasRole('ADMIN')" class="nav_list_item">
+        <div sec:authorize="hasRole('ADMIN')" class="nav_list_item">
             <form th:action="@{'/rents/'+${item.item_id}+'/reserve'}" method="post">
                 <button type="submit" name="Make rent">Make rent</button>
             </form>
