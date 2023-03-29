@@ -13,4 +13,6 @@ public interface UserService {
     void updateUserRole(Long id, Role tole);
 
     User findUserByUser_id(Long id);
+
+    User findUserByUserEmail(String email);
 }

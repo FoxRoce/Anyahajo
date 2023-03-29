@@ -35,6 +35,10 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByUser_id(id);
     }
 
+    public User findUserByUserEmail(String email) {
+        return userRepository.findByUserEmail(email);
+    }
+
     private UserForm mapToUserForm(User user) {
 
         return UserForm.builder()

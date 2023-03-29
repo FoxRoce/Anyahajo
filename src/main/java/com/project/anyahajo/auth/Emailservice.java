@@ -6,6 +6,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+
 @Service
 class EmailService implements EmailSender{
 
@@ -25,7 +26,7 @@ class EmailService implements EmailSender{
             helper.setText(email, true);
             helper.setTo(to);
             helper.setSubject("Cheers from Progmatic!");
-            helper.setFrom("hello@progmatic.com");
+            helper.setFrom("dd@gmail.com");
             mailSender.send(mimeMessage);
         } catch (MessagingException e) {
             System.err.println("** failed to send email\n" + e.getMessage());
