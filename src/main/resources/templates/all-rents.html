@@ -17,18 +17,26 @@
         <p th:text="${rent.item.name}">item name</p>
         <p th:text="${rent.item.availability}">item availability</p>
         <p th:text="${rent.startOfRent}">Starting date</p>
+
+        <div th:if="${rent.history == null} and ${rent.startOfRent != null}">
+            <form th:action="@{'/rents/'+${rent.rent_id}+'/changeStartDate'}" method="post">
+                <input type="date" id="newStartDate" name="newStartDate" required>
+                <button type="submit" name="changeDate">Change date</button>
+            </form>
+        </div>
+
         <p th:text="${rent.endOfRent}">End Date</p>
 
-        <div th:if="${rent.isHistory == false} and ${rent.endOfRent != null}">
-            <form th:action="@{'/rents/'+${rent.rent_id}+'/changeDate'}" method="post">
-                <input type="date" id="newDate" name="newDate">
+        <div th:if="${rent.history == null} and ${rent.endOfRent != null}">
+            <form th:action="@{'/rents/'+${rent.rent_id}+'/changeEndDate'}" method="post">
+                <input type="date" id="newEndDate" name="newEndDate" required>
                 <button type="submit" name="changeDate">Change date</button>
             </form>
         </div>
 
         <p th:text="${rent.isExtended}">Extended</p>
 
-        <div th:if="${rent.isHistory == false} and ${rent.isExtended == false} and ${rent.endOfRent != null}">
+        <div th:if="${rent.history == null} and ${rent.isExtended == false} and ${rent.endOfRent != null}">
             <form th:action="@{'/rents/'+${rent.rent_id}+'/extend'}" method="post">
                 <button type="submit" name="extend">Extend by 2 weeks</button>
             </form>
@@ -37,7 +45,7 @@
         <p th:text="${rent.price}">Price</p>
         <p th:text="${rent.deposit}">Deposit</p>
         <p th:text="${rent.payBackAmount}">Pay back amount</p>
-        <p th:text="${rent.isHistory}">History</p>
+        <p th:text="${rent.history}">History</p>
 
 
         <div th:if="${rent.item.availability == T(com.project.anyahajo.model.Availability).Reserved}">
@@ -49,8 +57,9 @@
         </form>
         </div>
 
-        <div th:if="${rent.isHistory == false} and ${rent.endOfRent != null} and ${#temporals.format(rent.endOfRent, 'yyyy-MM-dd') le #temporals.format(#temporals.createNow(), 'yyyy-MM-dd')}">
+        <div th:if="${rent.history == null} and ${rent.endOfRent != null} and ${#temporals.format(rent.endOfRent, 'yyyy-MM-dd') le #temporals.format(#temporals.createNow(), 'yyyy-MM-dd')}">
             <form th:action="@{'/rents/'+${rent.rent_id}+'/back'}" method="post">
+                <input type="date" id="historyDate" name="historyDate" required>
                 <button type="submit" name="Brought back">Click here if the item is back</button>
             </form>
         </div>

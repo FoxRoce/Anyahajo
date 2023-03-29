@@ -125,32 +125,33 @@ public class RentController {
         return "redirect:/admin/rents";
     }
 
-    @GetMapping("/asd")
-    public String addItemsToReserve(
-            @ModelAttribute("items") List<Item> items
-    ){
-        List<String> emailMessage = new ArrayList<>();
-        User user =(User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        emailMessage.add(user.getName() + " lefoglalt targyai: ");
-
-        for (Item item : items) {
-            item.setAvailability(Availability.Reserved);
-            emailMessage.add(item.getName());
-        }
-
-        List sendEmail = emailMessage;
-
-        return "redirect: /userProfile";
-    }
+//    @GetMapping("/asd")
+//    public String addItemsToReserve(
+//            @ModelAttribute("items") List<Item> items
+//    ){
+//        List<String> emailMessage = new ArrayList<>();
+//        User user =(User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//
+//        emailMessage.add(user.getName() + " lefoglalt targyai: ");
+//
+//        for (Item item : items) {
+//            item.setAvailability(Availability.Reserved);
+//            emailMessage.add(item.getName());
+//        }
+//
+//        List sendEmail = emailMessage;
+//
+//        return "redirect: /userProfile";
+//    }
 
     @PostMapping("/rents/{id}/back")
     public String updateRentBroughtBack(
-            @PathVariable("id") Long id
+            @PathVariable("id") Long id,
+            @ModelAttribute("historyDate") LocalDate date
     ) {
         Rent rent = rentRepository.findByRent_id(id);
         rent.getItem().setAvailability(Availability.Available);
-        rent.setHistory(true);
+        rent.setHistory(date);
 
         System.out.println("Sending e-mail to user...");
 
@@ -174,10 +175,10 @@ public class RentController {
         return "redirect:/admin/rents";
     }
 
-    @PostMapping("/rents/{id}/changeDate")
-    public String updateRentChangeDate(
+    @PostMapping("/rents/{id}/changeEndDate")
+    public String updateRentChangeEndDate(
             @PathVariable("id") Long id,
-            @ModelAttribute("newDate") LocalDate date
+            @ModelAttribute("newEndDate") LocalDate date
     ) {
         Rent rent = rentRepository.findByRent_id(id);
         rent.setEndOfRent(date);
@@ -187,6 +188,22 @@ public class RentController {
         } else {
             rent.setExtended(false);
         }
+
+        System.out.println("Sending e-mail to user...");
+
+        rentRepository.save(rent);
+
+        return "redirect:/admin/rents";
+    }
+
+    @PostMapping("/rents/{id}/changeStartDate")
+    public String updateRentChangeStartDate(
+            @PathVariable("id") Long id,
+            @ModelAttribute("newStartDate") LocalDate date
+    ) {
+        Rent rent = rentRepository.findByRent_id(id);
+        rent.setStartOfRent(date);
+        rent.setEndOfRent(date.plusDays(14));
 
         System.out.println("Sending e-mail to user...");
 

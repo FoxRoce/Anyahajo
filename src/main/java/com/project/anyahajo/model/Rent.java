@@ -29,5 +29,5 @@ public class Rent {
     private int deposit;
     private int payBackAmount;
 
-    private boolean isHistory = false;
+    private LocalDate history;
 }
