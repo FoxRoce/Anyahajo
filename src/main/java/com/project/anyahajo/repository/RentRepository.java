@@ -31,4 +31,10 @@ public interface RentRepository extends JpaRepository<Rent,Long> {
 
     @Query("select r from Rent r where r.user = ?1")
     List<Rent> findByUser(User user);
+
+    @Query("select r from Rent r where r.history IS NULL AND r.startOfRent IS NOT NULL ")
+    List<Rent> findBorrowed();
+
+    @Query("select r from Rent r where r.startOfRent IS NULL ")
+    List<Rent> findWaitAccept();
 }

@@ -238,4 +238,18 @@ public class RentController {
         userRepository.save(owner);
         return "basket";
     }
+
+    @GetMapping(path = {"/admin/rents/kikolcsonzott"})
+    public String listRentsBorrowed(Model model) {
+        List<Rent> rents = rentRepository.findBorrowed();
+        model.addAttribute("rents", rents);
+        return "all-rents";
+    }
+
+    @GetMapping(path = {"/admin/rents/jovahagyasravar"})
+    public String listRentsWaitAccept(Model model) {
+        List<Rent> rents = rentRepository.findWaitAccept();
+        model.addAttribute("rents", rents);
+        return "all-rents";
+    }
 }
