@@ -26,7 +26,6 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Controller
-@RequiredArgsConstructor
 public class ItemController {
 
     @NonNull
@@ -35,6 +34,21 @@ public class ItemController {
     private UserRepository appUserRepository;
     @NonNull
     private AppUserService appUserService;
+
+    private static final String FOLDER_PATH = "src/main/resources/static/images/";
+
+    public ItemController(ItemRepository itemRepository, UserRepository appUserRepository, AppUserService appUserService) {
+        this.itemRepository = itemRepository;
+        this.appUserRepository = appUserRepository;
+        this.appUserService = appUserService;
+        if (!Files.exists(Paths.get(FOLDER_PATH))) {
+            try {
+                Files.createDirectories(Paths.get(FOLDER_PATH));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     @GetMapping(path = {"/kolcsonzes"})
     public String listItems(Model model, Principal principal) {
@@ -65,15 +79,27 @@ public class ItemController {
         return "admin-add-item";
     }
 
+
+
+
+
     @PostMapping(path = {"/admin/ujTargyFelvetel"})
     public String saveItem(
             @ModelAttribute("newItem")
             @Validated
             ItemForm itemForm,
             BindingResult bindingResult,
-            @RequestParam("file") MultipartFile file // új paraméter a feltöltött fájlhoz
+            @RequestParam("file") MultipartFile file
     ) {
-// System.out.println("Inside post mapping");
+        Path folderPath = Paths.get("src/main/resources/static/images/");
+        if (!Files.exists(folderPath)) {
+            try {
+                Files.createDirectories(folderPath);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         if (bindingResult.hasErrors()) {
             System.out.println(bindingResult);
             return "admin-add-item";
@@ -101,13 +127,12 @@ public class ItemController {
         entity.setDescription(itemForm.getDescription());
         entity.setActive(itemForm.getIsActive());
 
-// Képfájl feltöltése
         if (!file.isEmpty()) {
             try {
                 byte[] bytes = file.getBytes();
                 Path path = Paths.get("src/main/resources/static/images/" + file.getOriginalFilename());
                 Files.write(path, bytes);
-                entity.setPicture(Objects.requireNonNull(file.getOriginalFilename()).getBytes()); // kép elérési útjának beállítása
+                entity.setPicture(path.toString().getBytes());
             } catch (IOException e) {
                 e.printStackTrace();
             }
