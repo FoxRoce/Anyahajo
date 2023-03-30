@@ -71,18 +71,6 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByUserEmail(email);
     }
 
-
-    @Override
-    public User findUserByResetPasswordToken(String token) {
-        return null;
-    }
-
-    @Override
-    public void changeUserPassword(User user, String password) {
-
-    }
-
-
     public User findpasswordtoken(String resetPasswordToken){
         return userRepository.findByResetPasswordToken(resetPasswordToken);
    }

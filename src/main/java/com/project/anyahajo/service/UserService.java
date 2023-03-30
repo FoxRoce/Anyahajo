@@ -19,9 +19,4 @@ public interface UserService {
     void updateUser(UserForm user, Long userId);
 
     User findUserByUserEmail(String email);
-
-
-    User findUserByResetPasswordToken(String token);
-
-    void changeUserPassword(User user, String password);
 }
