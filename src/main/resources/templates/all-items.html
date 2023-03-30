@@ -52,13 +52,13 @@
 <h1>Kolcsonzes lista:</h1>
 
 <div>
-    <form th:action="@{/kolcsonzes/kereses}" class="form-inline my-2 my-lg-0 mb-3">
-        <input name="text" class="form-control mr-sm-2 mb-5" type="search" placeholder="Keresés" aria-label="Search">
+    <form th:action="@{/kolcsonzes/kereses}" data-th-object="${searchData}" method="post" class="form-inline my-2 my-lg-0 mb-3">
+        <input name="text" th:field="*{text}" class="form-control mr-sm-2 mb-5" type="search" placeholder="Keresés" aria-label="Search">
 
         <label for="item-type">Szűrés típusonként:</label>
-        <select id="item-type" name="itemType" onchange="this.form.submit()">
+        <select id="item-type" th:field="*{itemType}" name="itemType" onchange="this.form.submit()">
             <option value="">Válassz egy opciót</option>
-            <option value="">Minden</option>
+            <option value="*">Minden</option>
             <option value="Book">Könyv</option>
             <option value="Carrier">Hordozó</option>
             <option value="Babycare">Babaápolás</option>
@@ -70,8 +70,7 @@
 <p th:if="${#lists.isEmpty(items)}">Nincs kolcsonozheto targy</p>
 
 <ul data-th-unless="${#lists.isEmpty(items)}">
-    <li data-th-each="item: ${items}"
-        th:if="${#strings.isEmpty(param.itemType) or #strings.equals(param.itemType, item.__class__.simpleName)}">
+    <li data-th-each="item: ${items}">
         <a data-th-href="@{${'/item/' + item.item_id}}"><b><p data-th-text="${item.name}">Targy nev</p></b></a>
         <p th:text="${item.item_id}">Id</p>
         <p th:text="${item.availability}">Foglalas</p>
@@ -100,7 +99,7 @@
                 data-th-action="@{'/kolcsonzes/putInTheBasket'}"
                 action="/kolcsonzes/putInTheBasket">
             <input type="hidden" name="item_id" data-th-value="${item.getItem_id()}">
-            <input type="submit" data-th-unless="${#lists.contains(basket, item.item_id)}" value="Kosárba teszem">
+            <input type="submit" data-th-unless="${#lists.contains(basket, item.getItem_id())}" value="Kosárba teszem">
 
         </form>
 

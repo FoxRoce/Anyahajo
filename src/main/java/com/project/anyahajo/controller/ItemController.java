@@ -17,6 +17,7 @@ import java.security.Principal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Controller
@@ -34,6 +35,7 @@ public class ItemController {
     public String listItems(Model model, Principal principal) {
         List<Item> items = itemRepository.findAll();
         model.addAttribute("items", items);
+        model.addAttribute("searchData", new SearchForm("", ""));
         if (principal != null) {
             User owner = (User) appUserService.loadUserByUsername(principal.getName());
             model.addAttribute("basket", owner.getBasket());
@@ -45,9 +47,19 @@ public class ItemController {
         return "redirect:/kolcsonzes?itemType=Book";
     }
 
-    @GetMapping("/kolcsonzes/kereses")
-    public String searchItems(Model model, @RequestParam(value = "text") String text) {
-        List<Item> items = itemRepository.findByText(text);
+    private record SearchForm(String text, String itemType){};
+
+    @PostMapping("/kolcsonzes/kereses")
+    public String searchItems(
+            Model model,
+            @ModelAttribute("searchData") SearchForm form
+    ) throws ClassNotFoundException {
+        List<Item> items;
+        if (Objects.equals(form.itemType, "") || Objects.equals(form.itemType, "*")) {
+            items = itemRepository.findByText(form.text);
+        } else {
+            items = itemRepository.findBySearch(form.text, Class.forName("com.project.anyahajo.model." + form.itemType));
+        }
         model.addAttribute("items", items);
         return "all-items";
     }
