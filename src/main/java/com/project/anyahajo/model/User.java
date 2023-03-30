@@ -1,21 +1,21 @@
 package com.project.anyahajo.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.*;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "ah_user")
 public class User implements UserDetails {
 
@@ -31,7 +31,19 @@ public class User implements UserDetails {
     private Boolean locked = false;
     private Boolean enabled = true;
 
+    @Enumerated(EnumType.STRING)
     private Role role;
+
+    public User(Long user_id, Name name, String email, String password, String phoneNumber, Boolean locked, Boolean enabled, Role role) {
+        this.user_id = user_id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.locked = locked;
+        this.enabled = enabled;
+        this.role = role;
+    }
 
     @ElementCollection
     @Column(name = "item_id")
@@ -55,6 +67,8 @@ public class User implements UserDetails {
         return authorities;
     }
 
+    @Column(name = "reset_password_token")
+    private String resetPasswordToken;
     @Override
     public String getPassword() {
         return this.password;

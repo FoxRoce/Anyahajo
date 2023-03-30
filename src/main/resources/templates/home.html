@@ -169,7 +169,7 @@
                     <div sec:authorize="!isAuthenticated()" class = 'nav_list_item'>
                         <li><a data-th-href="@{'/login'}">Bejelentkezés</a></li>
                     </div>
-                    <div sec:authorize="!isAuthenticated()"  class = 'nav_list_item'>
+                    <div sec:authorize="!isAuthenticated()" class = 'nav_list_item'>
                         <li><a data-th-href="@{'/register'}">Regisztráció</a></li>
                     </div>
                     <div  sec:authorize="hasRole('ADMIN')" class="nav_list_item">
