@@ -22,11 +22,16 @@
 
 </head>
 <body>
-<h1>Kolcsonzesek: </h1>
+<h1>Kölcsönzések: </h1>
+
+<a data-th-href="@{'/admin/rents'}">Minden kölcsönzés</a>
+<a data-th-href="@{'/admin/rents/kikolcsonzott'}">Folyamatban levő kölcsönzések</a>
+<a data-th-href="@{'/admin/rents/jovahagyasravar'}">Jóváhagyásra váró kölcsönzések</a>
+<a data-th-href="@{'/admin/rents/lejart'}">Lejárt kölcsönzések</a>
 
 
 <p th:if="${#lists.isEmpty(rents)}">
-    Nincsenek kolcsonzesek
+    Nincsenek kölcsönzések
 </p>
 <table th:unless="${#lists.isEmpty(rents)}">
     <tr>

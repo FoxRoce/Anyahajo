@@ -252,4 +252,11 @@ public class RentController {
         model.addAttribute("rents", rents);
         return "all-rents";
     }
+
+    @GetMapping(path = {"/admin/rents/lejart"})
+    public String listRentsExpired(Model model) {
+        List<Rent> rents = rentRepository.findExpired();
+        model.addAttribute("rents", rents);
+        return "all-rents";
+    }
 }
