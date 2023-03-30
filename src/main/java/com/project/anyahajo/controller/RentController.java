@@ -1,6 +1,7 @@
 package com.project.anyahajo.controller;
 
 import com.project.anyahajo.auth.AppUserService;
+import com.project.anyahajo.auth.EmailSender;
 import com.project.anyahajo.form.RentForm;
 import com.project.anyahajo.form.UserForm;
 import com.project.anyahajo.model.*;
@@ -24,12 +25,15 @@ import java.util.List;
 public class RentController {
 
     @NonNull
-    RentRepository rentRepository;
+    private RentRepository rentRepository;
     @NonNull
-    ItemRepository itemRepository;
+    private ItemRepository itemRepository;
     @NonNull
-    UserRepository userRepository;
-    @NonNull AppUserService appUserService;
+    private UserRepository userRepository;
+    @NonNull
+    private AppUserService appUserService;
+    @NonNull
+    private EmailSender emailSender;
 
     @GetMapping(path = {"/admin/rents"})
     public String listItems(Model model) {
@@ -91,6 +95,15 @@ public class RentController {
 
         rentRepository.save(newRent);
 
+        String emailBody = "Kedves vásárló!\n\n" + newRent.getItem().getName() +
+                " nevű tárgyra tett kölcsönzése el lett fogadva.\n" +
+                "Lejárati dátum: " + newRent.getEndOfRent()  +
+                "\nMeghoszabítást igényelhet az alábbi e-mail címen:\n" +
+                "admin@gmail.com" +
+                "\n\nÜdvözlettel, Anyahajó";
+
+        emailSender.send(newRent.getUser().getEmail(),emailBody,"Kölcsönzés elfogadva");
+
         return "redirect:/admin/rents";
     }
 
@@ -110,8 +123,16 @@ public class RentController {
        rent.setStartOfRent(LocalDate.now());
        rent.setEndOfRent(LocalDate.now().plusDays(14));
 
-        rentRepository.updateItemAndStartOfRentAndEndOfRentByRent_id(rent.getItem(),rent.getStartOfRent(),rent.getEndOfRent(),id);
+        String emailBody = "Kedves vásárló!\n\n" + rent.getItem().getName() +
+                " nevű tárgyra tett kölcsönzése el lett fogadva.\n" +
+                "Lejárati dátum: " + rent.getEndOfRent()  +
+                "\nMeghoszabítást igényelhet az alábbi e-mail címen:\n" +
+                "admin@gmail.com" +
+                "\n\nÜdvözlettel, Anyahajó";
 
+        emailSender.send(rent.getUser().getEmail(),emailBody,"Kölcsönzés elfogadva");
+
+        rentRepository.save(rent);
         return "redirect:/admin/rents";
     }
 
@@ -122,30 +143,19 @@ public class RentController {
         Rent rent = rentRepository.findByRent_id(id);
         rent.getItem().setAvailability(Availability.Available);
 
-        System.out.println("Sending e-mail to user...");
+        String emailBody = "Kedves vásárló!\n\n" +
+                "Sajnálattal közöljük, hogy a "+ rent.getItem().getName() +
+                " nevű tárgyra tett kölcsönzése el lett utasítva.\n" +
+                "\n\nÜdvözlettel, Anyahajó";
+
+        emailSender.send(rent.getUser().getEmail(),emailBody,"Kölcsönzés elutasítva");
+
+        rentRepository.save(rent);
 
         rentRepository.deleteById(id);
         return "redirect:/admin/rents";
     }
 
-//    @GetMapping("/asd")
-//    public String addItemsToReserve(
-//            @ModelAttribute("items") List<Item> items
-//    ){
-//        List<String> emailMessage = new ArrayList<>();
-//        User user =(User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//
-//        emailMessage.add(user.getName() + " lefoglalt targyai: ");
-//
-//        for (Item item : items) {
-//            item.setAvailability(Availability.Reserved);
-//            emailMessage.add(item.getName());
-//        }
-//
-//        List sendEmail = emailMessage;
-//
-//        return "redirect: /userProfile";
-//    }
 
     @PostMapping("/rents/{id}/back")
     public String updateRentBroughtBack(
@@ -156,7 +166,12 @@ public class RentController {
         rent.getItem().setAvailability(Availability.Available);
         rent.setHistory(date);
 
-        System.out.println("Sending e-mail to user...");
+        String emailBody = "Kedves vásárló!\n\n"
+                + rent.getItem().getName() + " nevű tárgyra vissza lett hozva." +
+                "\nKöszönjük kölcsönzését!" +
+                "\n\nÜdvözlettel, Anyahajó";
+
+        emailSender.send(rent.getUser().getEmail(),emailBody,"Kölcsönzés vége");
 
         rentRepository.save(rent);
 
@@ -171,7 +186,12 @@ public class RentController {
         rent.setEndOfRent(rent.getEndOfRent().plusDays(14));
         rent.setExtended(true);
 
-        System.out.println("Sending e-mail to user...");
+        String emailBody = "Kedves vásárló!\n\n" + rent.getItem().getName() +
+                " nevű tárgyra tett kölcsönzés lejárati ideje meg lett hosszabítva.\n" +
+                "Új lejárati dátum: " + rent.getEndOfRent()  +
+                "\n\nÜdvözlettel, Anyahajó";
+
+        emailSender.send(rent.getUser().getEmail(),emailBody,"Lejárati dátum meghosszabítás");
 
         rentRepository.save(rent);
 
@@ -191,8 +211,13 @@ public class RentController {
         } else {
             rent.setExtended(false);
         }
+        String emailBody = "Kedves vásárló!\n\n" + rent.getItem().getName() +
+                " nevű tárgyra tett kölcsönzés lejárati ideje megváltozott.\n" +
+                "Új lejárati dátum: " + rent.getEndOfRent()  +
+                "\nMegértését köszönjük." +
+                "\n\nÜdvözlettel, Anyahajó";
 
-        System.out.println("Sending e-mail to user...");
+        emailSender.send(rent.getUser().getEmail(),emailBody,"Lejárati dátum módosítás");
 
         rentRepository.save(rent);
 
@@ -208,8 +233,6 @@ public class RentController {
         rent.setStartOfRent(date);
         rent.setEndOfRent(date.plusDays(14));
 
-        System.out.println("Sending e-mail to user...");
-
         rentRepository.save(rent);
 
         return "redirect:/admin/rents";
@@ -218,6 +241,13 @@ public class RentController {
     public String sendRentDemand(Principal principal) {
         User owner = (User) appUserService.loadUserByUsername(principal.getName());
         List<Long> fromBasketRemoveableItems = new ArrayList<>();
+
+        List<String> emailBody = new ArrayList<>();
+        emailBody.add("Új foglalás:");
+        emailBody.add("Név: " + owner.getName().toString());
+        emailBody.add("E-mail: " + owner.getEmail());
+        emailBody.add("Foglalt tárgyak: ");
+
         for (Long item_id : owner.getBasket()) {
             if (itemRepository.findByItem_id(item_id) == null) {
                 return "error-item-not-found";
@@ -229,13 +259,18 @@ public class RentController {
                 item.setAvailability(Availability.Reserved);
                 fromBasketRemoveableItems.add(item_id);
                 rentRepository.save(rent);
-                itemRepository.save(item);
+//                itemRepository.save(item);
+                emailBody.add(item.getName());
             }
         }
         for (int i = 0; i < fromBasketRemoveableItems.size(); i++) {
             owner.getBasket().remove(fromBasketRemoveableItems.get(i));
         }
         userRepository.save(owner);
+
+        emailSender.send(owner.getEmail(),emailBody.toString(),"Foglalas");
+        emailSender.send("admin@gmail.com",emailBody.toString(),"Foglalas");
+
         return "basket";
     }
 }

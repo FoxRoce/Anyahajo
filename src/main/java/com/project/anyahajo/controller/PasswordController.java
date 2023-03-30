@@ -50,7 +50,7 @@ public class PasswordController {
         String resetUrl = "http://localhost:8080/reset-password?token=" + token;
         String emailBody = "Kattintson a következő linkre a jelszó visszaállításához: " + resetUrl;
         try {
-            emailSender.send(user.getEmail(), emailBody);
+            emailSender.send(user.getEmail(), emailBody, "Jelszó változtatás!");
             System.out.println(email + "  " + emailBody);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
