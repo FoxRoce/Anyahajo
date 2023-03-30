@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <style>
@@ -77,11 +77,11 @@
             animation: 2s slideUp ease forwards .5s;
             position: relative;
         }
-      .nav_list_itemb{
-          text-decoration: none;
-          font-size: 25px;
-          color: #fff;
-      }
+        .nav_list_itemb{
+            text-decoration: none;
+            font-size: 25px;
+            color: #fff;
+        }
 
         .nav_list li::before {
             content: '';
@@ -104,7 +104,7 @@
             animation: 1s fadeIn ease forwards 1s;
         }
 
-        .popover .close::after {
+        .popover {
             right: 0;
             top: 0;
             width: 50px;
@@ -143,55 +143,26 @@
             }
         }
     </style>
-    <title>Title</title>
+
+    <title>Admin</title>
 </head>
 <body>
 <div class="container">
-    <h1>
-        <a href="#menu">Kattints ide</a>
-    </h1>
-
     <div class="popover" id="menu">
         <div class = 'content'>
-            <a href="#" class="close"></a>
             <div class = 'nav'>
                 <ul class = 'nav_list'>
-
-                    <div class = 'nav_list_item'>
-                        <li><a data-th-href="@{'/home'}">Főoldal</a></li>
-                    </div>
-                    <div class = 'nav_list_item'>
-                        <li><a href="https://www.anyahajokozpont.hu/sample-page/">About</a></li>
-                    </div>
-                    <div class = 'nav_list_item'>
-                        <li><a data-th-href="@{'/kolcsonzes'}">Termékek</a></li>
-                    </div>
-                    <div class = 'nav_list_item'>
-                        <li><a data-th-href="@{'/login'}">Bejelentkezés</a></li>
-                    </div>
-                    <div class = 'nav_list_item'>
-                        <li><a data-th-href="@{'/register'}">Regisztráció</a></li>
-                    </div>
-                    <div  sec:authorize="hasRole('ADMIN')" class="nav_list_item">
-                        <li><a data-th-href="@{'/admin'}" href="/admin">Admin oldal</a></li>
-                    </div>
-                    <div class = 'nav_list_item'>
-                        <li><a data-th-href="@{'/logout'}">Kijelentkezés</a></li>
-                    </div>
-                    <div class = 'nav_list_item'>
-                        <li><a data-th-href="@{'https://www.anyahajokozpont.hu/'}">Vissza az Anyahajó oldalára</a></li>
-                    </div>
-
+<div  sec:authorize="hasRole('ADMIN')" class="nav_list_item">
+    <ul><a style="font-size:20px;" data-th-href="@{'/admin/ujTargyFelvetel'}" href="/admin/ujTargyFelvetel">Új tárgy felvétele</a></ul>
+   <ul><a style="font-size:20px;" data-th-href="@{'/admin/users'}" href="/admin/users">Felhasználok listája</a></ul>
+   <ul><a style="font-size:20px;" data-th-href="@{'/kolcsonzes}" href="/kolcsonzes">Kölcsönzések Igénylése</a></ul>
+   <ul><a style="font-size:20px;" data-th-href="@{'/admin/add_new_rent'}" href="/admin/add_new_rent">Új kölcsönzés hozzáadása</a></ul>
+   <ul><a  style="font-size:20px;" data-th-href="@{'/admin/rents'}" href="/admin/rents">Kölcsönzések</a></ul>
+</div>
                 </ul>
             </div>
         </div>
     </div>
 </div>
-<!--                            <li><a style="font-size:20px;" data-th-href="@{'/admin/ujTargyFelvetel'}">Új tárgy felvétele</a></li>-->
-<!--                            <li><a style="font-size:20px;" data-th-href="@{'/admin/users'}">Felhasználok listája</a></li>-->
-<!--                            <li>Kölcsönzések Igénylése</li>-->
-<!--                        <li><a style="font-size:20px;" data-th-href="@{'/admin/add_new_rent'}">Új kölcsönzés hozzáadása</a></li>-->
-<!--                        <li><a  style="font-size:20px;" data-th-href="@{'/admin/rents'}">Kölcsönzések</a></li>-->
-
 </body>
 </html>
