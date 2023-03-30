@@ -29,10 +29,12 @@ public class PasswordController {
     @Autowired
     private UserRepository userRepository;
 
-    @PostMapping("/reset-password")
+
+    @PostMapping("/forgot-password")
     public String processForgotPassword(
             @RequestParam("email") String email
-    ) {
+    )
+    {
         // ellenőrizze, hogy a felhasználói fiók létezik-e a megadott e-mail cím alapján
         User user = userService.findUserByUserEmail(email);
         if (user == null) {
@@ -62,14 +64,63 @@ public class PasswordController {
 //            return
 //        }
 
+
         // visszatérési érték a siker visszajelzéséhez a felhasználónak
         return "success-reset";
     }
-    @GetMapping("/reset-password")
-    public String showResetPasswordForm() {
-            return "forgot-password";
+    @PostMapping("/reset-password")
+    public String processResetPassword(
+            @RequestParam("token") String token,
+            @RequestParam("password") String password,
+            @RequestParam("confirmPassword") String confirmPassword,
+            Model model
+    ) {
+        // ellenőrizzük, hogy a két jelszó megegyezik-e
+        if (!password.equals(confirmPassword)) {
+            model.addAttribute("error", "A megadott jelszavak nem egyeznek meg.");
+            return "reset-password";
         }
+
+        // ellenőrizzük, hogy a token érvényes-e és lejárat nélküli
+        User user = userService.findUserByResetPasswordToken(token);
+        if (user == null) {
+            model.addAttribute("error", "A jelszó-visszaállítási token érvénytelen vagy lejárt.");
+            return "reset-password";
+        }
+
+        // ha minden ellenőrzés sikeres volt, akkor beállítjuk az új jelszót a felhasználóhoz és töröljük a token-t
+        userService.changeUserPassword(user, password);
+        user.setResetPasswordToken(null);
+        userRepository.save(user);
+
+        // visszairányítjuk a felhasználót a bejelentkezési oldalra
+        return "redirect:/login";
     }
+    @GetMapping("/new-password")
+    public String showResetPasswordForm(
+            @RequestParam("token") String token,
+            Model model
+    ) {
+//        // ellenőrizzük, hogy a token érvényes-e és lejáratnál.
+////        passwordResetToken = userService.findUserByResetPasswordToken(token);
+////        if (passwordResetToken == null) {
+//            // Ha a token érvénytelen vagy lejárt, akkor jelenítse meg a megfelelő hibaüzenetet
+//            model.addAttribute("errorMessage", "A jelszó-visszaállítási link érvénytelen vagy lejárt.");
+//            return "reset-password-error";
+//        }
+//
+//        // Tegyük lehetővé a jelszó visszaállítását a felhasználó számára
+//        model.addAttribute("token", token);
+//        return "new-password";
+//    }
+
+
+//        @GetMapping("/forgot-password")
+//    public String showResetPasswordForm() {
+//            return "forgot-password";
+//        }
+
+}
 
 
 

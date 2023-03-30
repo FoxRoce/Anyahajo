@@ -70,7 +70,20 @@ public class UserServiceImpl implements UserService {
     public User findUserByUserEmail(String email) {
         return userRepository.findByUserEmail(email);
     }
-   public User findpasswordtoken(String resetPasswordToken){
+
+
+    @Override
+    public User findUserByResetPasswordToken(String token) {
+        return null;
+    }
+
+    @Override
+    public void changeUserPassword(User user, String password) {
+
+    }
+
+
+    public User findpasswordtoken(String resetPasswordToken){
         return userRepository.findByResetPasswordToken(resetPasswordToken);
    }
 
