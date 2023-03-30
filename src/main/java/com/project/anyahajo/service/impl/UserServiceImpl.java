@@ -67,6 +67,13 @@ public class UserServiceImpl implements UserService {
                 userForm.getRole());
     }
 
+    public User findUserByUserEmail(String email) {
+        return userRepository.findByUserEmail(email);
+    }
+   public User findpasswordtoken(String resetPasswordToken){
+        return userRepository.findByResetPasswordToken(resetPasswordToken);
+   }
+
     private UserForm mapToUserForm(User user) {
 
         return UserForm.builder()

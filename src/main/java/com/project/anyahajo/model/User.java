@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.*;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -31,6 +30,8 @@ public class User implements UserDetails {
     private String phoneNumber;
     private Boolean locked = false;
     private Boolean enabled = true;
+
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     public User(Long user_id, Name name, String email, String password, String phoneNumber, Boolean locked, Boolean enabled, Role role) {
@@ -66,6 +67,8 @@ public class User implements UserDetails {
         return authorities;
     }
 
+    @Column(name = "reset_password_token")
+    private String resetPasswordToken;
     @Override
     public String getPassword() {
         return this.password;

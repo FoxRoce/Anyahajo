@@ -115,10 +115,6 @@
 
         <!--        </form>-->
 
-        <form th:action="@{'/rents/'+${item.item_id}+'/reserve'}" method="post">
-            <button type="submit" name="Make rent">Make rent</button>
-        </form>
-
         <div sec:authorize="hasRole('ADMIN')" class="nav_list_item">
             <form th:action="@{'/rents/'+${item.item_id}+'/reserve'}" method="post">
                 <button type="submit" name="Make rent">Make rent</button>
