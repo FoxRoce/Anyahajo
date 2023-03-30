@@ -23,7 +23,7 @@ class EmailService implements EmailSender{
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper =
                     new MimeMessageHelper(mimeMessage, "utf-8");
-            helper.setText(email, true);
+            helper.setText(email, false);
             helper.setTo(to);
             helper.setSubject(subject);
             helper.setFrom("dd@gmail.com");
