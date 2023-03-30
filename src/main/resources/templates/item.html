@@ -26,7 +26,7 @@
 <body>
 <div class="center">
     <div class="item">
-        <img src="" data-th-src="${item.getPicture()}" />
+        <img src="/images/${item.picture}" alt="Kép" />
         <div class="product-info">
             <p class="info">A termék neve: </p>
             <p class="item" data-th-text="${item.name}" ></p>
@@ -46,6 +46,20 @@
 
             </form>
 
+            <a href="/kolcsonzes" data-th-href="@{/kolcsonzes}">
+                <input type="submit" value="Termékek listája">
+            </a>
+            <a href="/home" data-th-href="@{/home}">
+                <input type="submit" value="Home">
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+
+
 <!--            <form-->
 <!--                    data-sec-authorize="isAuthenticated()"-->
 <!--                    data-th-unless="${#lists.contains(basket, item.item_id)}"-->
@@ -59,15 +73,3 @@
 <!--                <input type="submit" data-th-if="${#lists.contains(basket, item.item_id)}" value="Kiveszem a kosárból">-->
 
 <!--            </form>-->
-
-            <a href="/kolcsonzes" data-th-href="@{/kolcsonzes}">
-                <input type="submit" value="Termékek listája">
-            </a>
-            <a href="/home" data-th-href="@{/home}">
-                <input type="submit" value="Home">
-            </a>
-        </div>
-    </div>
-</div>
-</body>
-</html>
