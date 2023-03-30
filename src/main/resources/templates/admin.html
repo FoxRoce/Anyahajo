@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"  xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <style>
@@ -104,7 +104,7 @@
             animation: 1s fadeIn ease forwards 1s;
         }
 
-        .popover {
+        .popover .close::after {
             right: 0;
             top: 0;
             width: 50px;
@@ -143,26 +143,39 @@
             }
         }
     </style>
-
-    <title>Admin</title>
+    <title>Title</title>
 </head>
 <body>
 <div class="container">
+    <h1>
+        <a href="#menu">Kattints ide</a>
+    </h1>
+
     <div class="popover" id="menu">
         <div class = 'content'>
+            <a href="#" class="close"></a>
             <div class = 'nav'>
                 <ul class = 'nav_list'>
-<div  sec:authorize="hasRole('ADMIN')" class="nav_list_item">
-    <ul><a style="font-size:20px;" data-th-href="@{'/admin/ujTargyFelvetel'}" href="/admin/ujTargyFelvetel">Új tárgy felvétele</a></ul>
-   <ul><a style="font-size:20px;" data-th-href="@{'/admin/users'}" href="/admin/users">Felhasználok listája</a></ul>
-   <ul><a style="font-size:20px;" data-th-href="@{'/kolcsonzes}" href="/kolcsonzes">Kölcsönzések Igénylése</a></ul>
-   <ul><a style="font-size:20px;" data-th-href="@{'/admin/add_new_rent'}" href="/admin/add_new_rent">Új kölcsönzés hozzáadása</a></ul>
-   <ul><a  style="font-size:20px;" data-th-href="@{'/admin/rents'}" href="/admin/rents">Kölcsönzések</a></ul>
-</div>
+
+                    <div class = 'nav_list_item'>
+                        <li><a data-th-href="@{'/admin/ujTargyFelvetel'}" href="/admin/ujTargyFelvetel">Új tárgy felvétele</a></li>
+                    </div>
+                    <div class = 'nav_list_item'>
+                        <li><a data-th-href="@{'/admin/users'}" href="/admin/users">Felhasználok listája</a></li>
+                    </div>
+                    <div class = 'nav_list_item'>
+                        <li><a data-th-href="@{'/kolcsonzes}" href="/kolcsonzes">Kölcsönzések Igénylése</a></li>
+                    </div>
+                    <div class = 'nav_list_item'>
+                        <li><a data-th-href="@{'/admin/add_new_rent'}" href="/admin/add_new_rent">Új kölcsönzés hozzáadása</a></li>
+                    </div>
+                    <div class = 'nav_list_item'>
+                        <li><a data-th-href="@{'/admin/rents'}" href="/admin/rents">Kölcsönzések</a></li>
+                    </div>
+
+
                 </ul>
             </div>
         </div>
     </div>
 </div>
-</body>
-</html>
