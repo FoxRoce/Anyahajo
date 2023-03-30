@@ -64,7 +64,9 @@ public class UserServiceImpl implements UserService {
                 userForm.getPhoneNumber(),
                 userForm.getLocked(),
                 userForm.getEnabled(),
-                userForm.getRole());
+                userForm.getRole(),
+                userForm.getBasket(),
+                userForm.getResetPasswordToken());
     }
 
     public User findUserByUserEmail(String email) {
@@ -85,6 +87,8 @@ public class UserServiceImpl implements UserService {
                 .role(user.getRole())
                 .locked(user.getLocked())
                 .enabled(user.isEnabled())
+                .basket(user.getBasket())
+                .resetPasswordToken(user.getResetPasswordToken())
                 .build();
     }
 }

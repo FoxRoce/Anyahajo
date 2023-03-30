@@ -24,10 +24,20 @@
 <body>
 <h1>Kölcsönzések: </h1>
 
-<a data-th-href="@{'/admin/rents'}">Minden kölcsönzés</a>
-<a data-th-href="@{'/admin/rents/kikolcsonzott'}">Folyamatban levő kölcsönzések</a>
-<a data-th-href="@{'/admin/rents/jovahagyasravar'}">Jóváhagyásra váró kölcsönzések</a>
-<a data-th-href="@{'/admin/rents/lejart'}">Lejárt kölcsönzések</a>
+<form action="">
+    <select name="rents" onchange="location = this.value;">
+        <option value="">Válassz szűrést</option>
+        <option value="/admin/rents">Minden kölcsönzés</option>
+        <option value="/admin/rents/kikolcsonzott">Folyamatban levő kölcsönzések</option>
+        <option value="/admin/rents/jovahagyasravar">Jóváhagyásra váró kölcsönzések</option>
+        <option value="/admin/rents/lejart">Lejárt kölcsönzések</option>
+    </select>
+</form>
+
+<!--<a data-th-href="@{'/admin/rents'}">Minden kölcsönzés</a>-->
+<!--<a data-th-href="@{'/admin/rents/kikolcsonzott'}">Folyamatban levő kölcsönzések</a>-->
+<!--<a data-th-href="@{'/admin/rents/jovahagyasravar'}">Jóváhagyásra váró kölcsönzések</a>-->
+<!--<a data-th-href="@{'/admin/rents/lejart'}">Lejárt kölcsönzések</a>-->
 
 
 <p th:if="${#lists.isEmpty(rents)}">
