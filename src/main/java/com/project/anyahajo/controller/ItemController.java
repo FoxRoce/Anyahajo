@@ -12,11 +12,17 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Controller
@@ -64,9 +70,10 @@ public class ItemController {
             @ModelAttribute("newItem")
             @Validated
             ItemForm itemForm,
-            BindingResult bindingResult
+            BindingResult bindingResult,
+            @RequestParam("file") MultipartFile file // új paraméter a feltöltött fájlhoz
     ) {
-//        System.out.println("Inside post mapping");
+// System.out.println("Inside post mapping");
         if (bindingResult.hasErrors()) {
             System.out.println(bindingResult);
             return "admin-add-item";
@@ -92,14 +99,25 @@ public class ItemController {
         entity.setName(itemForm.getName());
         entity.setAvailability(itemForm.getAvailability());
         entity.setDescription(itemForm.getDescription());
-        entity.setPicture(itemForm.getPicture());
         entity.setActive(itemForm.getIsActive());
+
+// Képfájl feltöltése
+        if (!file.isEmpty()) {
+            try {
+                byte[] bytes = file.getBytes();
+                Path path = Paths.get("src/main/resources/static/images/" + file.getOriginalFilename());
+                Files.write(path, bytes);
+                entity.setPicture(Objects.requireNonNull(file.getOriginalFilename()).getBytes()); // kép elérési útjának beállítása
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         itemRepository.save(entity);
 
         return "redirect:/kolcsonzes";
     }
-    @GetMapping("/item/{id}")
+        @GetMapping("/item/{id}")
     public String getItem(@PathVariable("id") String id, Model model, Principal principal) {
         Item item = itemRepository.findByItem_id(Long.parseLong(id));
         if(principal != null && item != null) {
