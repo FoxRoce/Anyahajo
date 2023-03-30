@@ -96,7 +96,7 @@
         <td th:text="${rent.history}"></td>
         <td><div th:if="${rent.history == null} and ${rent.endOfRent != null}">
                 <form th:action="@{'/rents/'+${rent.rent_id}+'/back'}" method="post">
-                    <input type="date" id="historyDate" name="historyDate" required>
+                    <input type="date" id="historyDate" name="historyDate" required th:min="${rent.startOfRent}">
                     <button type="submit" name="Brought back">Click here if the item is back</button>
                 </form>
             </div>
