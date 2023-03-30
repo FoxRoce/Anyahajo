@@ -104,6 +104,8 @@ public class RentController {
 
         emailSender.send(newRent.getUser().getEmail(),emailBody,"Kölcsönzés elfogadva");
 
+        System.out.println(emailBody);
+
         return "redirect:/admin/rents";
     }
 
@@ -132,6 +134,8 @@ public class RentController {
 
         emailSender.send(rent.getUser().getEmail(),emailBody,"Kölcsönzés elfogadva");
 
+        System.out.println(emailBody);
+
         rentRepository.save(rent);
         return "redirect:/admin/rents";
     }
@@ -149,6 +153,8 @@ public class RentController {
                 "\n\nÜdvözlettel, Anyahajó";
 
         emailSender.send(rent.getUser().getEmail(),emailBody,"Kölcsönzés elutasítva");
+
+        System.out.println(emailBody);
 
         rentRepository.save(rent);
 
@@ -173,6 +179,8 @@ public class RentController {
 
         emailSender.send(rent.getUser().getEmail(),emailBody,"Kölcsönzés vége");
 
+        System.out.println(emailBody);
+
         rentRepository.save(rent);
 
         return "redirect:/admin/rents";
@@ -192,6 +200,8 @@ public class RentController {
                 "\n\nÜdvözlettel, Anyahajó";
 
         emailSender.send(rent.getUser().getEmail(),emailBody,"Lejárati dátum meghosszabítás");
+
+        System.out.println(emailBody);
 
         rentRepository.save(rent);
 
@@ -219,6 +229,8 @@ public class RentController {
 
         emailSender.send(rent.getUser().getEmail(),emailBody,"Lejárati dátum módosítás");
 
+        System.out.println(emailBody);
+
         rentRepository.save(rent);
 
         return "redirect:/admin/rents";
@@ -242,11 +254,11 @@ public class RentController {
         User owner = (User) appUserService.loadUserByUsername(principal.getName());
         List<Long> fromBasketRemoveableItems = new ArrayList<>();
 
-        List<String> emailBody = new ArrayList<>();
-        emailBody.add("Új foglalás:");
-        emailBody.add("Név: " + owner.getName().toString());
-        emailBody.add("E-mail: " + owner.getEmail());
-        emailBody.add("Foglalt tárgyak: ");
+        StringBuilder emailBody =
+                new StringBuilder("Új foglalás:\n" +
+                        "\nNév: " + owner.getName().toString() +
+                        "\nE-mail: " + owner.getEmail() +
+                        "\n\nFoglalt tárgyak: ");
 
         for (Long item_id : owner.getBasket()) {
             if (itemRepository.findByItem_id(item_id) == null) {
@@ -260,7 +272,7 @@ public class RentController {
                 fromBasketRemoveableItems.add(item_id);
                 rentRepository.save(rent);
 //                itemRepository.save(item);
-                emailBody.add(item.getName());
+                emailBody.append("\n").append(item.getName());
             }
         }
         for (int i = 0; i < fromBasketRemoveableItems.size(); i++) {
@@ -268,8 +280,12 @@ public class RentController {
         }
         userRepository.save(owner);
 
+        emailBody.append("\n\nKöszönjük foglalását!\n\nÜdvözlettel, Anyahajó");
+
         emailSender.send(owner.getEmail(),emailBody.toString(),"Foglalas");
         emailSender.send("admin@gmail.com",emailBody.toString(),"Foglalas");
+
+        System.out.println(emailBody);
 
         return "basket";
     }
