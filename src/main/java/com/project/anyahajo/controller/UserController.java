@@ -100,6 +100,6 @@ public class UserController {
 
         List<Rent> rents = rentRepository.findByUser(user);
         model.addAttribute("rents", rents);
-        return "all-rents";
+        return "all-rents-by-user";
     }
 }

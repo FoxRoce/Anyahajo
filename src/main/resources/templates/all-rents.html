@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Kolcsonzesek</title>
@@ -48,19 +48,19 @@
         <td>Felhasználó e-mail címe</td>
         <td>Felhasználó neve</td>
         <td>Kölcsönzött tárgy neve</td>
-        <td>Kölcsönzött tárgy Elerhetosege</td>
+        <div sec:authorize="hasRole('ADMIN')" > <td>Kölcsönzött tárgy Elerhetosege</td> </div>
         <td>Foglalasra valasz</td>
         <td>Kölcsönzés kezdete</td>
-        <td>Kezdo datum modisitas</td>
+        <div sec:authorize="hasRole('ADMIN')" > <td>Kezdo datum modisitas</td> </div>
         <td>Kölcsönzés lejárta</td>
-        <td>Lejárti datum modositas</td>
+        <div sec:authorize="hasRole('ADMIN')" > <td>Lejárti datum modositas</td> </div>
         <td>Volt-e meghosszabbítás</td>
-        <td>Meghosszabbítás 2 hettel</td>
+        <div sec:authorize="hasRole('ADMIN')" > <td>Meghosszabbítás 2 hettel</td> </div>
         <td>Kölcsönzési díj</td>
         <td>Kaució díja</td>
         <td>Kaucióból visszafizetendő összeg</td>
         <td>History</td>
-        <td>Visszaveteli datum beallitasa</td>
+        <div sec:authorize="hasRole('ADMIN')" > <td>Visszaveteli datum beallitasa</td> </div>
     </tr>
 
     <tr th:each="rent: ${rents}">
@@ -69,7 +69,7 @@
         <td th:text="${rent.item.name}"></td>
 
         <td th:text="${rent.item.availability}"></td>
-        <td><div th:if="${rent.item.availability == T(com.project.anyahajo.model.Availability).Reserved}">
+        <td><div sec:authorize="hasRole('ADMIN')" th:if="${rent.item.availability == T(com.project.anyahajo.model.Availability).Reserved}">
                 <form th:action="@{'/rents/'+${rent.rent_id}+'/accept'}" method="post">
                     <button type="submit" name="accept">Accept</button>
                 </form>
@@ -79,8 +79,8 @@
             </div>
         </td>
 
-        <td th:text="${rent.startOfRent}"></td>
-        <td><div th:if="${rent.history == null} and ${rent.startOfRent != null}">
+        <td  th:text="${rent.startOfRent}"></td>
+        <td><div sec:authorize="hasRole('ADMIN')" th:if="${rent.history == null} and ${rent.startOfRent != null}">
                 <form th:action="@{'/rents/'+${rent.rent_id}+'/changeStartDate'}" method="post">
                     <input type="date" id="newStartDate" name="newStartDate" required>
                     <button type="submit" name="changeDate">Change date</button>
@@ -89,7 +89,7 @@
         </td>
 
         <td th:text="${rent.endOfRent}"></td>
-        <td><div th:if="${rent.history == null} and ${rent.endOfRent != null}">
+        <td><div sec:authorize="hasRole('ADMIN')" th:if="${rent.history == null} and ${rent.endOfRent != null}">
                 <form th:action="@{'/rents/'+${rent.rent_id}+'/changeEndDate'}" method="post">
                     <input type="date" id="newEndDate" name="newEndDate" required>
                     <button type="submit" name="changeDate">Change date</button>
@@ -98,7 +98,7 @@
         </td>
 
         <td th:text="${rent.isExtended}"></td>
-        <td><div th:if="${rent.history == null} and ${rent.isExtended == false} and ${rent.endOfRent != null}">
+        <td><div sec:authorize="hasRole('ADMIN')" th:if="${rent.history == null} and ${rent.isExtended == false} and ${rent.endOfRent != null}">
                 <form th:action="@{'/rents/'+${rent.rent_id}+'/extend'}" method="post">
                     <button type="submit" name="extend">Extend by 2 weeks</button>
                 </form>
@@ -110,7 +110,7 @@
         <td th:text="${rent.payBackAmount}"></td>
 
         <td th:text="${rent.history}"></td>
-        <td><div th:if="${rent.history == null} and ${rent.endOfRent != null}">
+        <td><div sec:authorize="hasRole('ADMIN')" th:if="${rent.history == null} and ${rent.endOfRent != null}">
                 <form th:action="@{'/rents/'+${rent.rent_id}+'/back'}" method="post">
                     <input type="date" id="historyDate" name="historyDate" required th:min="${rent.startOfRent}">
                     <button type="submit" name="Brought back">Click here if the item is back</button>
