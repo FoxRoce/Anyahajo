@@ -19,4 +19,6 @@ public interface UserService {
     void updateUser(UserForm user, Long userId);
 
     User findUserByUserEmail(String email);
+
+    User findpasswordtoken(String token);
 }

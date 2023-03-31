@@ -47,6 +47,7 @@ public class PasswordController {
         this.appUserRepository = appUserRepository;
     }
 
+
     @PostMapping("/forgot-password")
     public String processForgotPassword(
             @RequestParam("email") String email
@@ -66,7 +67,7 @@ public class PasswordController {
         userRepository.save(user);
 
         // elküldi a jelszó-visszaállítási linket tartalmazó email-t a felhasználónak
-        String resetUrl = "http://localhost:8080/reset-password?token=" + token;
+        String resetUrl = "http://localhost:8080/forgot-password/token=" + token;
         String emailBody = "Kattintson a következő linkre a jelszó visszaállításához: " + resetUrl;
         try {
             emailSender.send(user.getEmail(), emailBody);
@@ -77,7 +78,7 @@ public class PasswordController {
         // visszatérési érték a siker visszajelzéséhez a felhasználónak
         return "success-reset";
     }
-    @GetMapping("http://localhost:8080/reset-password?token={token}")
+    @GetMapping("/forgot-password/token={token}")
         public String newerPassword(@PathVariable ("token")String token, Model model){
             User user = userServiceImplement.findpasswordtoken(token);
             model.addAttribute("user", user);
@@ -85,7 +86,7 @@ public class PasswordController {
             model.addAttribute("newUser",new RegistrationForm());
             return "new-password";
        }
-    @PostMapping("http://localhost:8080/reset-password?token={token}")
+    @PostMapping("/forgot-password/token={token}")
     public String rebaseForgotPassword(
             @ModelAttribute("newUser")
             @Validated
@@ -103,7 +104,7 @@ public class PasswordController {
         }
 
 //        String encodePw = passwordEncoder.encode(password);
-        User user = userServiceImplement.findpasswordtoken(token);
+        User user = userService.findpasswordtoken(token);
         user.setPassword(passwordEncoder.encode(registrationForm.getPassword()));
 
         appUserRepository.save(user);
