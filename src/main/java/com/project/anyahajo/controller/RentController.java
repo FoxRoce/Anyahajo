@@ -102,9 +102,11 @@ public class RentController {
                 "admin@gmail.com" +
                 "\n\nÜdvözlettel, Anyahajó";
 
-        emailSender.send(newRent.getUser().getEmail(),emailBody,"Kölcsönzés elfogadva");
-
-        System.out.println(emailBody);
+        try {
+            emailSender.send(newRent.getUser().getEmail(), emailBody, "Kölcsönzés elfogadva");
+        } catch (Exception e){
+            System.out.println(emailBody);
+        }
 
         return "redirect:/admin/rents";
     }
@@ -132,10 +134,11 @@ public class RentController {
                 "admin@gmail.com" +
                 "\n\nÜdvözlettel, Anyahajó";
 
-        emailSender.send(rent.getUser().getEmail(),emailBody,"Kölcsönzés elfogadva");
-
-        System.out.println(emailBody);
-
+        try {
+            emailSender.send(rent.getUser().getEmail(), emailBody, "Kölcsönzés elfogadva");
+        } catch (Exception e) {
+            System.out.println(emailBody);
+        }
         rentRepository.save(rent);
         return "redirect:/admin/rents";
     }
@@ -152,9 +155,11 @@ public class RentController {
                 " nevű tárgyra tett kölcsönzése el lett utasítva.\n" +
                 "\n\nÜdvözlettel, Anyahajó";
 
-        emailSender.send(rent.getUser().getEmail(),emailBody,"Kölcsönzés elutasítva");
-
-        System.out.println(emailBody);
+        try {
+            emailSender.send(rent.getUser().getEmail(),emailBody,"Kölcsönzés elutasítva");
+        } catch (Exception e) {
+            System.out.println(emailBody);
+        }
 
         rentRepository.save(rent);
 
@@ -177,9 +182,11 @@ public class RentController {
                 "\nKöszönjük kölcsönzését!" +
                 "\n\nÜdvözlettel, Anyahajó";
 
-        emailSender.send(rent.getUser().getEmail(),emailBody,"Kölcsönzés vége");
-
-        System.out.println(emailBody);
+        try {
+            emailSender.send(rent.getUser().getEmail(),emailBody,"Kölcsönzés vége");
+        } catch (Exception e){
+            System.out.println(emailBody);
+        }
 
         rentRepository.save(rent);
 
@@ -199,9 +206,11 @@ public class RentController {
                 "Új lejárati dátum: " + rent.getEndOfRent()  +
                 "\n\nÜdvözlettel, Anyahajó";
 
-        emailSender.send(rent.getUser().getEmail(),emailBody,"Lejárati dátum meghosszabítás");
-
-        System.out.println(emailBody);
+        try {
+            emailSender.send(rent.getUser().getEmail(), emailBody, "Lejárati dátum meghosszabítás");
+        } catch (Exception e){
+            System.out.println(emailBody);
+        }
 
         rentRepository.save(rent);
 
@@ -227,9 +236,12 @@ public class RentController {
                 "\nMegértését köszönjük." +
                 "\n\nÜdvözlettel, Anyahajó";
 
-        emailSender.send(rent.getUser().getEmail(),emailBody,"Lejárati dátum módosítás");
+        try {
+            emailSender.send(rent.getUser().getEmail(),emailBody,"Lejárati dátum módosítás");
+        } catch (Exception e){
+            System.out.println(emailBody);
 
-        System.out.println(emailBody);
+        }
 
         rentRepository.save(rent);
 
@@ -271,7 +283,6 @@ public class RentController {
                 item.setAvailability(Availability.Reserved);
                 fromBasketRemoveableItems.add(item_id);
                 rentRepository.save(rent);
-//                itemRepository.save(item);
                 emailBody.append("\n").append(item.getName());
             }
         }
@@ -282,10 +293,13 @@ public class RentController {
 
         emailBody.append("\n\nKöszönjük foglalását!\n\nÜdvözlettel, Anyahajó");
 
-        emailSender.send(owner.getEmail(),emailBody.toString(),"Foglalas");
-        emailSender.send("admin@gmail.com",emailBody.toString(),"Foglalas");
+        try {
+            emailSender.send(owner.getEmail(),emailBody.toString(),"Foglalas");
+            emailSender.send("admin@gmail.com",emailBody.toString(),"Foglalas");
+        } catch (Exception e){
+            System.out.println(emailBody);
+        }
 
-        System.out.println(emailBody);
 
         return "basket";
     }
