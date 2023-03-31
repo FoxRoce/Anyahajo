@@ -52,7 +52,8 @@ public class ItemController {
     @PostMapping("/kolcsonzes/kereses")
     public String searchItems(
             Model model,
-            @ModelAttribute("searchData") SearchForm form
+            @ModelAttribute("searchData") SearchForm form,
+            Principal principal
     ) throws ClassNotFoundException {
         List<Item> items;
         if (Objects.equals(form.itemType, "") || Objects.equals(form.itemType, "*")) {
@@ -61,6 +62,10 @@ public class ItemController {
             items = itemRepository.findBySearch(form.text, Class.forName("com.project.anyahajo.model." + form.itemType));
         }
         model.addAttribute("items", items);
+        if (principal != null) {
+            User owner = (User) appUserService.loadUserByUsername(principal.getName());
+            model.addAttribute("basket", owner.getBasket());
+        }
         return "all-items";
     }
 
