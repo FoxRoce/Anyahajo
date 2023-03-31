@@ -16,16 +16,16 @@ class EmailService implements EmailSender{
         this.mailSender = mailSender;
     }
 
-    @Override
+
     @Async
-    public void send(String to, String email) {
+    public void send(String to, String email, String subject) {
         try {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper =
                     new MimeMessageHelper(mimeMessage, "utf-8");
-            helper.setText(email, true);
+            helper.setText(email, false);
             helper.setTo(to);
-            helper.setSubject("Jelszó változtatás!");
+            helper.setSubject(subject);
             helper.setFrom("dd@gmail.com");
             mailSender.send(mimeMessage);
         } catch (MessagingException e) {
@@ -33,4 +33,5 @@ class EmailService implements EmailSender{
             throw new IllegalStateException("failed to send email");
         }
     }
+
 }
