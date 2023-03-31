@@ -6,6 +6,7 @@ import com.project.anyahajo.model.Rent;
 import com.project.anyahajo.model.Role;
 import com.project.anyahajo.model.User;
 import com.project.anyahajo.repository.RentRepository;
+import com.project.anyahajo.repository.UserRepository;
 import com.project.anyahajo.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,11 +25,14 @@ public class UserController {
     private UserService userService;
     private RentRepository rentRepository;
     private AppUserService userDetailService;
+    private final UserRepository userRepository;
 
-    public UserController(UserService userService, RentRepository rentRepository, AppUserService userDetailService) {
+    public UserController(UserService userService, RentRepository rentRepository, AppUserService userDetailService,
+                          UserRepository userRepository) {
         this.userService = userService;
         this.rentRepository = rentRepository;
         this.userDetailService = userDetailService;
+        this.userRepository = userRepository;
     }
 
     @GetMapping(path = {"/admin/users"})
@@ -69,26 +73,26 @@ public class UserController {
         return "redirect:/admin/users";
     }
 
-    @GetMapping("/user/{userId}/edit")
-    public String editUserForm(@PathVariable("userId") long userId, Model model) {
-        UserForm user = userService.findUserById(userId);
+    @GetMapping("/user/edit")
+    public String editUserForm(Principal principal, Model model) {
+        User user = (User) userDetailService.loadUserByUsername(principal.getName());
         model.addAttribute("user", user);
         return "user-edit";
     }
 
-    @PostMapping("/user/{userId}/edit")
-    public String updateClub(@PathVariable("userId") Long userId,
-                             @Valid @ModelAttribute("user") UserForm user,
+    @PostMapping("/user/edit")
+    public String updateClub(@Valid @ModelAttribute("user") User user,
                              BindingResult bindingResult,
-                             Model model) {
+                             Model model,
+                             Principal principal) {
 
         if(bindingResult.hasErrors()) {
             model.addAttribute("user", user);
             return "user-edit";
         }
 
-        user.setId(userId);
-        userService.updateUser(user, userId);
+        user = (User) userDetailService.loadUserByUsername(principal.getName());
+        userRepository.save(user);
 
         return "redirect:/home";
     }

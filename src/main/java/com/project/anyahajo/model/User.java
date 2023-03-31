@@ -12,8 +12,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "ah_user")
