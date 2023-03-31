@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -81,17 +82,15 @@ public class UserController {
     }
 
     @PostMapping("/user/edit")
-    public String updateClub(@Valid @ModelAttribute("user") User user,
+    public String updateClub(@Validated @ModelAttribute("user") User user,
                              BindingResult bindingResult,
-                             Model model,
-                             Principal principal) {
+                             Model model) {
 
         if(bindingResult.hasErrors()) {
             model.addAttribute("user", user);
             return "user-edit";
         }
 
-        user = (User) userDetailService.loadUserByUsername(principal.getName());
         userRepository.save(user);
 
         return "redirect:/home";
