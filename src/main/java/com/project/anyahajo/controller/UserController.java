@@ -9,8 +9,10 @@ import com.project.anyahajo.repository.RentRepository;
 import com.project.anyahajo.repository.UserRepository;
 import com.project.anyahajo.service.UserService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,6 +29,9 @@ public class UserController {
     private RentRepository rentRepository;
     private AppUserService userDetailService;
     private final UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public UserController(UserService userService, RentRepository rentRepository, AppUserService userDetailService,
                           UserRepository userRepository) {
@@ -84,14 +89,32 @@ public class UserController {
     @PostMapping("/user/edit")
     public String updateClub(@Validated @ModelAttribute("user") User user,
                              BindingResult bindingResult,
-                             Model model) {
+                             Model model,
+                             Principal principal) {
 
         if(bindingResult.hasErrors()) {
             model.addAttribute("user", user);
             return "user-edit";
         }
 
-        userRepository.save(user);
+        User oldUser = (User) userDetailService.loadUserByUsername(principal.getName());
+
+        if (!user.getName().getFirstName().isEmpty() || !user.getName().getLastName().isEmpty()){
+            oldUser.setName(user.getName());
+        }
+        if (!user.getEmail().isEmpty()){
+            oldUser.setEmail(user.getEmail());
+        }
+        if (!user.getPhoneNumber().isEmpty()){
+            oldUser.setPhoneNumber(user.getPhoneNumber());
+        }
+        if (!user.getPassword().isEmpty()){
+            oldUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+
+
+        userRepository.save(oldUser);
+
 
         return "redirect:/home";
     }
