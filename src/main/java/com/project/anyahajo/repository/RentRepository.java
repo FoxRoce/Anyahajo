@@ -12,23 +12,22 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface RentRepository extends JpaRepository<Rent,Long> {
-    @Transactional
-    @Modifying
-    @Query("update Rent r set r.item = ?1, r.startOfRent = ?2, r.endOfRent = ?3 where r.rent_id = ?4")
-    void updateItemAndStartOfRentAndEndOfRentByRent_id(Item item, LocalDate startOfRent, LocalDate endOfRent, Long rent_id);
 
     @Query("select r from Rent r where r.rent_id = ?1")
     Rent findByRent_id(Long rent_id);
 
-    @Transactional
-    @Modifying
-    @Query("update Rent r set r.item = ?1 where r.rent_id = ?2")
-    int updateItemByRent_id(Item item, Long rent_id);
-
     @Query("select r from Rent r where r.user = ?1")
     List<Rent> findByUser_id(User user);
 
-
     @Query("select r from Rent r where r.user = ?1")
     List<Rent> findByUser(User user);
+
+    @Query("select r from Rent r where r.history IS NULL AND r.startOfRent IS NOT NULL ")
+    List<Rent> findBorrowed();
+
+    @Query("select r from Rent r where r.startOfRent IS NULL ")
+    List<Rent> findWaitAccept();
+
+    @Query("select r from Rent r where r.history IS NOT NULL ")
+    List<Rent> findExpired();
 }

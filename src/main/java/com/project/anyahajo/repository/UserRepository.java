@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
+    @Query("select u from User u where u.email = ?1")
+    User findByUserEmail(String email);
 
     Optional<User> findByEmail(String email);
 
@@ -28,5 +30,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("select u from User u where u.user_id = ?1")
     User findByUser_id(Long user_id);
+
+    @Query("select u from User u where u.resetPasswordToken = ?1")
+    User findByResetPasswordToken(String resetPasswordToken);
 }
 

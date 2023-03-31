@@ -12,6 +12,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -34,5 +37,7 @@ public class UserForm {
     private Role role;
     private Boolean locked = false;
     private Boolean enabled = true;
+    private Set<Long> basket = new LinkedHashSet<>();
+    private String resetPasswordToken;
 
 }
