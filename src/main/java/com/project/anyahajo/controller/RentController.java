@@ -36,6 +36,8 @@ public class RentController {
     private EmailSender emailSender;
     @NonNull
     private AppUserService userDetailService;
+    @NonNull
+    private ItemController itemController;
 
     @GetMapping(path = {"/admin/rents"})
     public String listItems(Model model) {
@@ -300,7 +302,7 @@ public class RentController {
         return "redirect:/admin/rents";
     }
     @PostMapping("/kolcsonzes/igenyles")
-    public String sendRentDemand(Principal principal) {
+    public String sendRentDemand(Principal principal, Model model) {
         User owner = (User) appUserService.loadUserByUsername(principal.getName());
         List<Long> fromBasketRemoveableItems = new ArrayList<>();
 
@@ -313,6 +315,10 @@ public class RentController {
         for (Long item_id : owner.getBasket()) {
             if (itemRepository.findByItem_id(item_id) == null) {
                 return "error-item-not-found";
+            } else if (!itemRepository.findByItem_id(item_id).getAvailability().equals(Availability.Available)) {
+                model.addAttribute("termek_neve", itemRepository.findByItem_id(item_id).getName());
+                itemController.removeFromBasket(item_id, principal);
+                return "error-item-is-not-available";
             } else {
                 Item item = itemRepository.findByItem_id(item_id);
                 Rent rent = new Rent();
@@ -337,8 +343,6 @@ public class RentController {
         } catch (Exception e){
             System.out.println(emailBody);
         }
-
-
         return "basket";
     }
 
