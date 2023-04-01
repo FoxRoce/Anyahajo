@@ -81,13 +81,14 @@ public class UserController {
 
     @GetMapping("/user/edit")
     public String editUserForm(Principal principal, Model model) {
-        User user = (User) userDetailService.loadUserByUsername(principal.getName());
+        User userGet = (User) userDetailService.loadUserByUsername(principal.getName());
+        UserForm user = userService.mapToUserForm(userGet);
         model.addAttribute("user", user);
         return "user-edit";
     }
 
     @PostMapping("/user/edit")
-    public String updateClub(@Validated @ModelAttribute("user") User user,
+    public String updateClub(@Validated @ModelAttribute("user") UserForm user,
                              BindingResult bindingResult,
                              Model model,
                              Principal principal) {
@@ -97,7 +98,8 @@ public class UserController {
             return "user-edit";
         }
 
-        User oldUser = (User) userDetailService.loadUserByUsername(principal.getName());
+        User userGet = (User) userDetailService.loadUserByUsername(principal.getName());
+        UserForm oldUser = userService.mapToUserForm(userGet);
 
         if (!user.getName().getFirstName().isEmpty() || !user.getName().getLastName().isEmpty()){
             oldUser.setName(user.getName());
@@ -112,8 +114,9 @@ public class UserController {
             oldUser.setPassword(passwordEncoder.encode(user.getPassword()));
         }
 
-
-        userRepository.save(oldUser);
+//        userService.updateUser(oldUser, oldUser.getId());
+        User newUser = (User) userService.mapToUser(oldUser);
+        userRepository.save(newUser);
 
 
         return "redirect:/home";

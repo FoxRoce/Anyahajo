@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(UpdatedUser);
     }
 
-    private User mapToUser(UserForm userForm) {
+    public User mapToUser(UserForm userForm) {
 
         return new User(userForm.getId(),
                 userForm.getName(),
@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByResetPasswordToken(resetPasswordToken);
    }
 
-    private UserForm mapToUserForm(User user) {
+    public UserForm mapToUserForm(User user) {
 
         return UserForm.builder()
                 .id(user.getUser_id())
