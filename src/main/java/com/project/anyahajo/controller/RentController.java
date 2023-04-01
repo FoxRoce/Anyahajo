@@ -305,6 +305,7 @@ public class RentController {
     public String sendRentDemand(Principal principal, Model model) {
         User owner = (User) appUserService.loadUserByUsername(principal.getName());
         List<Long> fromBasketRemoveableItems = new ArrayList<>();
+        List<String> namesOfTheItemsInTheBasket = new ArrayList<>();
 
         StringBuilder emailBody =
                 new StringBuilder("Új foglalás:\n" +
@@ -328,8 +329,10 @@ public class RentController {
                 fromBasketRemoveableItems.add(item_id);
                 rentRepository.save(rent);
                 emailBody.append("\n").append(item.getName());
+                namesOfTheItemsInTheBasket.add(item.getName());
             }
         }
+        model.addAttribute("basket", namesOfTheItemsInTheBasket);
         for (int i = 0; i < fromBasketRemoveableItems.size(); i++) {
             owner.getBasket().remove(fromBasketRemoveableItems.get(i));
         }
@@ -343,7 +346,11 @@ public class RentController {
         } catch (Exception e){
             System.out.println(emailBody);
         }
-        return "basket";
+        return "rent-claim-success";
+    }
+    @GetMapping("/sikeresigenyleadas")
+    public String successRentClaim() {
+        return "rent-claim-success";
     }
 
     @GetMapping(path = {"/admin/rents/kikolcsonzott"})
