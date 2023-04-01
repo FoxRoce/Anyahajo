@@ -40,7 +40,15 @@ public class UserController {
         this.userDetailService = userDetailService;
         this.userRepository = userRepository;
     }
-
+    @GetMapping("/admin")
+    public String getAdminPage(Principal principal) {
+        User user = (User) userDetailService.loadUserByUsername(principal.getName());
+        if(user.getRole().equals(Role.ADMIN)) {
+            return "admin";
+        } else {
+            return "home";
+        }
+    }
     @GetMapping(path = {"/admin/users"})
     public String listItems(Model model) {
         List<UserForm> users = userService.findAllUsers();
@@ -129,6 +137,6 @@ public class UserController {
 
         List<Rent> rents = rentRepository.findByUser(user);
         model.addAttribute("rents", rents);
-        return "all-rents";
+        return "all-rents-by-user";
     }
 }

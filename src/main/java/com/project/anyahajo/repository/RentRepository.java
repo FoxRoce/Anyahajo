@@ -30,4 +30,13 @@ public interface RentRepository extends JpaRepository<Rent,Long> {
 
     @Query("select r from Rent r where r.history IS NOT NULL ")
     List<Rent> findExpired();
+
+    @Query("select r from Rent r where r.history IS NULL AND r.startOfRent IS NOT NULL AND r.user = ?1 ")
+    List<Rent> findBorrowedByUser_id(User user);
+
+    @Query("select r from Rent r where r.startOfRent IS NULL AND r.user = ?1 ")
+    List<Rent> findWaitAcceptByUser_id(User user);
+
+    @Query("select r from Rent r where r.history IS NOT NULL AND r.user = ?1 ")
+    List<Rent> findExpiredByUser_id(User user);
 }

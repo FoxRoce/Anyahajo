@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Kolcsonzesek</title>
+
+  <style>
+    table, th, td {
+      border: 1px solid black;
+    }
+
+    table.center {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    body
+    {
+      background: -webkit-linear-gradient(to right, #a75888, #1f88b4);
+      background: linear-gradient(to right, #a75888, #1f88b4);
+    }
+  </style>
+
+</head>
+<body>
+<h1>Kölcsönzések: </h1>
+
+<form action="">
+  <select name="rents" onchange="location = this.value;">
+    <option value="">Válassz szűrést</option>
+    <option value="/rents">Minden kölcsönzés</option>
+    <option value="/rents/kikolcsonzott">Folyamatban levő kölcsönzések</option>
+    <option value="/rents/jovahagyasravar">Jóváhagyásra váró kölcsönzések</option>
+    <option value="/rents/lejart">Lejárt kölcsönzések</option>
+  </select>
+</form>
+
+<p th:if="${#lists.isEmpty(rents)}">
+  Nincsenek kölcsönzések
+</p>
+<table th:unless="${#lists.isEmpty(rents)}">
+  <tr>
+    <td>Felhasználó e-mail címe</td>
+    <td>Felhasználó neve</td>
+    <td>Kölcsönzött tárgy neve</td>
+    <td>Foglalasra valasz</td>
+    <td>Kölcsönzés kezdete</td>
+    <td>Kölcsönzés lejárta</td>
+    <td>Volt-e meghosszabbítás</td>
+    <td>Kölcsönzési díj</td>
+    <td>Kaució díja</td>
+    <td>Kaucióból visszafizetendő összeg</td>
+    <td>History</td>
+  </tr>
+
+  <tr th:each="rent: ${rents}">
+    <td th:text="${rent.user.email}"></td>
+    <td th:text="${rent.user.name} ? ${rent.user.name} : 'User has no name'"></td>
+
+    <td th:text="${rent.item.name}"></td>
+    <td th:text="${rent.item.availability}"></td>
+    <td th:text="${rent.startOfRent}"></td>
+    <td th:text="${rent.endOfRent}"></td>
+    <td th:text="${rent.isExtended}"></td>
+    <td th:text="${rent.price}"></td>
+    <td th:text="${rent.deposit}"></td>
+    <td th:text="${rent.payBackAmount}"></td>
+    <td th:text="${rent.history}"></td>
+
+  </tr>
+  </li>
+</table>
+</body>
+</html>

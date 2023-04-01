@@ -34,6 +34,8 @@ public class RentController {
     private AppUserService appUserService;
     @NonNull
     private EmailSender emailSender;
+    @NonNull
+    private AppUserService userDetailService;
 
     @GetMapping(path = {"/admin/rents"})
     public String listItems(Model model) {
@@ -120,8 +122,14 @@ public class RentController {
 
     @PostMapping("/rents/{id}/accept")
     public String updateRentAccept(
-            @PathVariable("id") Long id
+            @PathVariable("id") Long id,
+            Principal principal
     ) {
+        User user = (User) userDetailService.loadUserByUsername(principal.getName());
+        if (!user.getRole().equals(Role.ADMIN)){
+            return "redirect:/rents";
+        }
+
        Rent rent = rentRepository.findByRent_id(id);
        rent.getItem().setAvailability(Availability.NotAvailable);
        rent.setStartOfRent(LocalDate.now());
@@ -145,8 +153,14 @@ public class RentController {
 
     @PostMapping("/rents/{id}/decline")
     public String updateRentDecline(
-            @PathVariable("id") Long id
+            @PathVariable("id") Long id,
+            Principal principal
     ) {
+        User user = (User) userDetailService.loadUserByUsername(principal.getName());
+        if (!user.getRole().equals(Role.ADMIN)){
+            return "redirect:/rents";
+        }
+
         Rent rent = rentRepository.findByRent_id(id);
         rent.getItem().setAvailability(Availability.Available);
 
@@ -171,8 +185,14 @@ public class RentController {
     @PostMapping("/rents/{id}/back")
     public String updateRentBroughtBack(
             @PathVariable("id") Long id,
-            @ModelAttribute("historyDate") LocalDate date
+            @ModelAttribute("historyDate") LocalDate date,
+            Principal principal
     ) {
+        User user = (User) userDetailService.loadUserByUsername(principal.getName());
+        if (!user.getRole().equals(Role.ADMIN)){
+            return "redirect:/rents";
+        }
+
         Rent rent = rentRepository.findByRent_id(id);
         rent.getItem().setAvailability(Availability.Available);
         rent.setHistory(date);
@@ -195,8 +215,14 @@ public class RentController {
 
     @PostMapping("/rents/{id}/extend")
     public String updateRentExtend(
-            @PathVariable("id") Long id
+            @PathVariable("id") Long id,
+            Principal principal
     ) {
+        User user = (User) userDetailService.loadUserByUsername(principal.getName());
+        if (!user.getRole().equals(Role.ADMIN)){
+            return "redirect:/rents";
+        }
+
         Rent rent = rentRepository.findByRent_id(id);
         rent.setEndOfRent(rent.getEndOfRent().plusDays(14));
         rent.setExtended(true);
@@ -220,8 +246,14 @@ public class RentController {
     @PostMapping("/rents/{id}/changeEndDate")
     public String updateRentChangeEndDate(
             @PathVariable("id") Long id,
-            @ModelAttribute("newEndDate") LocalDate date
+            @ModelAttribute("newEndDate") LocalDate date,
+            Principal principal
     ) {
+        User user = (User) userDetailService.loadUserByUsername(principal.getName());
+        if (!user.getRole().equals(Role.ADMIN)){
+            return "redirect:/rents";
+        }
+
         Rent rent = rentRepository.findByRent_id(id);
         rent.setEndOfRent(date);
 
@@ -251,8 +283,14 @@ public class RentController {
     @PostMapping("/rents/{id}/changeStartDate")
     public String updateRentChangeStartDate(
             @PathVariable("id") Long id,
-            @ModelAttribute("newStartDate") LocalDate date
+            @ModelAttribute("newStartDate") LocalDate date,
+            Principal principal
     ) {
+        User user = (User) userDetailService.loadUserByUsername(principal.getName());
+        if (!user.getRole().equals(Role.ADMIN)){
+            return "redirect:/rents";
+        }
+
         Rent rent = rentRepository.findByRent_id(id);
         rent.setStartOfRent(date);
         rent.setEndOfRent(date.plusDays(14));
@@ -268,7 +306,7 @@ public class RentController {
 
         StringBuilder emailBody =
                 new StringBuilder("Új foglalás:\n" +
-                        "\nNév: " + owner.getName().toString() +
+                        "\nNév: " + (owner.getName() == null ? "Nincs nev" : owner.getName().toString())  +
                         "\nE-mail: " + owner.getEmail() +
                         "\n\nFoglalt tárgyak: ");
 
@@ -323,5 +361,29 @@ public class RentController {
         List<Rent> rents = rentRepository.findExpired();
         model.addAttribute("rents", rents);
         return "all-rents";
+    }
+
+    @GetMapping(path = {"/rents/kikolcsonzott"})
+    public String listRentsBorrowedByUser(Model model, Principal principal) {
+        User user = (User) userDetailService.loadUserByUsername(principal.getName());
+        List<Rent> rents = rentRepository.findBorrowedByUser_id(user);
+        model.addAttribute("rents", rents);
+        return "all-rents-by-user";
+    }
+
+    @GetMapping(path = {"/rents/jovahagyasravar"})
+    public String listRentsWaitAcceptByUser(Model model, Principal principal) {
+        User user = (User) userDetailService.loadUserByUsername(principal.getName());
+        List<Rent> rents = rentRepository.findWaitAcceptByUser_id(user);
+        model.addAttribute("rents", rents);
+        return "all-rents-by-user";
+    }
+
+    @GetMapping(path = {"/rents/lejart"})
+    public String listRentsExpiredByUser(Model model, Principal principal) {
+        User user = (User) userDetailService.loadUserByUsername(principal.getName());
+        List<Rent> rents = rentRepository.findExpiredByUser_id(user);
+        model.addAttribute("rents", rents);
+        return "all-rents-by-user";
     }
 }
