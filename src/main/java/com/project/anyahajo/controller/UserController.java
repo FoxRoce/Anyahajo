@@ -30,7 +30,15 @@ public class UserController {
         this.rentRepository = rentRepository;
         this.userDetailService = userDetailService;
     }
-
+    @GetMapping("/admin")
+    public String getAdminPage(Principal principal) {
+        User user = (User) userDetailService.loadUserByUsername(principal.getName());
+        if(user.getRole().equals(Role.ADMIN)) {
+            return "admin";
+        } else {
+            return "home";
+        }
+    }
     @GetMapping(path = {"/admin/users"})
     public String listItems(Model model) {
         List<UserForm> users = userService.findAllUsers();
