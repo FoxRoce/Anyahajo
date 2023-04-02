@@ -12,6 +12,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -39,5 +40,6 @@ public class UserForm {
     private Boolean enabled = true;
     private Set<Long> basket = new LinkedHashSet<>();
     private String resetPasswordToken;
+    private LocalDateTime tokenExpiration;
 
 }

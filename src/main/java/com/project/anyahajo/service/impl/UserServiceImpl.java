@@ -56,7 +56,6 @@ public class UserServiceImpl implements UserService {
     }
 
     public User mapToUser(UserForm userForm) {
-
         return new User(userForm.getId(),
                 userForm.getName(),
                 userForm.getEmail(),
@@ -65,8 +64,11 @@ public class UserServiceImpl implements UserService {
                 userForm.getLocked(),
                 userForm.getEnabled(),
                 userForm.getRole(),
-                userForm.getBasket(),
-                userForm.getResetPasswordToken());
+                userForm.getResetPasswordToken(),
+                userForm.getTokenExpiration(),
+                userForm.getBasket()
+        );
+
     }
 
     public User findUserByUserEmail(String email) {
@@ -90,6 +92,7 @@ public class UserServiceImpl implements UserService {
                 .enabled(user.isEnabled())
                 .basket(user.getBasket())
                 .resetPasswordToken(user.getResetPasswordToken())
+                .tokenExpiration(user.getTokenExpiration())
                 .build();
     }
 
