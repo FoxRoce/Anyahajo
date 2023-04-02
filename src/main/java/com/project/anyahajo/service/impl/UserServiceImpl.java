@@ -72,7 +72,8 @@ public class UserServiceImpl implements UserService {
     public User findUserByUserEmail(String email) {
         return userRepository.findByUserEmail(email);
     }
-   public User findpasswordtoken(String resetPasswordToken){
+
+    public User findpasswordtoken(String resetPasswordToken){
         return userRepository.findByResetPasswordToken(resetPasswordToken);
    }
 
@@ -91,4 +92,5 @@ public class UserServiceImpl implements UserService {
                 .resetPasswordToken(user.getResetPasswordToken())
                 .build();
     }
+
 }
