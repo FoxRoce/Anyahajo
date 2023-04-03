@@ -99,11 +99,11 @@ public class AuthController {
         return "redirect:/home";
     }
 
-    @GetMapping("/enable-user/url={code}")
+    @GetMapping("/enable-user/url={bob}")
     public String enableUser(
-            @PathVariable ("code")String code
+            @PathVariable ("bob")String bob
     ){
-        User user = appUserRepository.findByEnableUrl(code);
+        User user = appUserRepository.findByEnableUrl(bob);
         if (user == null){
             return "token-expired";
         }
