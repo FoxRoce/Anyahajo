@@ -3,6 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Hiba</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        table.center {
+            margin-left: auto;
+            margin-right: auto;
+        }
+        body
+        {
+            background: -webkit-linear-gradient(to right, #a75888, #1f88b4);
+            background: linear-gradient(to right, #a75888, #1f88b4);
+        }
+    </style>
 </head>
 <body>
 <p th:inline="text">Sajnáljuk, a(z) <p th:text="${termek_neve}"></p> nevű terméket időközben valószínűleg kikölcsönözték. Kérjük, válassz másik terméket!</p>
