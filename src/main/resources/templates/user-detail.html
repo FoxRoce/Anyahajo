@@ -3,34 +3,98 @@
 <head>
   <meta charset="UTF-8">
   <title>Felhasználó</title>
+
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        table.center {
+            margin-left: auto;
+            margin-right: auto;
+        }
+        body
+        {
+            background: -webkit-linear-gradient(to right, #a75888, #1f88b4);
+            background: linear-gradient(to right, #a75888, #1f88b4);
+        }
+
+    </style>
 </head>
 <body>
-<h1>[[user.name]]</h1>
-    <b><p th:text="${user.name}">Név</p></b>
-    <p th:text="${user.email}">E-mail</p>
-    <p th:text="${user.phoneNumber}">Telefonszám</p>
-    <p th:text="${user.role}">Role</p>
-    <form th:action="@{'/users/'+${user.user_id}+'/role'}" method="post">
-      <button type="submit" name="role">
-        Change Role
-      </button>
+<h1>Kölcsönzései</h1>
+    <span>Név: </span>
+    <span th:text="${user.name}">Név</span>
+<br>
+    <span>E-mail: </span>
+    <span th:text="${user.email}">E-mail</span>
+<br>
+    <span>Telefonszám: </span>
+    <span th:text="${user.phoneNumber}">Telefonszám</span>
+<br>
     </form>
 
 <p th:if="${#lists.isEmpty(rents)}">
   Nincsenek kolcsonzesek
 </p>
-<ul th:unless="${#lists.isEmpty(rents)}">
-  <li th:each="rent: ${rents}">
-    <p th:text="${rent.item.name}">item name</p>
-    <p th:text="${rent.item.availability}">item availability</p>
-    <p th:text="${rent.startOfRent}">Starting date</p>
-    <p th:text="${rent.endOfRent}">End Date</p>
-    <p th:text="${rent.isExtended}">Extended</p>
-    <p th:text="${rent.price}">Price</p>
-    <p th:text="${rent.deposit}">Deposit</p>
-    <p th:text="${rent.payBackAmount}">Pay back amount</p>
+<table th:unless="${#lists.isEmpty(rents)}">
+    <tr>
+        <td>Termék neve</td>
+        <td>Termék elérhetősége</td>
+        <td>Kölcsönzés kezdete</td>
+        <td>Kölcsönzés lejárta</td>
+        <td>Van-e hosszabbítás</td>
+        <td>Kölcsönzési díj</td>
+        <td>Kauvió</td>
+        <td>Visszafizetendő összeg</td>
+    </tr>
 
-  </li>
-</ul>
+    <tr th:each="rent: ${rents}">
+        <td th:text="${rent.item.name}"></td>
+        <td th:text="${rent.item.availability}"></td>
+        <td th:text="${rent.startOfRent}"></td>
+        <td th:text="${rent.endOfRent}"></td>
+        <td th:text="${rent.isExtended}"></td>
+        <td th:text="${rent.price}"></td>
+        <td th:text="${rent.deposit}"></td>
+        <td th:text="${rent.payBackAmount}"></td>
+    </tr>
+<!--  <li th:each="rent: ${rents}">-->
+<!--    <p th:text="${rent.item.name}">item name</p>-->
+<!--    <p th:text="${rent.item.availability}">item availability</p>-->
+<!--    <p th:text="${rent.startOfRent}">Starting date</p>-->
+<!--    <p th:text="${rent.endOfRent}">End Date</p>-->
+<!--    <p th:text="${rent.isExtended}">Extended</p>-->
+<!--    <p th:text="${rent.price}">Price</p>-->
+<!--    <p th:text="${rent.deposit}">Deposit</p>-->
+<!--    <p th:text="${rent.payBackAmount}">Pay back amount</p>-->
+
+<!--  </li>-->
+</table>
 </body>
 </html>
+
+<!--<table th:unless="${#lists.isEmpty(users)}">-->
+<!--    <tr>-->
+<!--        <td>Név</td>-->
+<!--        <td>E-mail</td>-->
+<!--        <td>Telefonszám</td>-->
+<!--        <td>Kölcsönzései</td>-->
+<!--        <td>Role</td>-->
+<!--    </tr>-->
+
+<!--    <tr th:each="user: ${users}">-->
+<!--        <td th:text="${user.name}"></td>-->
+<!--        <td th:text="${user.email}"></td>-->
+<!--        <td th:text="${user.phoneNumber}"></td>-->
+<!--        <td> <a th:href="@{'/admin/users/'+${user.id}}"><b><p th:text="Kölcsönzései">Kölcsönzései</p></b></a></td>-->
+<!--        <td th:text="${user.role}"></td>-->
+<!--        <td>-->
+<!--            <form th:action="@{'/users/'+${user.id}+'/role'}" method="post">-->
+<!--                <button type="submit" name="role">-->
+<!--                    Change Role-->
+<!--                </button>-->
+<!--            </form></td>-->
+
+<!--    </tr>-->
+<!--</table>-->

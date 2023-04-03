@@ -73,7 +73,7 @@
     <li data-th-each="item: ${items}">
         <a data-th-href="@{${'/item/' + item.item_id}}"><b><p data-th-text="${item.name}">Targy nev</p></b></a>
         <p th:text="${item.item_id}">Id</p>
-        <p th:text="${item.availability}">Foglalas</p>
+        <p th:text="${item.availability.getHunName()}">Foglalas</p>
         <p th:text="${item.description}">Leiras</p>
         <p th:text="${item.picture}">Kep</p>
         <p th:text="${item.isActive}">Elerheto-e</p>

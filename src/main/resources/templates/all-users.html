@@ -2,7 +2,38 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Felhasználók</title>
+  <title>Kolcsonzesek</title>
+
+  <style>
+    table, th, td {
+      border: 1px solid black;
+    }
+
+    table.center {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    body
+    {
+      background: -webkit-linear-gradient(to right, #a75888, #1f88b4);
+      background: linear-gradient(to right, #a75888, #1f88b4);
+    }
+
+    button[type="submit"] {
+      background-color: rgba(62, 0, 186, 0.99);
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #0077B3;
+    }
+  </style>
+
 </head>
 <body>
 <h1>Felhasználók: </h1>
@@ -10,19 +41,45 @@
 <p th:if="${#lists.isEmpty(users)}">
   Nincsenek felhasználók
 </p>
-<ul th:unless="${#lists.isEmpty(users)}">
-  <li th:each="user: ${users}">
-    <p th:text="${user.name}">Név</p>
-    <p th:text="${user.email}">E-mail</p>
-    <p th:text="${user.phoneNumber}">Telefonszám</p>
-    <a th:href="@{'/admin/users/'+${user.id}}"><b><p th:text="Kölcsönzései">Kölcsönzései</p></b></a>
-    <p th:text="${user.role}">Role</p>
-    <form th:action="@{'/users/'+${user.id}+'/role'}" method="post">
+
+<table th:unless="${#lists.isEmpty(users)}">
+  <tr>
+    <td>Név</td>
+    <td>E-mail</td>
+    <td>Telefonszám</td>
+    <td>Kölcsönzései</td>
+    <td>Role</td>
+  </tr>
+
+  <tr th:each="user: ${users}">
+    <td th:text="${user.name}"></td>
+    <td th:text="${user.email}"></td>
+    <td th:text="${user.phoneNumber}"></td>
+    <td> <a th:href="@{'/admin/users/'+${user.id}}"><b><p th:text="Kölcsönzései">Kölcsönzései</p></b></a></td>
+    <td th:text="${user.role}"></td>
+    <td>
+      <form th:action="@{'/users/'+${user.id}+'/role'}" method="post">
       <button type="submit" name="role">
         Change Role
       </button>
-    </form>
-  </li>
-</ul>
+    </form></td>
+
+  </tr>
+</table>
+
+<!--<ul th:unless="${#lists.isEmpty(users)}">-->
+<!--  <li th:each="user: ${users}">-->
+<!--    <p th:text="${user.name}">Név</p>-->
+<!--    <p th:text="${user.email}">E-mail</p>-->
+<!--    <p th:text="${user.phoneNumber}">Telefonszám</p>-->
+<!--    <a th:href="@{'/admin/users/'+${user.id}}"><b><p th:text="Kölcsönzései">Kölcsönzései</p></b></a>-->
+<!--    <p th:text="${user.role}">Role</p>-->
+<!--    <form th:action="@{'/users/'+${user.id}+'/role'}" method="post">-->
+<!--      <button type="submit" name="role">-->
+<!--        Change Role-->
+<!--      </button>-->
+<!--    </form>-->
+<!--  </li>-->
+<!--</ul>-->
 </body>
 </html>

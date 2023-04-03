@@ -41,5 +41,6 @@ public class UserForm {
     private Set<Long> basket = new LinkedHashSet<>();
     private String resetPasswordToken;
     private LocalDateTime tokenExpiration;
+    private String enableUrl;
 
 }
