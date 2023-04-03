@@ -6,25 +6,106 @@
 </head>
 <body>
 <h1>Uj targy felvetel</h1>
-<form data-th-object="${newItem}" data-th-action="@{admin/ujTargyFelvetel}" action="/admin/ujTargyFelvetel" method="post">
+<form data-th-object="${newItem}" data-th-action="@{ujTargyFelvetel}" action="/admin/ujTargyFelvetel" method="post">
+
+    <label for="type">Tipus</label>
+    <select id="type" name="type" onchange="showFields()">
+        <option value="">Choose an option</option>
+        <option value="book">Book</option>
+        <option value="carrier">Carrier</option>
+        <option value="babycare">Babycare</option>
+    </select>
+
     <label for="name">Nev</label>
-    <input id="name" type="text" data-th-field="*{name}">
+    <input id="name" type="text" data-th-field="*{name}"required><br><br>
     <p
             style="color: red"
             data-th-if="${#fields.hasErrors('name')}"
             data-th-error="*{name}"
     ></p>
 
+    <label for="availability">Availability:</label>
+    <select id="availability" name="availability" required>
+        <option value="">Choose an option</option>
+        <option value="Available">Available</option>
+        <option value="Reserved">Reserved</option>
+        <option value="NotAvailable">Not Available</option>
+    </select><br><br>
 
-    <label for="dateOfRent">Date of rent</label>
-    <input id="dateOfRent" type="date" data-th-field="*{dateOfRent}">
+    <label for="description">Leírás</label>
+    <input id="description" type="text" data-th-field="*{description}" required><br><br>
     <p
             style="color: red"
-            data-th-if="${#fields.hasErrors('dateOfRent')}"
-            data-th-error="*{dateOfRent}"
+            data-th-if="${#fields.hasErrors('description')}"
+            data-th-error="*{description}"
     ></p>
+
+    <label for="picture">Kép</label>
+    <input id="picture" type="text" data-th-field="*{picture}">
+    <p
+            style="color: red"
+            data-th-if="${#fields.hasErrors('picture')}"
+            data-th-error="*{picture}"
+    ></p>
+
+    <label for="isActive">Is Active:</label>
+    <select name="isActive" id="isActive">
+        <option value="true">Yes</option>
+        <option value="false">No</option>
+    </select>
+
+    <div id="bookFields" style="display: none;">
+        <label for="author">Szerzo</label>
+        <input id="author" type="text" data-th-field="*{author}">
+        <p style="color: red" data-th-if="${#fields.hasErrors('author')}" data-th-error="*{author}"></p>
+    </div>
+
+    <div id="carrierFields" style="display: none;">
+
+        <label for="carrierType">Tipus:</label>
+        <select id="carrierType" name="carrierType">
+            <option value="">Choose an option</option>
+            <option value="Wrap">Wrap</option>
+            <option value="Buckle">Buckle</option>
+            <option value="OtherShaped">OtherShaped</option>
+        </select><br><br>
+
+        <label for="carrierBrand">Marka</label>
+        <input id="carrierBrand" type="text" data-th-field="*{carrierBrand}">
+        <p style="color: red" data-th-if="${#fields.hasErrors('carrierBrand')}" data-th-error="*{carrierBrand}"></p>
+
+        <label for="size">Meret</label>
+        <input id="size" type="text" data-th-field="*{size}">
+        <p style="color: red" data-th-if="${#fields.hasErrors('size')}" data-th-error="*{size}"></p>
+    </div>
+
+    <div id="babycareFields" style="display: none;">
+        <label for="babycareBrand">Marka</label>
+        <input id="babycareBrand" type="text" data-th-field="*{babycareBrand}">
+        <p style="color: red" data-th-if="${#fields.hasErrors('babycareBrand')}" data-th-error="*{babycareBrand}"></p>
+    </div>
 
     <input type="submit" value="Save">
 </form>
+
+<script>
+    function showFields() {
+        const type = document.getElementById("type").value;
+        if (type === "book") {
+            document.getElementById("bookFields").style.display = "block";
+            document.getElementById("carrierFields").style.display = "none";
+            document.getElementById("babycareFields").style.display = "none";
+        } else if (type === "carrier") {
+            document.getElementById("bookFields").style.display = "none";
+            document.getElementById("carrierFields").style.display = "block";
+            document.getElementById("babycareFields").style.display = "none";
+        } else if (type === "babycare") {
+            document.getElementById("bookFields").style.display = "none";
+            document.getElementById("carrierFields").style.display = "none";
+            document.getElementById("babycareFields").style.display = "block";
+        }
+    }
+    </script>
+
 </body>
 </html>

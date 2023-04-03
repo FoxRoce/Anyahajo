@@ -66,13 +66,6 @@
     }
 
 
-    .subcontainer{
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-    }
-
     .subcontainer a{
       font-size: 16px;
       margin-bottom: 12px;
@@ -105,7 +98,6 @@
       text-decoration: none;
     }
 
-    /* Media queries for the responsiveness of the page */
     @media screen and (max-width: 600px) {
       form{
         width: 25rem;
@@ -123,23 +115,37 @@
 </head>
 <body>
 <h1>Belépés az Anyahajó kölcsönzés oldalára</h1>
-<form action="/login" method="POST">
-
+<form method="post" data-th-action="@{/login}">
   <div class="headingsContainer">
     <h3>Belépés</h3>
     <p>Belépés e-mail és jelszóval</p>
   </div>
 
-
   <div class="mainContainer">
-
+    <div th:if="${param.error}">
+      Invalid username and password.
+    </div>
+    <div th:if="${param.logout}">
+      You have been logged out.
+    </div>
     <label for="email">Email cím:</label>
-    <input type="email" placeholder="E-mail cím" id="email" name="email" required>
-
+    <input type="email" placeholder="E-mail cím" id="email" name="username" required>
     <br><br>
-
     <label for="password">Jelszó:</label>
     <input type="password" placeholder="Jelszó" id="password" name="password" required>
+    <br><br>
+    <div data-th-if="${param.error}">
+      <p class="error-message" th:text="${param.error}"></p>
+    </div>
+    <button type="submit">Belépés</button>
+    <p class="register">Még nem regisztrált? <a data-th-href="@{'/register'}">Regisztráljon itt!</a></p>
+  </div>
+  <div>
+    <a href="/forgot-password">Forgot Password?</a>
+  </div>
+</form>
+</body>
+</html>
 
 
 <!--    <div class="subcontainer">-->
@@ -148,16 +154,3 @@
 <!--      </label>-->
 <!--      <p class="forgotpsd"> <a href="#">Forgot Password?</a></p>-->
 <!--    </div>-->
-
-
-
-    <button type="submit">Belépés</button>
-
-
-    <p class="register">Még nem regisztrált? <a data-th-href="@{'/register'}">Regisztráljon itt!</a></p>
-
-  </div>
-
-</form>
-</body>
-</html>

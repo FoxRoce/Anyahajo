@@ -1,6 +1,6 @@
 package com.project.anyahajo.auth;
 
-import com.project.anyahajo.repository.AppUserRepository;
+import com.project.anyahajo.repository.UserRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,7 +16,7 @@ public class AppUserService implements UserDetailsService {
     private final static String USER_NOT_FOUND_MSG = "user with email %s not found";
 
     @NonNull
-    private AppUserRepository appUserRepository;
+    private UserRepository appUserRepository;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

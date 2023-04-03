@@ -1,22 +1,31 @@
 package com.project.anyahajo;
 
 import com.project.anyahajo.model.*;
-import com.project.anyahajo.repository.AppUserRepository;
+import com.project.anyahajo.repository.UserRepository;
 import com.project.anyahajo.repository.ItemRepository;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
+
+import java.awt.*;
+import java.io.File;
+import java.nio.file.Files;
 
 @Component
 public  class BootstrapData implements CommandLineRunner{
     private final ItemRepository itemRepository;
-    public BootstrapData(AppUserRepository appUserRepository, ItemRepository itemRepository) {
+    public BootstrapData(UserRepository appUserRepository, ItemRepository itemRepository) {
 
         this.itemRepository = itemRepository;
     }
     @Override
     public void run(String... args) throws Exception {
 
-        itemRepository.deleteAll();
+//        itemRepository.deleteAll();
+
+
+
+
 
         Book harryPotter = new Book();
         harryPotter.setAuthor("J.K. Rowling");
@@ -24,6 +33,7 @@ public  class BootstrapData implements CommandLineRunner{
         harryPotter.setAvailability(Availability.Available);
         harryPotter.setActive(true);
         harryPotter.setDescription("DHarry Potter finds porn in the daily prophet");
+
 
         Book littleprince = new Book();
         littleprince.setAuthor("Antoine de");
@@ -68,7 +78,7 @@ public  class BootstrapData implements CommandLineRunner{
 
         Carrier wraps=new Carrier();
         wraps.setCarrierBrand("Meitais");
-        wraps.setType(CarrierType.Wrap);
+        wraps.setCarrierType(CarrierType.Wrap);
         wraps.setSize("small");
         wraps.setName("Small wrap");
         wraps.setAvailability(Availability.Available);
@@ -77,7 +87,7 @@ public  class BootstrapData implements CommandLineRunner{
 
         Carrier buckle=new Carrier();
         buckle.setCarrierBrand("Hellobello");
-        buckle.setType(CarrierType.Buckle);
+        buckle.setCarrierType(CarrierType.Buckle);
         buckle.setSize("medium");
         buckle.setName("Medium buckle");
         buckle.setAvailability(Availability.Reserved);
@@ -86,7 +96,7 @@ public  class BootstrapData implements CommandLineRunner{
 
         Carrier others=new Carrier();
         others.setCarrierBrand("Rituals");
-        others.setType(CarrierType.OtherShaped);
+        others.setCarrierType(CarrierType.OtherShaped);
         others.setSize("large");
         others.setName("Large type of carrier");
         others.setAvailability(Availability.NotAvailable);

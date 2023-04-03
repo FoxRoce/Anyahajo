@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Getter
 @Setter
@@ -18,10 +19,10 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long item_id;
 
+    @Enumerated(EnumType.STRING)
     private Availability availability;
     private String name;
     private String description;
     private Byte[] picture;
     private boolean isActive = false;
-
 }

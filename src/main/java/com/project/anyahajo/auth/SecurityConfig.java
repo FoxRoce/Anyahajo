@@ -1,5 +1,6 @@
 package com.project.anyahajo.auth;
 
+import com.project.anyahajo.model.Role;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.WebAttributes;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -39,16 +42,22 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests()
-                .requestMatchers("/home","/register","/kolcsonzes")
+                .requestMatchers("/","/home","/register","/kolcsonzes","/books", "/kolcsonzes/kereses", "/item/{id}","/forgot-password/**")
                 .permitAll()
-                .requestMatchers("/admin").hasRole("ADMIN")
+                .requestMatchers("/admin/**").hasRole("ADMIN")
 
                 .anyRequest().authenticated()
                 .and()
-                .formLogin(Customizer.withDefaults())
-                .logout()
-                .permitAll()
+                .formLogin()
+                    .loginPage("/login")
+                    .defaultSuccessUrl("/home")
+                    .permitAll()
+                .and()
+                .logout().logoutSuccessUrl("/home").permitAll()
                 .and();
         return http.build();
     }
 }
+
+
+//.loginPage("/login").loginProcessingUrl("/login").permitAll().and()

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Felhasználók</title>
+</head>
+<body>
+<h1>Felhasználók: </h1>
+
+<p th:if="${#lists.isEmpty(users)}">
+  Nincsenek felhasználók
+</p>
+<ul th:unless="${#lists.isEmpty(users)}">
+  <li th:each="user: ${users}">
+    <p th:text="${user.name}">Név</p>
+    <p th:text="${user.email}">E-mail</p>
+    <p th:text="${user.phoneNumber}">Telefonszám</p>
+    <a th:href="@{'/admin/users/'+${user.id}}"><b><p th:text="Kölcsönzései">Kölcsönzései</p></b></a>
+    <p th:text="${user.role}">Role</p>
+    <form th:action="@{'/users/'+${user.id}+'/role'}" method="post">
+      <button type="submit" name="role">
+        Change Role
+      </button>
+    </form>
+  </li>
+</ul>
+</body>
+</html>

@@ -1,6 +1,8 @@
 package com.project.anyahajo.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,7 +11,8 @@ import lombok.Setter;
 @Setter
 public class Carrier extends Item {
 
-    private CarrierType type;
+    @Enumerated(EnumType.STRING)
+    private CarrierType carrierType;
     private String carrierBrand;
     private String size;
 }

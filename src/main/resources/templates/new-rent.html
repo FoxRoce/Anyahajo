@@ -1,0 +1,65 @@
+ <!DOCTYPE html>
+    <html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Admin - new rent</title>
+    </head>
+    <body>
+    <h1>Add New Rent</h1>
+    <form data-th-object="${newRent}" data-th-action="@{add_new_rent}" action="/admin/add_new_rent" method="post">
+        <label for="item">Item:</label>
+        <select id="item" data-th-field="*{item}">
+            <option value="">Select an item</option>
+            <th:block th:each="item : ${items}">
+                <option th:value="${item.item_id}" th:text="${item.name}"></option>
+            </th:block>
+        </select>
+        <br>
+        <label for="user">User:</label>
+        <select id="user" name="user" onchange="showHideNewUser()">
+            <option value="">Select a user</option>
+            <th:block th:each="user : ${users}">
+                <option th:value="${user.user_id}" th:text="${user.email}"></option>
+            </th:block>
+        </select>
+        <input
+                style="display: block;"
+                type="email"
+                id="new_user_email"
+                name="new_user_email"
+                placeholder="Enter new user email"
+        />
+        <br>
+        <label for="startOfRent">Start of Rent:</label>
+        <input type="date" id="startOfRent" name="startOfRent" required>
+        <br>
+<!--        <label for="endOfRent">End of Rent:</label>-->
+<!--        <input type="date" id="endOfRent" name="endOfRent" required>-->
+<!--        <br>-->
+        <label for="isExtended">Is Extended:</label>
+        <input type="checkbox" id="isExtended" name="isExtended">
+        <br>
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" required>
+        <br>
+        <label for="deposit">Deposit:</label>
+        <input type="number" id="deposit" name="deposit" required>
+        <br>
+        <label for="payBackAmount">Pay Back Amount:</label>
+        <input type="number" id="payBackAmount" name="payBackAmount" required>
+        <br>
+        <button type="submit">Add Rent</button>
+    </form>
+    <script>
+        function showHideNewUser() {
+            var userSelect = document.getElementById("user");
+            var newUserField = document.getElementById("new_user_email");
+            if (userSelect.value === "") {
+                newUserField.style.display = "block";
+            } else {
+                newUserField.style.display = "none";
+            }
+        }
+    </script>
+    </body>
+    </html>

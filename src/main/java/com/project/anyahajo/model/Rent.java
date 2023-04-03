@@ -16,10 +16,10 @@ public class Rent {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long rent_id;
     @ManyToOne
-    @MapsId("item_id")
+    @JoinColumn(name = "item_id")
     private Item item;
     @ManyToOne
-    @MapsId("user_id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     private LocalDate startOfRent;
@@ -28,4 +28,6 @@ public class Rent {
     private int price;
     private int deposit;
     private int payBackAmount;
+
+    private LocalDate history;
 }
