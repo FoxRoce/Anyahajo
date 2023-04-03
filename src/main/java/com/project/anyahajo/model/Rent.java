@@ -25,9 +25,9 @@ public class Rent {
     private LocalDate startOfRent;
     private LocalDate endOfRent;
     private boolean isExtended;
-    private int price;
-    private int deposit;
-    private int payBackAmount;
+    private Integer price;
+    private Integer deposit;
+    private Integer payBackAmount;
 
     private LocalDate history;
 }

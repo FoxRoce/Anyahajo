@@ -45,22 +45,22 @@
 </p>
 <table th:unless="${#lists.isEmpty(rents)}">
     <tr>
-        <td>Felhasználó e-mail címe</td>
-        <td>Felhasználó neve</td>
-        <td>Kölcsönzött tárgy neve</td>
-        <div sec:authorize="hasRole('ADMIN')" > <td>Kölcsönzött tárgy Elerhetosege</td> </div>
-        <td>Foglalasra valasz</td>
-        <td>Kölcsönzés kezdete</td>
-        <div sec:authorize="hasRole('ADMIN')" > <td>Kezdo datum modisitas</td> </div>
-        <td>Kölcsönzés lejárta</td>
-        <div sec:authorize="hasRole('ADMIN')" > <td>Lejárti datum modositas</td> </div>
-        <td>Volt-e meghosszabbítás</td>
-        <div sec:authorize="hasRole('ADMIN')" > <td>Meghosszabbítás 2 hettel</td> </div>
-        <td>Kölcsönzési díj</td>
-        <td>Kaució díja</td>
-        <td>Kaucióból visszafizetendő összeg</td>
-        <td>History</td>
-        <div sec:authorize="hasRole('ADMIN')" > <td>Visszaveteli datum beallitasa</td> </div>
+        <td><b>Felhasználó e-mail címe</b></td>
+        <td><b>Felhasználó neve</b></td>
+        <td><b>Kölcsönzött tárgy neve</b></td>
+        <div sec:authorize="hasRole('ADMIN')" > <td><b>Kölcsönzött tárgy Elérhetősége</b></td> </div>
+        <td><b>Foglalásra válasz</b></td>
+        <td><b>Kölcsönzés kezdete</b></td>
+        <div sec:authorize="hasRole('ADMIN')" > <td><b>Kezdő dátum módosítás</b></td> </div>
+        <td><b>Kölcsönzés lejárta</b></td>
+        <div sec:authorize="hasRole('ADMIN')" > <td><b>Lejárati dátum módosítás</b></td> </div>
+        <td><b>Volt-e meghosszabbítás</b></td>
+        <div sec:authorize="hasRole('ADMIN')" > <td><b>Meghosszabbítás 2 héttel</b></td> </div>
+        <td><b>Kölcsönzési díj</b></td>
+        <td><b>Kaució díja</b></td>
+        <td><b>Kaucióból visszafizetendő összeg</b></td>
+        <td><b>History</b></td>
+        <div sec:authorize="hasRole('ADMIN')" > <td><b>Visszavételi dátum beállítása</b></td> </div>
     </tr>
 
     <tr th:each="rent: ${rents}">
@@ -68,13 +68,13 @@
         <td th:text="${rent.user.name} ? ${rent.user.name} : 'User has no name'"></td>
         <td th:text="${rent.item.name}"></td>
 
-        <td th:text="${rent.item.availability}"></td>
+        <td th:text="${rent.item.availability.getHunName}"></td>
         <td><div sec:authorize="hasRole('ADMIN')" th:if="${rent.item.availability == T(com.project.anyahajo.model.Availability).Reserved}">
                 <form th:action="@{'/rents/'+${rent.rent_id}+'/accept'}" method="post">
-                    <button type="submit" name="accept">Accept</button>
+                    <button type="submit" name="accept">Elfogad</button>
                 </form>
                 <form th:action="@{'/rents/'+${rent.rent_id}+'/decline'}" method="post">
-                    <button type="submit" name="decline">Decline</button>
+                    <button type="submit" name="decline">Visszautasít</button>
                 </form>
             </div>
         </td>
@@ -83,7 +83,7 @@
         <td><div sec:authorize="hasRole('ADMIN')" th:if="${rent.history == null} and ${rent.startOfRent != null}">
                 <form th:action="@{'/rents/'+${rent.rent_id}+'/changeStartDate'}" method="post">
                     <input type="date" id="newStartDate" name="newStartDate" required>
-                    <button type="submit" name="changeDate">Change date</button>
+                    <button type="submit" name="changeDate">Dátum módosítása</button>
                 </form>
             </div>
         </td>
@@ -92,15 +92,15 @@
         <td><div sec:authorize="hasRole('ADMIN')" th:if="${rent.history == null} and ${rent.endOfRent != null}">
                 <form th:action="@{'/rents/'+${rent.rent_id}+'/changeEndDate'}" method="post">
                     <input type="date" id="newEndDate" name="newEndDate" required>
-                    <button type="submit" name="changeDate">Change date</button>
+                    <button type="submit" name="changeDate">Dátum módosítása</button>
                 </form>
             </div>
         </td>
 
-        <td th:text="${rent.isExtended}"></td>
+        <td th:text="${rent.isExtended} ? 'Igen' : 'Nem'"></td>
         <td><div sec:authorize="hasRole('ADMIN')" th:if="${rent.history == null} and ${rent.isExtended == false} and ${rent.endOfRent != null}">
                 <form th:action="@{'/rents/'+${rent.rent_id}+'/extend'}" method="post">
-                    <button type="submit" name="extend">Extend by 2 weeks</button>
+                    <button type="submit" name="extend">Meghosszabbítás 2 héttel</button>
                 </form>
             </div>
         </td>
@@ -113,7 +113,7 @@
         <td><div sec:authorize="hasRole('ADMIN')" th:if="${rent.history == null} and ${rent.endOfRent != null}">
                 <form th:action="@{'/rents/'+${rent.rent_id}+'/back'}" method="post">
                     <input type="date" id="historyDate" name="historyDate" required th:min="${rent.startOfRent}">
-                    <button type="submit" name="Brought back">Click here if the item is back</button>
+                    <button type="submit" name="Brought back">Kattints ide, ha a tételt visszahozták</button>
                 </form>
             </div>
         </td>

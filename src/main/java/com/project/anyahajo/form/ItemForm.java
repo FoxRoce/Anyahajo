@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 
@@ -19,7 +20,7 @@ public class ItemForm {
 
     private Availability availability;
     private String description;
-    private Byte[] picture;
+    private MultipartFile picture;
     private Boolean isActive;
 
     private String babycareBrand = null;

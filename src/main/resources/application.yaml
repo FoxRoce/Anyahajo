@@ -22,6 +22,11 @@ spring:
     username: ${PDB_USERNAME}
     password: ${PDB_PASSWORD}
 
+  servlet:
+    multipart:
+      max-request-size: 110MB
+      max-file-size: 110MB
+
 
   jpa:
     hibernate:
