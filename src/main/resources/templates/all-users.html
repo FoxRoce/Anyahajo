@@ -58,7 +58,7 @@
     <td> <a th:href="@{'/admin/users/'+${user.id}}"><b><p th:text="Kölcsönzései">Kölcsönzései</p></b></a></td>
     <td th:text="${user.role}"></td>
     <td>
-      <form th:action="@{'/users/'+${user.id}+'/role'}" method="post">
+      <form th:action="@{'/admin/users/'+${user.id}+'/role'}" method="post">
       <button type="submit" name="role">
         Change Role
       </button>
@@ -66,20 +66,5 @@
 
   </tr>
 </table>
-
-<!--<ul th:unless="${#lists.isEmpty(users)}">-->
-<!--  <li th:each="user: ${users}">-->
-<!--    <p th:text="${user.name}">Név</p>-->
-<!--    <p th:text="${user.email}">E-mail</p>-->
-<!--    <p th:text="${user.phoneNumber}">Telefonszám</p>-->
-<!--    <a th:href="@{'/admin/users/'+${user.id}}"><b><p th:text="Kölcsönzései">Kölcsönzései</p></b></a>-->
-<!--    <p th:text="${user.role}">Role</p>-->
-<!--    <form th:action="@{'/users/'+${user.id}+'/role'}" method="post">-->
-<!--      <button type="submit" name="role">-->
-<!--        Change Role-->
-<!--      </button>-->
-<!--    </form>-->
-<!--  </li>-->
-<!--</ul>-->
 </body>
 </html>

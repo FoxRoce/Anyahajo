@@ -1,11 +1,8 @@
 package com.project.anyahajo.auth;
 
-import com.project.anyahajo.service.impl.UserServiceImpl;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,29 +14,25 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    @NonNull
-    private UserServiceImpl userService;
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public DaoAuthenticationProvider daoAuthenticationProvider() {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-
-        provider.setPasswordEncoder(passwordEncoder());
-        provider.setUserDetailsService(userService);
-
-        return provider;
-    }
-
-    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests()
-                .requestMatchers("/","/home","/register","/kolcsonzes","/books", "/kolcsonzes/kereses", "/item/{id}","/forgot-password/**","/enable-user/**")
+                .requestMatchers("/",
+                        "/home",
+                        "/register",
+                        "/kolcsonzes",
+                        "/books",
+                        "/kolcsonzes/kereses",
+                        "/item/{id}",
+                        "/forgot-password/**",
+                        "/enable-user/**"
+                )
                 .permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
 

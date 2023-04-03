@@ -6,7 +6,7 @@
     </head>
     <body>
     <h1>Add New Rent</h1>
-    <form data-th-object="${newRent}" data-th-action="@{add_new_rent}" action="/admin/add_new_rent" method="post">
+    <form data-th-object="${newRent}" data-th-action="@{/admin/add_new_rent}" action="/admin/add_new_rent" method="post">
         <label for="item">Item:</label>
         <select id="item" data-th-field="*{item}">
             <option value="">Select an item</option>
@@ -33,9 +33,6 @@
         <label for="startOfRent">Start of Rent:</label>
         <input type="date" id="startOfRent" name="startOfRent" required>
         <br>
-<!--        <label for="endOfRent">End of Rent:</label>-->
-<!--        <input type="date" id="endOfRent" name="endOfRent" required>-->
-<!--        <br>-->
         <label for="isExtended">Is Extended:</label>
         <input type="checkbox" id="isExtended" name="isExtended">
         <br>

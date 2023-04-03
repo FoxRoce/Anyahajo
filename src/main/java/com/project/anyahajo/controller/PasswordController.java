@@ -32,6 +32,8 @@ public class PasswordController {
     @NonNull
     private final PasswordEncoder passwordEncoder;
 
+
+
     @PostMapping("/forgot-password")
     public String processForgotPassword(
             @RequestParam("email") String email
@@ -63,6 +65,7 @@ public class PasswordController {
         }
         return "success-reset";
     }
+
     @GetMapping("/forgot-password/token={bob}")
         public String newerPassword(@PathVariable ("bob")String token, Model model){
             User user = userService.findpasswordtoken(token);
@@ -73,6 +76,7 @@ public class PasswordController {
             model.addAttribute("newUser",new ResetForm());
             return "new-password";
        }
+
     @PostMapping("/forgot-password/token={bob}")
     public String rebaseForgotPassword(
             @ModelAttribute("newUser")

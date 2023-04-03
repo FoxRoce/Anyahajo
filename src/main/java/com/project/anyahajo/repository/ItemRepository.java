@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface ItemRepository extends JpaRepository<Item,Long> {
+
     @Transactional
     @Modifying
     @Query("delete from Item i")

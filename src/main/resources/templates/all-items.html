@@ -103,20 +103,8 @@
 
         </form>
 
-        <!--        <form-->
-        <!--                data-sec-authorize="isAuthenticated()"-->
-        <!--                data-th-unless="${#lists.contains(basket, item.item_id)}"-->
-        <!--                method="post"-->
-        <!--                data-th-action="@{(${#lists.contains(basket, id)} ? '/kosar/delete' : '/kolcsonzes/putInTheBasket')}"-->
-        <!--                action="/kolcsonzes/putInTheBasket">-->
-        <!--            <input type="hidden" name="item_id" data-th-value="${item.getItem_id()}">-->
-        <!--            <input type="submit" data-th-unless="${#lists.contains(basket, item.item_id)}" value="Kosárba teszem">-->
-        <!--            <input type="submit" data-th-if="${#lists.contains(basket, item.item_id)}" value="Kiveszem a kosárból">-->
-
-        <!--        </form>-->
-
         <div sec:authorize="hasRole('ADMIN')" class="nav_list_item">
-            <form th:action="@{'/rents/'+${item.item_id}+'/reserve'}" method="post">
+            <form th:action="@{'/admin/rents/'+${item.item_id}+'/reserve'}" method="post">
                 <button type="submit" name="Make rent">Make rent</button>
             </form>
         </div>

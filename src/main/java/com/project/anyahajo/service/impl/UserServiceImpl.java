@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -26,22 +27,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @NonNull
     private PasswordEncoder passwordEncoder;
 
-    @Override
-    public List<UserForm> findAllUsers() {
 
-        List<User> users = userRepository.findAll();
-        return users.stream().map(user -> mapToUserForm(user)).toList();
-    }
 
     @Override
-    public void updateUserRole(Long id, Role role) {
-        userRepository.updateRoleByUser_id(id, role);
+    public void save(User newUser) {
+        userRepository.save(newUser);
     }
 
-    @Override
-    public User findUserByUser_id(Long id) {
-        return userRepository.findByUser_id(id);
-    }
+
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -53,10 +46,54 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 );
     }
 
+
+
+    @Override
+    public List<UserForm> findAllUsers() {
+
+        List<User> users = userRepository.findAll();
+        return users.stream().map(this::mapToUserForm).toList();
+    }
+
+    @Override
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+
     @Override
     public UserForm findUserById(long userId) {
         User user = userRepository.findById(userId).get();
         return mapToUserForm(user);
+    }
+
+    @Override
+    public User findUserByUser_id(Long id) {
+        return userRepository.findByUser_id(id);
+    }
+
+    @Override
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    public User findUserByUserEmail(String email) {
+        return userRepository.findByUserEmail(email);
+    }
+
+    @Override
+    public User findByEnableUrl(String url) {
+        return userRepository.findByEnableUrl(url);
+    }
+
+    public User findpasswordtoken(String resetPasswordToken){
+        return userRepository.findByResetPasswordToken(resetPasswordToken);
+    }
+
+
+
+    @Override
+    public void updateUserRole(Long id, Role role) {
+        userRepository.updateRoleByUser_id(id, role);
     }
 
     @Override
@@ -68,6 +105,26 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         userForm.setRole(user.getRole());
         User UpdatedUser = mapToUser(userForm);
         userRepository.save(UpdatedUser);
+    }
+
+
+
+
+    public UserForm mapToUserForm(User user) {
+
+        return UserForm.builder()
+                .id(user.getUser_id())
+                .name(user.getName())
+                .email(user.getEmail())
+                .password(user.getPassword())
+                .phoneNumber(user.getPhoneNumber())
+                .role(user.getRole())
+                .locked(user.getLocked())
+                .enabled(user.isEnabled())
+                .basket(user.getBasket())
+                .resetPasswordToken(user.getResetPasswordToken())
+                .tokenExpiration(user.getTokenExpiration())
+                .build();
     }
 
     public User mapToUser(UserForm userForm) {
@@ -85,41 +142,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 userForm.getBasket()
         );
 
-    }
-
-    @Override
-    public List<User> findAll() {
-        return userRepository.findAll();
-    }
-
-    @Override
-    public void save(User newUser) {
-        userRepository.save(newUser);
-    }
-
-    public User findUserByUserEmail(String email) {
-        return userRepository.findByUserEmail(email);
-    }
-
-    public User findpasswordtoken(String resetPasswordToken){
-        return userRepository.findByResetPasswordToken(resetPasswordToken);
-   }
-
-    public UserForm mapToUserForm(User user) {
-
-        return UserForm.builder()
-                .id(user.getUser_id())
-                .name(user.getName())
-                .email(user.getEmail())
-                .password(user.getPassword())
-                .phoneNumber(user.getPhoneNumber())
-                .role(user.getRole())
-                .locked(user.getLocked())
-                .enabled(user.isEnabled())
-                .basket(user.getBasket())
-                .resetPasswordToken(user.getResetPasswordToken())
-                .tokenExpiration(user.getTokenExpiration())
-                .build();
     }
 
 }

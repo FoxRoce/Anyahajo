@@ -1,10 +1,8 @@
 package com.project.anyahajo.controller;
 
-import com.project.anyahajo.form.UserForm;
-import com.project.anyahajo.model.Rent;
+import com.project.anyahajo.form.UserForm;;
 import com.project.anyahajo.model.Role;
 import com.project.anyahajo.model.User;
-import com.project.anyahajo.repository.RentRepository;
 import com.project.anyahajo.service.UserService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +15,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -26,38 +23,9 @@ public class UserController {
     @NonNull
     private UserService userService;
     @NonNull
-    private RentRepository rentRepository;
-    @NonNull
     private PasswordEncoder passwordEncoder;
 
-    @GetMapping("/admin")
-    public String getAdminPage(Principal principal) {
-        User user = (User) userService.loadUserByUsername(principal.getName());
-        if(user.getRole().equals(Role.ADMIN)) {
-            return "admin";
-        } else {
-            return "home";
-        }
-    }
-    @GetMapping(path = {"/admin/users"})
-    public String listItems(Model model) {
-        List<UserForm> users = userService.findAllUsers();
-        model.addAttribute("users", users);
-        return "all-users";
-    }
 
-    @GetMapping(path = {"/admin/users/{id}"})
-    public String showUserDetails(
-            Model model,
-            @PathVariable("id") Long id
-    ) {
-        User user = userService.findUserByUser_id(id);
-        model.addAttribute("user", user);
-
-        List<Rent> rents = rentRepository.findByUser_id(user);
-        model.addAttribute("rents", rents);
-        return "user-detail";
-    }
 
     @PostMapping("/users/{id}/role")
     public String updateUserRole(
@@ -112,7 +80,6 @@ public class UserController {
             oldUser.setPassword(passwordEncoder.encode(user.getPassword()));
         }
 
-//        userService.updateUser(oldUser, oldUser.getId());
         User newUser = (User) userService.mapToUser(oldUser);
         userService.save(newUser);
 
@@ -120,13 +87,4 @@ public class UserController {
         return "redirect:/home";
     }
 
-    @GetMapping(path = {"/rents"})
-    public String listRents(Model model, Principal principal) {
-
-        User user = (User) userService.loadUserByUsername(principal.getName());
-
-        List<Rent> rents = rentRepository.findByUser(user);
-        model.addAttribute("rents", rents);
-        return "all-rents-by-user";
-    }
 }

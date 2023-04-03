@@ -13,7 +13,6 @@ import java.util.Optional;
 @Entity
 @Table(name = "ah_item")
 public class Item {
-//    itemController - postMapping - saveItem
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

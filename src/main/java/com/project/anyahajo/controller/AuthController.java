@@ -5,7 +5,7 @@ import com.project.anyahajo.form.RegistrationForm;
 import com.project.anyahajo.model.Name;
 import com.project.anyahajo.model.Role;
 import com.project.anyahajo.model.User;
-import com.project.anyahajo.repository.UserRepository;
+import com.project.anyahajo.service.UserService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,9 +27,15 @@ public class AuthController {
     @NonNull
     private final PasswordEncoder passwordEncoder;
     @NonNull
-    private final UserRepository appUserRepository;
+    private final UserService userService;
     @NonNull
     private final EmailSender emailSender;
+
+
+    @GetMapping(path = {"", "/", "/home"})
+    public String getHomePage() {
+        return "home";
+    }
 
     @GetMapping("/register")
     public String newUser(
@@ -55,7 +61,7 @@ public class AuthController {
                     "A jelszavak nem egyeznek");
             return "register";
         }
-        if (appUserRepository.findByEmail(registrationForm.getEmail()).isPresent()) {
+        if (userService.findByEmail(registrationForm.getEmail()).isPresent()) {
             bindingResult.rejectValue("email", "registrationForm.email",
                     "Már létező email cím");
             return "register";
@@ -82,7 +88,7 @@ public class AuthController {
                 "\n\nÜdvözlettel, Anyahajó";
 
         user.setEnableUrl(url);
-        appUserRepository.save(user);
+        userService.save(user);
 
         try {
             emailSender.send(user.getEmail(),emailBody,"Fiók aktiválás");
@@ -98,14 +104,14 @@ public class AuthController {
     public String enableUser(
             @PathVariable ("bob")String bob
     ){
-        User user = appUserRepository.findByEnableUrl(bob);
+        User user = userService.findByEnableUrl(bob);
         if (user == null){
             return "token-expired";
         }
         user.setEnabled(true);
         user.setEnableUrl(null);
 
-        appUserRepository.save(user);
+        userService.save(user);
 
         return "success-active";
     }

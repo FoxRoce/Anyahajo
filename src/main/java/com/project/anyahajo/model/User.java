@@ -31,20 +31,21 @@ public class User implements UserDetails {
     private String phoneNumber;
     private Boolean locked = false;
     private Boolean enabled = false;
-    private String enableUrl;
 
+
+    private String enableUrl;
     @Enumerated(EnumType.STRING)
     private Role role;
-
     @Column(name = "reset_password_token")
     private String resetPasswordToken;
-
     private LocalDateTime tokenExpiration;
 
     @ElementCollection
     @Column(name = "item_id")
     @CollectionTable(name = "ah_user_basket", joinColumns = @JoinColumn(name = "owner_id"))
     private Set<Long> basket = new LinkedHashSet<>();
+
+
 
 
     public void addItemToBasket(Item item) {
@@ -65,6 +66,7 @@ public class User implements UserDetails {
         }
         return authorities;
     }
+
     @Override
     public String getPassword() {
         return this.password;
@@ -95,11 +97,4 @@ public class User implements UserDetails {
         return this.enabled;
     }
 
-    public Set<Long> getBasket() {
-        return basket;
-    }
-
-    public void setBasket(Set<Long> basket) {
-        this.basket = basket;
-    }
 }
