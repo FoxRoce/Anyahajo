@@ -39,5 +39,6 @@ public class UserForm {
     private Boolean enabled = true;
     private Set<Long> basket = new LinkedHashSet<>();
     private String resetPasswordToken;
+    private String enableUrl;
 
 }

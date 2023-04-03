@@ -64,9 +64,11 @@ public class UserServiceImpl implements UserService {
                 userForm.getPhoneNumber(),
                 userForm.getLocked(),
                 userForm.getEnabled(),
+                userForm.getEnableUrl(),
                 userForm.getRole(),
                 userForm.getBasket(),
-                userForm.getResetPasswordToken());
+                userForm.getResetPasswordToken()
+        );
     }
 
     public User findUserByUserEmail(String email) {

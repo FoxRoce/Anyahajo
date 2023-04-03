@@ -29,7 +29,8 @@ public class User implements UserDetails {
 
     private String phoneNumber;
     private Boolean locked = false;
-    private Boolean enabled = true;
+    private Boolean enabled = false;
+    private String enableUrl;
 
     @Enumerated(EnumType.STRING)
     private Role role;
