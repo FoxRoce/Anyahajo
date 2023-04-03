@@ -26,7 +26,7 @@
 <body>
 <div class="center">
     <div class="item">
-        <img src="" data-th-src="${item.getPicture()}" />
+        <img th:src="@{/all-items/img/{id}(id=${item.item_id})}" alt="item picture" width="300" height="300"/>
         <div class="product-info">
             <p class="info">A termék neve: </p>
             <p class="item" data-th-text="${item.name}" ></p>

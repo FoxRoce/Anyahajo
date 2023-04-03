@@ -36,6 +36,8 @@ public class RentController {
     private EmailSender emailSender;
     @NonNull
     private AppUserService userDetailService;
+    @NonNull
+    private ItemController itemController;
 
     @GetMapping(path = {"/admin/rents"})
     public String listItems(Model model) {
@@ -123,6 +125,7 @@ public class RentController {
     @PostMapping("/rents/{id}/accept")
     public String updateRentAccept(
             @PathVariable("id") Long id,
+            @ModelAttribute("deposit") Integer deposit,
             Principal principal
     ) {
         User user = (User) userDetailService.loadUserByUsername(principal.getName());
@@ -134,6 +137,8 @@ public class RentController {
        rent.getItem().setAvailability(Availability.NotAvailable);
        rent.setStartOfRent(LocalDate.now());
        rent.setEndOfRent(LocalDate.now().plusDays(14));
+
+       rent.setDeposit(deposit);
 
         String emailBody = "Kedves vásárló!\n\n" + rent.getItem().getName() +
                 " nevű tárgyra tett kölcsönzése el lett fogadva.\n" +
@@ -186,6 +191,7 @@ public class RentController {
     public String updateRentBroughtBack(
             @PathVariable("id") Long id,
             @ModelAttribute("historyDate") LocalDate date,
+            @ModelAttribute("price") Integer price,
             Principal principal
     ) {
         User user = (User) userDetailService.loadUserByUsername(principal.getName());
@@ -196,6 +202,14 @@ public class RentController {
         Rent rent = rentRepository.findByRent_id(id);
         rent.getItem().setAvailability(Availability.Available);
         rent.setHistory(date);
+
+        rent.setPrice(price);
+
+        if (rent.getDeposit() - rent.getPrice() >= 0){
+            rent.setPayBackAmount(rent.getDeposit() - rent.getPrice());
+        } else {
+            rent.setPayBackAmount(0);
+        }
 
         String emailBody = "Kedves vásárló!\n\n"
                 + rent.getItem().getName() + " nevű tárgyra vissza lett hozva." +
@@ -300,9 +314,10 @@ public class RentController {
         return "redirect:/admin/rents";
     }
     @PostMapping("/kolcsonzes/igenyles")
-    public String sendRentDemand(Principal principal) {
+    public String sendRentDemand(Principal principal, Model model) {
         User owner = (User) appUserService.loadUserByUsername(principal.getName());
         List<Long> fromBasketRemoveableItems = new ArrayList<>();
+//        List<String> namesOfTheItemsInTheBasket = new ArrayList<>();
 
         StringBuilder emailBody =
                 new StringBuilder("Új foglalás:\n" +
@@ -313,6 +328,10 @@ public class RentController {
         for (Long item_id : owner.getBasket()) {
             if (itemRepository.findByItem_id(item_id) == null) {
                 return "error-item-not-found";
+            } else if (!itemRepository.findByItem_id(item_id).getAvailability().equals(Availability.Available)) {
+                model.addAttribute("termek_neve", itemRepository.findByItem_id(item_id).getName());
+                itemController.removeFromBasket(item_id, principal);
+                return "error-item-is-not-available";
             } else {
                 Item item = itemRepository.findByItem_id(item_id);
                 Rent rent = new Rent();
@@ -320,10 +339,15 @@ public class RentController {
                 rent.setUser(owner);
                 item.setAvailability(Availability.Reserved);
                 fromBasketRemoveableItems.add(item_id);
+                rent.setPrice(0);
+                rent.setDeposit(0);
+                rent.setPayBackAmount(0);
                 rentRepository.save(rent);
                 emailBody.append("\n").append(item.getName());
+//                namesOfTheItemsInTheBasket.add(item.getName());
             }
         }
+//        model.addAttribute("basket", namesOfTheItemsInTheBasket);
         for (int i = 0; i < fromBasketRemoveableItems.size(); i++) {
             owner.getBasket().remove(fromBasketRemoveableItems.get(i));
         }
@@ -337,9 +361,7 @@ public class RentController {
         } catch (Exception e){
             System.out.println(emailBody);
         }
-
-
-        return "basket";
+        return "rent-claim-success";
     }
 
     @GetMapping(path = {"/admin/rents/kikolcsonzott"})
@@ -386,4 +408,5 @@ public class RentController {
         model.addAttribute("rents", rents);
         return "all-rents-by-user";
     }
+
 }

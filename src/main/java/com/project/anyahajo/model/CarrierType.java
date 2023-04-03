@@ -6,6 +6,10 @@ public enum CarrierType {
     Buckle("Csatos"),
     OtherShaped("Egyéb formázott");
 
+    public String getHunName() {
+        return hunName;
+    }
+
     public final String hunName;
 
     CarrierType(String hunName) {

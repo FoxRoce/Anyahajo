@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Kolcsonzesek</title>
+    <title>Kölcsönzések</title>
     <style>
 
         h1 {
@@ -49,7 +49,7 @@
     </style>
 </head>
 <body>
-<h1>Kolcsonzes lista:</h1>
+<h1>Kölcsönzés lista:</h1>
 
 <div>
     <form th:action="@{/kolcsonzes/kereses}" data-th-object="${searchData}" method="post" class="form-inline my-2 my-lg-0 mb-3">
@@ -72,24 +72,35 @@
 <ul data-th-unless="${#lists.isEmpty(items)}">
     <li data-th-each="item: ${items}">
         <a data-th-href="@{${'/item/' + item.item_id}}"><b><p data-th-text="${item.name}">Targy nev</p></b></a>
-        <p th:text="${item.item_id}">Id</p>
-        <p th:text="${item.availability}">Foglalas</p>
-        <p th:text="${item.description}">Leiras</p>
+        <p th:text="${item.availability.getHunName()}">Foglalas</p>
+        <span>Leirás: </span>
+        <span th:text="${item.description}">Leiras</span>
+        <br>
         <p th:text="${item.picture}">Kep</p>
-        <p th:text="${item.isActive}">Elerheto-e</p>
+        <p th:text="${item.isActive} ? 'Aktív' : 'Inaktív' ">Elerheto-e</p>
 
         <div th:if="${item instanceof T(com.project.anyahajo.model.Book)}">
-            <p th:text="${item.author}">Szerzo</p>
+            <span>Szerző: </span>
+            <span th:text="${item.author}">Szerzo</span>
+            <br>
         </div>
 
         <div th:if="${item instanceof T(com.project.anyahajo.model.Carrier)}">
-            <p th:text="${item.carrierBrand}">Marka</p>
-            <p th:text="${item.size}">Meret</p>
-            <p th:text="${item.carrierType}">Tipus</p>
+            <span>Márka: </span>
+            <span th:text="${item.carrierBrand}">Marka</span>
+            <br>
+            <span>Méret: </span>
+            <span th:text="${item.size}">Meret</span>
+            <br>
+            <span>Típus: </span>
+            <span th:text="${item.carrierType.getHunName()}">Tipus</span>
+            <br>
         </div>
 
         <div th:if="${item instanceof T(com.project.anyahajo.model.Babycare)}">
-            <p th:text="${item.babycareBrand}">Marka</p>
+            <span>Márka: </span>
+            <span th:text="${item.babycareBrand}">Marka</span>
+            <br>
         </div>
 
         <form

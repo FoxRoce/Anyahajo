@@ -5,18 +5,18 @@
     <title>Admin - uj targy</title>
 </head>
 <body>
-<h1>Uj targy felvetel</h1>
+<h1>Új tárgy felvétel</h1>
 <form data-th-object="${newItem}" data-th-action="@{ujTargyFelvetel}" action="/admin/ujTargyFelvetel" method="post">
 
-    <label for="type">Tipus</label>
+    <label for="type">Típus</label>
     <select id="type" name="type" onchange="showFields()">
-        <option value="">Choose an option</option>
-        <option value="book">Book</option>
-        <option value="carrier">Carrier</option>
-        <option value="babycare">Babycare</option>
+        <option value="">Válassz egy opciót</option>
+        <option value="book">Könyv</option>
+        <option value="carrier">Hordozó</option>
+        <option value="babycare">Babaápolás</option>
     </select>
 
-    <label for="name">Nev</label>
+    <label for="name">Név</label>
     <input id="name" type="text" data-th-field="*{name}"required><br><br>
     <p
             style="color: red"
@@ -24,12 +24,12 @@
             data-th-error="*{name}"
     ></p>
 
-    <label for="availability">Availability:</label>
+    <label for="availability">Elérhetőség:</label>
     <select id="availability" name="availability" required>
-        <option value="">Choose an option</option>
-        <option value="Available">Available</option>
-        <option value="Reserved">Reserved</option>
-        <option value="NotAvailable">Not Available</option>
+        <option value="">Válassz egy opciót</option>
+        <option value="Available">Szabad</option>
+        <option value="Reserved">Foglalt</option>
+        <option value="NotAvailable">Nem elérhető</option>
     </select><br><br>
 
     <label for="description">Leírás</label>
@@ -48,44 +48,44 @@
             data-th-error="*{picture}"
     ></p>
 
-    <label for="isActive">Is Active:</label>
+    <label for="isActive">Aktív?:</label>
     <select name="isActive" id="isActive">
-        <option value="true">Yes</option>
-        <option value="false">No</option>
+        <option value="true">Igen</option>
+        <option value="false">Nem</option>
     </select>
 
     <div id="bookFields" style="display: none;">
-        <label for="author">Szerzo</label>
+        <label for="author">Szerző</label>
         <input id="author" type="text" data-th-field="*{author}">
         <p style="color: red" data-th-if="${#fields.hasErrors('author')}" data-th-error="*{author}"></p>
     </div>
 
     <div id="carrierFields" style="display: none;">
 
-        <label for="carrierType">Tipus:</label>
+        <label for="carrierType">Típus:</label>
         <select id="carrierType" name="carrierType">
-            <option value="">Choose an option</option>
-            <option value="Wrap">Wrap</option>
-            <option value="Buckle">Buckle</option>
-            <option value="OtherShaped">OtherShaped</option>
+            <option value="">Válassz egy opciót</option>
+            <option value="Wrap">Kendő</option>
+            <option value="Buckle">Csatos</option>
+            <option value="OtherShaped">Egyéb formázott</option>
         </select><br><br>
 
-        <label for="carrierBrand">Marka</label>
+        <label for="carrierBrand">Márka</label>
         <input id="carrierBrand" type="text" data-th-field="*{carrierBrand}">
         <p style="color: red" data-th-if="${#fields.hasErrors('carrierBrand')}" data-th-error="*{carrierBrand}"></p>
 
-        <label for="size">Meret</label>
+        <label for="size">Méret</label>
         <input id="size" type="text" data-th-field="*{size}">
         <p style="color: red" data-th-if="${#fields.hasErrors('size')}" data-th-error="*{size}"></p>
     </div>
 
     <div id="babycareFields" style="display: none;">
-        <label for="babycareBrand">Marka</label>
+        <label for="babycareBrand">Márka</label>
         <input id="babycareBrand" type="text" data-th-field="*{babycareBrand}">
         <p style="color: red" data-th-if="${#fields.hasErrors('babycareBrand')}" data-th-error="*{babycareBrand}"></p>
     </div>
 
-    <input type="submit" value="Save">
+    <input type="submit" value="Mentés">
 </form>
 
 <script>
