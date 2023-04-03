@@ -44,11 +44,11 @@
 
 <table th:unless="${#lists.isEmpty(users)}">
   <tr>
-    <td>Név</td>
-    <td>E-mail</td>
-    <td>Telefonszám</td>
-    <td>Kölcsönzései</td>
-    <td>Jogosultság</td>
+    <td><b>Név</b></td>
+    <td><b>E-mail</b></td>
+    <td><b>Telefonszám</b></td>
+    <td><b>Kölcsönzései</b></td>
+    <td><b>Jogosultság</b></td>
   </tr>
 
   <tr th:each="user: ${users}">
