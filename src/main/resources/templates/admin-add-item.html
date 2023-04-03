@@ -41,7 +41,7 @@
     ></p>
 
     <label for="picture">Kép</label>
-    <input id="picture" type="file" name="picture" accept="image/*">
+    <input id="picture" type="file" name="picture" accept="image/*" data-th-field="*{picture}" multiple="multiple">
     <p style="color: red" data-th-if="${#fields.hasErrors('picture')}" data-th-error="*{picture}"></p>
 
     <label for="isActive">Is Active:</label>
