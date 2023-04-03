@@ -52,7 +52,7 @@
 <h1>Kolcsonzes lista:</h1>
 
 <div>
-    <form th:action="@{/kolcsonzes/kereses}" data-th-object="${searchData}" method="post" class="form-inline my-2 my-lg-0 mb-3">
+    <form th:action="@{/kolcsonzes/kereses}" data-th-object="${searchData}" method="post" class="form-inline my-2 my-lg-0 mb-3" enctype="multipart/form-data">
         <input name="text" th:field="*{text}" class="form-control mr-sm-2 mb-5" type="search" placeholder="Keresés" aria-label="Search">
 
         <label for="item-type">Szűrés típusonként:</label>
@@ -75,7 +75,7 @@
         <p th:text="${item.item_id}">Id</p>
         <p th:text="${item.availability}">Foglalas</p>
         <p th:text="${item.description}">Leiras</p>
-        <p th:text="${item.picture}">Kep</p>
+        <img th:src="@{/all-items/img/{id}(id=${item.item_id})}" alt="item picture"/>
         <p th:text="${item.isActive}">Elerheto-e</p>
 
         <div th:if="${item instanceof T(com.project.anyahajo.model.Book)}">
