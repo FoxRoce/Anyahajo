@@ -55,8 +55,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(UpdatedUser);
     }
 
-    private User mapToUser(UserForm userForm) {
-
+    public User mapToUser(UserForm userForm) {
         return new User(userForm.getId(),
                 userForm.getName(),
                 userForm.getEmail(),
@@ -66,19 +65,22 @@ public class UserServiceImpl implements UserService {
                 userForm.getEnabled(),
                 userForm.getEnableUrl(),
                 userForm.getRole(),
-                userForm.getBasket(),
-                userForm.getResetPasswordToken()
+                userForm.getResetPasswordToken(),
+                userForm.getTokenExpiration(),
+                userForm.getBasket()
         );
+
     }
 
     public User findUserByUserEmail(String email) {
         return userRepository.findByUserEmail(email);
     }
-   public User findpasswordtoken(String resetPasswordToken){
+
+    public User findpasswordtoken(String resetPasswordToken){
         return userRepository.findByResetPasswordToken(resetPasswordToken);
    }
 
-    private UserForm mapToUserForm(User user) {
+    public UserForm mapToUserForm(User user) {
 
         return UserForm.builder()
                 .id(user.getUser_id())
@@ -91,6 +93,8 @@ public class UserServiceImpl implements UserService {
                 .enabled(user.isEnabled())
                 .basket(user.getBasket())
                 .resetPasswordToken(user.getResetPasswordToken())
+                .tokenExpiration(user.getTokenExpiration())
                 .build();
     }
+
 }

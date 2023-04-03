@@ -4,7 +4,12 @@ import com.project.anyahajo.model.*;
 import com.project.anyahajo.repository.UserRepository;
 import com.project.anyahajo.repository.ItemRepository;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
+
+import java.awt.*;
+import java.io.File;
+import java.nio.file.Files;
 
 @Component
 public  class BootstrapData implements CommandLineRunner{
@@ -18,12 +23,17 @@ public  class BootstrapData implements CommandLineRunner{
 
 //        itemRepository.deleteAll();
 
+
+
+
+
         Book harryPotter = new Book();
         harryPotter.setAuthor("J.K. Rowling");
         harryPotter.setName("Harry Potter and his magic rod");
         harryPotter.setAvailability(Availability.Available);
         harryPotter.setActive(true);
         harryPotter.setDescription("DHarry Potter finds porn in the daily prophet");
+
 
         Book littleprince = new Book();
         littleprince.setAuthor("Antoine de");
