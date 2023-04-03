@@ -5,6 +5,10 @@ public enum Availability {
     Reserved("Foglalt"),
     NotAvailable("Nem elérhető");
 
+    public String getHunName() {
+        return hunName;
+    }
+
     public final String hunName;
 
     Availability(String hunName) {
