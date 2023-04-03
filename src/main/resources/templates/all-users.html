@@ -48,7 +48,7 @@
     <td>E-mail</td>
     <td>Telefonszám</td>
     <td>Kölcsönzései</td>
-    <td>Role</td>
+    <td>Jogosultság</td>
   </tr>
 
   <tr th:each="user: ${users}">
@@ -60,7 +60,7 @@
     <td>
       <form th:action="@{'/users/'+${user.id}+'/role'}" method="post">
       <button type="submit" name="role">
-        Change Role
+        Jogosultság módosítása
       </button>
     </form></td>
 
