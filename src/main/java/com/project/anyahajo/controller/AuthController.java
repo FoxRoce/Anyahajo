@@ -6,6 +6,8 @@ import com.project.anyahajo.model.Name;
 import com.project.anyahajo.model.Role;
 import com.project.anyahajo.model.User;
 import com.project.anyahajo.repository.UserRepository;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,20 +21,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import java.util.UUID;
 
 @Controller
+@RequiredArgsConstructor
 public class AuthController {
 
-    public AuthController(
-            PasswordEncoder passwordEncoder,
-            UserRepository appUserRepository,
-            EmailSender emailSender
-    ) {
-        this.passwordEncoder = passwordEncoder;
-        this.appUserRepository = appUserRepository;
-        this.emailSender = emailSender;
-    }
-
+    @NonNull
     private final PasswordEncoder passwordEncoder;
+    @NonNull
     private final UserRepository appUserRepository;
+    @NonNull
     private final EmailSender emailSender;
 
     @GetMapping("/register")
@@ -65,7 +61,6 @@ public class AuthController {
             return "register";
         }
 
-//        String encodePw = passwordEncoder.encode(password);
         User user = new User();
         Name name = new Name();
         name.setLastName(registrationForm.getLastName());

@@ -1,17 +1,14 @@
 package com.project.anyahajo.controller;
 
-import com.project.anyahajo.auth.AppUserService;
 import com.project.anyahajo.form.UserForm;
 import com.project.anyahajo.model.Rent;
 import com.project.anyahajo.model.Role;
 import com.project.anyahajo.model.User;
 import com.project.anyahajo.repository.RentRepository;
-import com.project.anyahajo.repository.UserRepository;
 import com.project.anyahajo.service.UserService;
-import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,26 +20,19 @@ import java.security.Principal;
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 public class UserController {
 
+    @NonNull
     private UserService userService;
+    @NonNull
     private RentRepository rentRepository;
-    private AppUserService userDetailService;
-    private final UserRepository userRepository;
-
-    @Autowired
+    @NonNull
     private PasswordEncoder passwordEncoder;
 
-    public UserController(UserService userService, RentRepository rentRepository, AppUserService userDetailService,
-                          UserRepository userRepository) {
-        this.userService = userService;
-        this.rentRepository = rentRepository;
-        this.userDetailService = userDetailService;
-        this.userRepository = userRepository;
-    }
     @GetMapping("/admin")
     public String getAdminPage(Principal principal) {
-        User user = (User) userDetailService.loadUserByUsername(principal.getName());
+        User user = (User) userService.loadUserByUsername(principal.getName());
         if(user.getRole().equals(Role.ADMIN)) {
             return "admin";
         } else {
@@ -89,7 +79,7 @@ public class UserController {
 
     @GetMapping("/user/edit")
     public String editUserForm(Principal principal, Model model) {
-        User userGet = (User) userDetailService.loadUserByUsername(principal.getName());
+        User userGet = (User) userService.loadUserByUsername(principal.getName());
         UserForm user = userService.mapToUserForm(userGet);
         model.addAttribute("user", user);
         return "user-edit";
@@ -106,7 +96,7 @@ public class UserController {
             return "user-edit";
         }
 
-        User userGet = (User) userDetailService.loadUserByUsername(principal.getName());
+        User userGet = (User) userService.loadUserByUsername(principal.getName());
         UserForm oldUser = userService.mapToUserForm(userGet);
 
         if (!user.getName().getFirstName().isEmpty() || !user.getName().getLastName().isEmpty()){
@@ -124,7 +114,7 @@ public class UserController {
 
 //        userService.updateUser(oldUser, oldUser.getId());
         User newUser = (User) userService.mapToUser(oldUser);
-        userRepository.save(newUser);
+        userService.save(newUser);
 
 
         return "redirect:/home";
@@ -133,7 +123,7 @@ public class UserController {
     @GetMapping(path = {"/rents"})
     public String listRents(Model model, Principal principal) {
 
-        User user = (User) userDetailService.loadUserByUsername(principal.getName());
+        User user = (User) userService.loadUserByUsername(principal.getName());
 
         List<Rent> rents = rentRepository.findByUser(user);
         model.addAttribute("rents", rents);

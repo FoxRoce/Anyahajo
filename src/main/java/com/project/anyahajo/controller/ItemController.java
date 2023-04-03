@@ -1,10 +1,10 @@
 package com.project.anyahajo.controller;
 
-import com.project.anyahajo.auth.AppUserService;
 import com.project.anyahajo.form.ItemForm;
 import com.project.anyahajo.model.*;
 import com.project.anyahajo.repository.UserRepository;
 import com.project.anyahajo.repository.ItemRepository;
+import com.project.anyahajo.service.UserService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -14,11 +14,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -27,9 +24,7 @@ public class ItemController {
     @NonNull
     private ItemRepository itemRepository;
     @NonNull
-    private UserRepository appUserRepository;
-    @NonNull
-    private AppUserService appUserService;
+    private UserService userService;
 
     @GetMapping(path = {"/kolcsonzes"})
     public String listItems(Model model, Principal principal) {
@@ -37,7 +32,7 @@ public class ItemController {
         model.addAttribute("items", items);
         model.addAttribute("searchData", new SearchForm("", ""));
         if (principal != null) {
-            User owner = (User) appUserService.loadUserByUsername(principal.getName());
+            User owner = (User) userService.loadUserByUsername(principal.getName());
             model.addAttribute("basket", owner.getBasket());
         }
         return "all-items";
@@ -63,7 +58,7 @@ public class ItemController {
         }
         model.addAttribute("items", items);
         if (principal != null) {
-            User owner = (User) appUserService.loadUserByUsername(principal.getName());
+            User owner = (User) userService.loadUserByUsername(principal.getName());
             model.addAttribute("basket", owner.getBasket());
         }
         return "all-items";
@@ -121,7 +116,7 @@ public class ItemController {
         Item item = itemRepository.findByItem_id(Long.parseLong(id));
         if(principal != null && item != null) {
             model.addAttribute("item", item);
-            User owner = (User) appUserService.loadUserByUsername(principal.getName());
+            User owner = (User) userService.loadUserByUsername(principal.getName());
             model.addAttribute("basket", owner.getBasket());
             return "item";
         }
@@ -133,22 +128,22 @@ public class ItemController {
     }
     @PostMapping(path = {"/kolcsonzes/putInTheBasket", "/kolcsonzes/kereses/putInTheBasket"})
     public String putInTheBasket(@RequestParam("item_id") Long id, Principal principal) {
-        User owner = (User) appUserService.loadUserByUsername(principal.getName());
+        User owner = (User) userService.loadUserByUsername(principal.getName());
         Item item = itemRepository.findByItem_id(id);
             owner.getBasket().add(id);
-            appUserRepository.save(owner);
+            userService.save(owner);
         return "redirect:/kolcsonzes";
     }
     @PostMapping("kosar/delete")
     public String removeFromBasket(@RequestParam("item_id") Long id, Principal principal) {
-        User owner = (User) appUserService.loadUserByUsername(principal.getName());
+        User owner = (User) userService.loadUserByUsername(principal.getName());
         owner.getBasket().remove(id);
-        appUserRepository.save(owner);
+        userService.save(owner);
         return "redirect:/kosar";
     }
     @GetMapping(path = "/kosar")
     public String showBasket(Principal principal, Model model) {
-        User owner = (User) appUserService.loadUserByUsername(principal.getName());
+        User owner = (User) userService.loadUserByUsername(principal.getName());
         List <Item> itemsInTheBasket = owner.getBasket().stream().map(x -> {
             if(itemRepository.findById(x).isPresent()) {
                 return itemRepository.findById(x).get();

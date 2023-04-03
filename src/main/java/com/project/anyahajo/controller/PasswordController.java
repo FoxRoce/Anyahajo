@@ -1,5 +1,5 @@
 package com.project.anyahajo.controller;
-import com.project.anyahajo.form.RegistrationForm;;
+;
 import com.project.anyahajo.form.ResetForm;
 import com.project.anyahajo.model.User;
 import com.project.anyahajo.repository.UserRepository;
@@ -8,7 +8,6 @@ import com.project.anyahajo.auth.EmailSender;
 import com.project.anyahajo.timer.TokenExpiryTask;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,11 +30,7 @@ public class PasswordController {
     @NonNull
     private UserService userService;
     @NonNull
-    private UserRepository userRepository;
-    @NonNull
     private final PasswordEncoder passwordEncoder;
-    @NonNull
-    private final UserRepository appUserRepository;
 
     @PostMapping("/forgot-password")
     public String processForgotPassword(
@@ -51,10 +46,10 @@ public class PasswordController {
         String token = UUID.randomUUID().toString();
         user.setResetPasswordToken(token);
         user.setTokenExpiration(new Timestamp(tokenExpiration).toLocalDateTime());
-        userRepository.save(user);
+        userService.save(user);
 
         Timer timer = new Timer();
-        timer.schedule(new TokenExpiryTask(user, userRepository), new Date(tokenExpiration));
+        timer.schedule(new TokenExpiryTask(user, userService), new Date(tokenExpiration));
 
         String resetUrl = "http://localhost:8080/forgot-password/token=" + token;
         String emailBody = "Kattintson a következő linkre a jelszó visszaállításához: " + resetUrl +
@@ -104,7 +99,7 @@ public class PasswordController {
         user.setResetPasswordToken(null);
         user.setTokenExpiration(null);
 
-        appUserRepository.save(user);
+        userService.save(user);
 
         return "redirect:/login";
     }

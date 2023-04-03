@@ -1,16 +1,14 @@
 package com.project.anyahajo.controller;
 
-import com.project.anyahajo.auth.AppUserService;
 import com.project.anyahajo.auth.EmailSender;
 import com.project.anyahajo.form.RentForm;
-import com.project.anyahajo.form.UserForm;
 import com.project.anyahajo.model.*;
 import com.project.anyahajo.repository.ItemRepository;
 import com.project.anyahajo.repository.RentRepository;
 import com.project.anyahajo.repository.UserRepository;
+import com.project.anyahajo.service.UserService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -29,13 +27,9 @@ public class RentController {
     @NonNull
     private ItemRepository itemRepository;
     @NonNull
-    private UserRepository userRepository;
-    @NonNull
-    private AppUserService appUserService;
+    private UserService userService;
     @NonNull
     private EmailSender emailSender;
-    @NonNull
-    private AppUserService userDetailService;
 
     @GetMapping(path = {"/admin/rents"})
     public String listItems(Model model) {
@@ -53,7 +47,7 @@ public class RentController {
         model.addAttribute("newRent", rf);
         List<Item> items = itemRepository.findAll();
         model.addAttribute("items", items);
-        List<User> users = userRepository.findAll();
+        List<User> users = userService.findAll();
         model.addAttribute("users", users);
         return "new-rent";
     }
@@ -77,7 +71,7 @@ public class RentController {
             newUser.setLocked(false);
             newUser.setEnabled(true);
 
-            userRepository.save(newUser);
+            userService.save(newUser);
             newRent.setUser(newUser);
         }
 
@@ -126,7 +120,7 @@ public class RentController {
             @ModelAttribute("deposit") Integer deposit,
             Principal principal
     ) {
-        User user = (User) userDetailService.loadUserByUsername(principal.getName());
+        User user = (User) userService.loadUserByUsername(principal.getName());
         if (!user.getRole().equals(Role.ADMIN)){
             return "redirect:/rents";
         }
@@ -159,7 +153,7 @@ public class RentController {
             @PathVariable("id") Long id,
             Principal principal
     ) {
-        User user = (User) userDetailService.loadUserByUsername(principal.getName());
+        User user = (User) userService.loadUserByUsername(principal.getName());
         if (!user.getRole().equals(Role.ADMIN)){
             return "redirect:/rents";
         }
@@ -192,7 +186,7 @@ public class RentController {
             @ModelAttribute("price") Integer price,
             Principal principal
     ) {
-        User user = (User) userDetailService.loadUserByUsername(principal.getName());
+        User user = (User) userService.loadUserByUsername(principal.getName());
         if (!user.getRole().equals(Role.ADMIN)){
             return "redirect:/rents";
         }
@@ -230,7 +224,7 @@ public class RentController {
             @PathVariable("id") Long id,
             Principal principal
     ) {
-        User user = (User) userDetailService.loadUserByUsername(principal.getName());
+        User user = (User) userService.loadUserByUsername(principal.getName());
         if (!user.getRole().equals(Role.ADMIN)){
             return "redirect:/rents";
         }
@@ -261,7 +255,7 @@ public class RentController {
             @ModelAttribute("newEndDate") LocalDate date,
             Principal principal
     ) {
-        User user = (User) userDetailService.loadUserByUsername(principal.getName());
+        User user = (User) userService.loadUserByUsername(principal.getName());
         if (!user.getRole().equals(Role.ADMIN)){
             return "redirect:/rents";
         }
@@ -298,7 +292,7 @@ public class RentController {
             @ModelAttribute("newStartDate") LocalDate date,
             Principal principal
     ) {
-        User user = (User) userDetailService.loadUserByUsername(principal.getName());
+        User user = (User) userService.loadUserByUsername(principal.getName());
         if (!user.getRole().equals(Role.ADMIN)){
             return "redirect:/rents";
         }
@@ -313,7 +307,7 @@ public class RentController {
     }
     @PostMapping("/kolcsonzes/igenyles")
     public String sendRentDemand(Principal principal) {
-        User owner = (User) appUserService.loadUserByUsername(principal.getName());
+        User owner = (User) userService.loadUserByUsername(principal.getName());
         List<Long> fromBasketRemoveableItems = new ArrayList<>();
 
         StringBuilder emailBody =
@@ -342,7 +336,7 @@ public class RentController {
         for (int i = 0; i < fromBasketRemoveableItems.size(); i++) {
             owner.getBasket().remove(fromBasketRemoveableItems.get(i));
         }
-        userRepository.save(owner);
+        userService.save(owner);
 
         emailBody.append("\n\nKöszönjük foglalását!\n\nÜdvözlettel, Anyahajó");
 
@@ -380,7 +374,7 @@ public class RentController {
 
     @GetMapping(path = {"/rents/kikolcsonzott"})
     public String listRentsBorrowedByUser(Model model, Principal principal) {
-        User user = (User) userDetailService.loadUserByUsername(principal.getName());
+        User user = (User) userService.loadUserByUsername(principal.getName());
         List<Rent> rents = rentRepository.findBorrowedByUser_id(user);
         model.addAttribute("rents", rents);
         return "all-rents-by-user";
@@ -388,7 +382,7 @@ public class RentController {
 
     @GetMapping(path = {"/rents/jovahagyasravar"})
     public String listRentsWaitAcceptByUser(Model model, Principal principal) {
-        User user = (User) userDetailService.loadUserByUsername(principal.getName());
+        User user = (User) userService.loadUserByUsername(principal.getName());
         List<Rent> rents = rentRepository.findWaitAcceptByUser_id(user);
         model.addAttribute("rents", rents);
         return "all-rents-by-user";
@@ -396,7 +390,7 @@ public class RentController {
 
     @GetMapping(path = {"/rents/lejart"})
     public String listRentsExpiredByUser(Model model, Principal principal) {
-        User user = (User) userDetailService.loadUserByUsername(principal.getName());
+        User user = (User) userService.loadUserByUsername(principal.getName());
         List<Rent> rents = rentRepository.findExpiredByUser_id(user);
         model.addAttribute("rents", rents);
         return "all-rents-by-user";

@@ -25,4 +25,10 @@ public interface UserService {
     UserForm mapToUserForm(User userGet);
 
     Object mapToUser(UserForm oldUser);
+
+    List<User> findAll();
+
+    void save(User newUser);
+
+    Object loadUserByUsername(String name);
 }

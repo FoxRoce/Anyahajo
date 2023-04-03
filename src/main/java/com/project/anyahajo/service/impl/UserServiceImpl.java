@@ -5,21 +5,26 @@ import com.project.anyahajo.model.Role;
 import com.project.anyahajo.model.User;
 import com.project.anyahajo.repository.UserRepository;
 import com.project.anyahajo.service.UserService;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserService {
+@RequiredArgsConstructor
+public class UserServiceImpl implements UserService, UserDetailsService {
 
+    @NonNull
+    private final static String USER_NOT_FOUND_MSG = "user with email %s not found";
+    @NonNull
     private UserRepository userRepository;
+    @NonNull
     private PasswordEncoder passwordEncoder;
-
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     @Override
     public List<UserForm> findAllUsers() {
@@ -36,6 +41,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findUserByUser_id(Long id) {
         return userRepository.findByUser_id(id);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return userRepository.findByEmail(email)
+                .orElseThrow(
+                        () -> new UsernameNotFoundException(
+                                String.format(USER_NOT_FOUND_MSG, email)
+                        )
+                );
     }
 
     @Override
@@ -72,6 +87,16 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public void save(User newUser) {
+        userRepository.save(newUser);
+    }
+
     public User findUserByUserEmail(String email) {
         return userRepository.findByUserEmail(email);
     }
@@ -98,3 +123,6 @@ public class UserServiceImpl implements UserService {
     }
 
 }
+
+
+
