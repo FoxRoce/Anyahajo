@@ -1,19 +1,16 @@
 package com.project.anyahajo.auth;
 
-import com.project.anyahajo.model.Role;
+import com.project.anyahajo.service.impl.UserServiceImpl;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.WebAttributes;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -21,7 +18,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 public class SecurityConfig {
 
     @NonNull
-    private AppUserService userDetailsService;
+    private UserServiceImpl userService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -33,7 +30,7 @@ public class SecurityConfig {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
 
         provider.setPasswordEncoder(passwordEncoder());
-        provider.setUserDetailsService(userDetailsService);
+        provider.setUserDetailsService(userService);
 
         return provider;
     }
@@ -59,5 +56,3 @@ public class SecurityConfig {
     }
 }
 
-
-//.loginPage("/login").loginProcessingUrl("/login").permitAll().and()
