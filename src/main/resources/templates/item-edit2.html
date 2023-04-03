@@ -8,8 +8,8 @@
 <h1>Termék módosítása</h1>
 <form data-th-object="${newItem}" data-th-action="@{/admin/termekmodositas/{id}}" action="/admin/termekmodositas/{id}" method="post">
 
-  <p>Típus:</p>
-  <p data-th-text="${itemType}" id="type"></p>
+<!--  <p>Típus:</p>-->
+<!--  <p data-th-text="${itemType}" id="type"></p>-->
 <!--  <label for="type">Új típus</label>-->
 <!--  <select id="type" name="type" onchange="showFields()">-->
 <!--    <option value="">Choose an option</option>-->
@@ -23,15 +23,15 @@
   <label for="name">Új név:</label>
   <input id="name" type="text" data-th-field="*{name}"><br><br>
 
-  <p>Elérhetőség:</p>
-  <p data-th-text="${item.availability}"></p>
-  <label for="availability">Új elérhetőség:</label>
-  <select id="availability" name="availability" required>
-    <option value="">Choose an option</option>
-    <option value="Available">Available</option>
-    <option value="Reserved">Reserved</option>
-    <option value="NotAvailable">Not Available</option>
-  </select><br><br>
+<!--  <p>Elérhetőség:</p>-->
+<!--  <p data-th-text="${item.availability}"></p>-->
+<!--  <label for="availability">Új elérhetőség:</label>-->
+<!--  <select id="availability" name="availability" required>-->
+<!--    <option value="">Choose an option</option>-->
+<!--    <option value="Available">Available</option>-->
+<!--    <option value="Reserved">Reserved</option>-->
+<!--    <option value="NotAvailable">Not Available</option>-->
+<!--  </select><br><br>-->
 
   <p>Leírás:</p>
   <p data-th-text="${item.description}"></p>
@@ -56,7 +56,7 @@
     <option value="false">No</option>
   </select>
 
-  <div data-th-if="${itemType} == book" id="bookFields" style="display: none;">
+  <div th:if="${item instanceof T(com.project.anyahajo.model.Book)}">
     <p>Szerző:</p>
     <p data-th-text="${item.author}"></p>
     <label for="author">Szerző módosítása:</label>
@@ -64,7 +64,7 @@
     <p style="color: red" data-th-if="${#fields.hasErrors('author')}" data-th-error="*{author}"></p>
   </div>
 
-  <div data-th-if="${itemType} == carrier" id="carrierFields" style="display: none;">
+  <div th:if="${item instanceof T(com.project.anyahajo.model.Carrier)}">
 
     <p>Típus:</p>
     <p data-th-text="${item.carrierType}"></p>
@@ -89,7 +89,7 @@
     <p style="color: red" data-th-if="${#fields.hasErrors('size')}" data-th-error="*{size}"></p>
   </div>
 
-  <div data-th-if="${itemType} == babycare" id="babycareFields" style="display: none;">
+  <div th:if="${item instanceof T(com.project.anyahajo.model.Babycare)}">
     <p>Márka:</p>
     <p data-th-text="item.babycareBrand"></p>
     <label for="babycareBrand">Márka módosítása:</label>
@@ -100,29 +100,29 @@
   <input type="submit" value="Save">
 </form>
 
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    showFields();
-  });
-</script>
-  <script>
-  function showFields() {
-    const type = document.getElementById("type").value;
-    if (type === "book") {
-      document.getElementById("bookFields").style.display = "block";
-      document.getElementById("carrierFields").style.display = "none";
-      document.getElementById("babycareFields").style.display = "none";
-    } else if (type === "carrier") {
-      document.getElementById("bookFields").style.display = "none";
-      document.getElementById("carrierFields").style.display = "block";
-      document.getElementById("babycareFields").style.display = "none";
-    } else if (type === "babycare") {
-      document.getElementById("bookFields").style.display = "none";
-      document.getElementById("carrierFields").style.display = "none";
-      document.getElementById("babycareFields").style.display = "block";
-    }
-  }
-</script>
+<!--<script>-->
+<!--  document.addEventListener("DOMContentLoaded", function() {-->
+<!--    showFields();-->
+<!--  });-->
+<!--</script>-->
+<!--  <script>-->
+<!--  function showFields() {-->
+<!--    const type = document.getElementById("type").value;-->
+<!--    if (type === "book") {-->
+<!--      document.getElementById("bookFields").style.display = "block";-->
+<!--      document.getElementById("carrierFields").style.display = "none";-->
+<!--      document.getElementById("babycareFields").style.display = "none";-->
+<!--    } else if (type === "carrier") {-->
+<!--      document.getElementById("bookFields").style.display = "none";-->
+<!--      document.getElementById("carrierFields").style.display = "block";-->
+<!--      document.getElementById("babycareFields").style.display = "none";-->
+<!--    } else if (type === "babycare") {-->
+<!--      document.getElementById("bookFields").style.display = "none";-->
+<!--      document.getElementById("carrierFields").style.display = "none";-->
+<!--      document.getElementById("babycareFields").style.display = "block";-->
+<!--    }-->
+<!--  }-->
+<!--</script>-->
 
 </body>
 </html>

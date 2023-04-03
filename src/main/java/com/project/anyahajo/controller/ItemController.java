@@ -169,24 +169,35 @@ public class ItemController {
     }
 
     @GetMapping("/admin/termekmodositas/{id}")
-    public String showmodifyItem(@PathVariable("id") Long id, Model model) {
-        Item item = itemRepository.findByItem_id(id);
+    public String showmodifyItem(@PathVariable("id") String id, Model model) {
+        Item item = itemRepository.findByItem_id(Long.parseLong(id));
         model.addAttribute("item", item);
         model.addAttribute("newItem", new ItemForm());
         String itemType = String.valueOf(item.getClass()).toLowerCase();
+        switch (itemType) {
+            case "class com.project.anyahajo.model.book":
+                itemType = "book";
+                break;
+            case "class com.project.anyahajo.model.carrier":
+                itemType = "carrier";
+                break;
+            case "class com.project.anyahajo.model.babycare":
+                itemType = "babycare";
+                break;
+        }
         model.addAttribute("itemType", itemType);
         return "item-edit2";
     }
 
     @PostMapping("/admin/termekmodositas/{id}")
-    public String modifyItem(@PathVariable("id") Long id,
+    public String modifyItem(@PathVariable("id") String id,
                              Model model,
                              @ModelAttribute("newItem")
                              @Validated
                              ItemForm itemForm,
                              BindingResult bindingResult) {
 
-        Item item = itemRepository.findByItem_id(id);
+        Item item = itemRepository.findByItem_id(Long.parseLong(id));
         model.addAttribute("item", item);
         String itemType = String.valueOf(item.getClass()).toLowerCase();
         switch (itemType) {
@@ -204,7 +215,7 @@ public class ItemController {
 
         if (bindingResult.hasErrors()) {
             System.out.println(bindingResult);
-            return "admin-add-item";
+            return "item-edit2";
         }
         if (item instanceof Babycare) {
             if (!itemForm.getBabycareBrand().isEmpty()) {
@@ -229,9 +240,9 @@ public class ItemController {
         if (!itemForm.getName().isEmpty()) {
             item.setName(itemForm.getName());
         }
-        if (!itemForm.getAvailability().isEmpty()) {
-            item.setAvailability(itemForm.getAvailability());
-        }
+//        if (!itemForm.getAvailability().isEmpty()) {
+//            item.setAvailability(itemForm.getAvailability());
+//        }
         if (!itemForm.getDescription().isEmpty()) {
             item.setDescription(itemForm.getDescription());
         }
@@ -244,6 +255,6 @@ public class ItemController {
 
         itemRepository.save(item);
 
-        return "redirect:/item";
+        return "redirect:/kolcsonzes";
     }
 }
