@@ -3,6 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin - uj targy</title>
+    <style>  body {
+        font-family:sans-serif;
+        background: -webkit-linear-gradient(to right, #a75888, #1f88b4);
+        background: linear-gradient(to right, #a75888, #1f88b4);
+        color:whitesmoke;
+    }
+
+    h1 {
+        color: #333;
+        text-align: center;
+        margin-top: 50px;
+    }
+
+    form {
+        max-width: 500px;
+        margin: 0 auto;
+        backdrop-filter: blur(16px) saturate(180%);
+        -webkit-backdrop-filter: blur(16px) saturate(180%);
+        background-color: rgba(11, 15, 13, 0.582);
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 10px rgba(0,0,0,.1);
+    }
+
+    label {
+        display: block;
+        margin-bottom: 10px;
+        color: #f6f1f1;
+    }
+
+    input[type="text"],
+    select {
+        display: block;
+        width: 90%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        border: none;
+        background-color: #f7f7f7;
+    }
+
+    select {
+        appearance: none;
+        -webkit-appearance: none;
+        background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 12 6" xmlns="http://www.w3.org/2000/svg"><path d="M1.4.7L0 .4 6 0l6 1.3-.7.3-5.3-1V5l5.3-1 .7.3-6 1.3-6-1.3.7-.3 5.3 1V1.4L1.4.7z" fill="%23333"/></svg>');
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        background-size: 12px;
+    }
+
+    input[type="submit"] {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin-top: 20px;
+        border-radius: 5px;
+        border: none;
+        background-color: #333;
+        color: #fff;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #555;
+    }
+
+    #bookFields,
+    #carrierFields,
+    #babycareFields {
+        display: none;
+        margin-top: 20px;
+        padding: 10px;
+        border-radius: 5px;
+        background-color: #f7f7f7;
+    }
+
+    #bookFields label,
+    #carrierFields label,
+    #babycareFields label {
+        margin-bottom: 5px;
+        color: #333;
+    }
+
+    #bookFields input[type="text"],
+    #carrierFields input[type="text"] {
+        margin-bottom: 10px;
+    }
+
+    #bookFields p,
+    #carrierFields p,
+    #babycareFields p {
+        color: red;
+        margin-top: 5px;
+    }
+
+    </style>
 </head>
 <body>
 <h1>Uj targy felvetel</h1>
@@ -17,7 +114,8 @@
     </select>
 
     <label for="name">Nev</label>
-    <input id="name" type="text" data-th-field="*{name}"required><br><br>
+    <input id="name" type="text" data-th-field="*{name}"required>
+<!--    <br><br>-->
     <p
             style="color: red"
             data-th-if="${#fields.hasErrors('name')}"
@@ -30,10 +128,12 @@
         <option value="Available">Available</option>
         <option value="Reserved">Reserved</option>
         <option value="NotAvailable">Not Available</option>
-    </select><br><br>
+    </select>
+<!--    <br><br>-->
 
     <label for="description">Leírás</label>
-    <input id="description" type="text" data-th-field="*{description}" required><br><br>
+    <input id="description" type="text" data-th-field="*{description}" required>
+<!--    <br><br>-->
     <p
             style="color: red"
             data-th-if="${#fields.hasErrors('description')}"
@@ -64,7 +164,8 @@
             <option value="Wrap">Wrap</option>
             <option value="Buckle">Buckle</option>
             <option value="OtherShaped">OtherShaped</option>
-        </select><br><br>
+        </select>
+<!--        <br><br>-->
 
         <label for="carrierBrand">Marka</label>
         <input id="carrierBrand" type="text" data-th-field="*{carrierBrand}">

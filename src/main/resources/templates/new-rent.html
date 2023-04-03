@@ -3,6 +3,86 @@
     <head>
         <meta charset="UTF-8">
         <title>Admin - new rent</title>
+        <style>
+            /* Styling for the form */
+            form {
+                margin: 20px;
+                padding: 20px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                font-family: Arial, sans-serif;
+                background-color: rgba(11, 15, 13, 0.582);
+            }
+
+            label {
+                display: block;
+                margin-bottom: 10px;
+                font-weight: bold;
+                color: #f5cef5;
+            }
+
+            input[type="date"],
+            input[type="email"],
+            input[type="number"] {
+                display: block;
+                padding: 8px;
+                margin-bottom: 10px;
+                border-radius: 5px;
+                border: 1px solid #ccc;
+                font-size: 16px;
+            }
+
+            input[type="checkbox"] {
+                margin-top: 10px;
+                margin-bottom: 20px;
+            }
+
+            button[type="submit"] {
+                background-color: #4CAF50;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                padding: 10px 20px;
+                font-size: 16px;
+                cursor: pointer;
+            }
+
+            button[type="submit"]:hover {
+                background: -webkit-linear-gradient(to left, #a75888, #1f88b4);
+                background: linear-gradient(to left, #a75888, #1f88b4);
+            }
+
+            /* Styling for the page header */
+            h1 {
+                margin: 20px;
+                font-family: Arial, sans-serif;
+            }
+
+            /* Styling for the user select field */
+            select {
+                display: block;
+                padding: 8px;
+                margin-bottom: 10px;
+                border-radius: 5px;
+                border: 1px solid #ccc;
+                font-size: 16px;
+                width: 50%;
+            }
+
+            /* Styling for the "Enter new user email" input field */
+            #new_user_email {
+                display: none;
+            }
+
+            /* Styling for the form errors */
+            input:invalid {
+                border-color: #faf4f4;
+            }
+body{
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #a75888, #1f88b4);
+}
+        </style>
     </head>
     <body>
     <h1>Add New Rent</h1>
