@@ -63,6 +63,7 @@ public class UserServiceImpl implements UserService {
                 userForm.getPhoneNumber(),
                 userForm.getLocked(),
                 userForm.getEnabled(),
+                userForm.getEnableUrl(),
                 userForm.getRole(),
                 userForm.getResetPasswordToken(),
                 userForm.getTokenExpiration(),

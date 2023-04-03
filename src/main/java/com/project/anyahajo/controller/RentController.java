@@ -123,6 +123,7 @@ public class RentController {
     @PostMapping("/rents/{id}/accept")
     public String updateRentAccept(
             @PathVariable("id") Long id,
+            @ModelAttribute("deposit") Integer deposit,
             Principal principal
     ) {
         User user = (User) userDetailService.loadUserByUsername(principal.getName());
@@ -134,6 +135,8 @@ public class RentController {
        rent.getItem().setAvailability(Availability.NotAvailable);
        rent.setStartOfRent(LocalDate.now());
        rent.setEndOfRent(LocalDate.now().plusDays(14));
+
+       rent.setDeposit(deposit);
 
         String emailBody = "Kedves vásárló!\n\n" + rent.getItem().getName() +
                 " nevű tárgyra tett kölcsönzése el lett fogadva.\n" +
@@ -186,6 +189,7 @@ public class RentController {
     public String updateRentBroughtBack(
             @PathVariable("id") Long id,
             @ModelAttribute("historyDate") LocalDate date,
+            @ModelAttribute("price") Integer price,
             Principal principal
     ) {
         User user = (User) userDetailService.loadUserByUsername(principal.getName());
@@ -196,6 +200,14 @@ public class RentController {
         Rent rent = rentRepository.findByRent_id(id);
         rent.getItem().setAvailability(Availability.Available);
         rent.setHistory(date);
+
+        rent.setPrice(price);
+
+        if (rent.getDeposit() - rent.getPrice() >= 0){
+            rent.setPayBackAmount(rent.getDeposit() - rent.getPrice());
+        } else {
+            rent.setPayBackAmount(0);
+        }
 
         String emailBody = "Kedves vásárló!\n\n"
                 + rent.getItem().getName() + " nevű tárgyra vissza lett hozva." +
@@ -320,6 +332,9 @@ public class RentController {
                 rent.setUser(owner);
                 item.setAvailability(Availability.Reserved);
                 fromBasketRemoveableItems.add(item_id);
+                rent.setPrice(0);
+                rent.setDeposit(0);
+                rent.setPayBackAmount(0);
                 rentRepository.save(rent);
                 emailBody.append("\n").append(item.getName());
             }
@@ -386,4 +401,5 @@ public class RentController {
         model.addAttribute("rents", rents);
         return "all-rents-by-user";
     }
+
 }
