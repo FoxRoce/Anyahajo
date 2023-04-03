@@ -332,9 +332,9 @@ public class RentController {
                 rent.setUser(owner);
                 item.setAvailability(Availability.Reserved);
                 fromBasketRemoveableItems.add(item_id);
-                rent.setPrice(null);
-                rent.setDeposit(null);
-                rent.setPayBackAmount(null);
+                rent.setPrice(0);
+                rent.setDeposit(0);
+                rent.setPayBackAmount(0);
                 rentRepository.save(rent);
                 emailBody.append("\n").append(item.getName());
             }
