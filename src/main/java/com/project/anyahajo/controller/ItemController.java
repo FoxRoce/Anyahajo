@@ -42,12 +42,16 @@ public class ItemController {
         }
         return "all-items";
     }
+
     @GetMapping(path = {"/books"})
     public String listItems() {
         return "redirect:/kolcsonzes?itemType=Book";
     }
 
-    private record SearchForm(String text, String itemType){};
+    private record SearchForm(String text, String itemType) {
+    }
+
+    ;
 
     @PostMapping("/kolcsonzes/kereses")
     public String searchItems(
@@ -116,10 +120,11 @@ public class ItemController {
 
         return "redirect:/kolcsonzes";
     }
+
     @GetMapping("/item/{id}")
     public String getItem(@PathVariable("id") String id, Model model, Principal principal) {
         Item item = itemRepository.findByItem_id(Long.parseLong(id));
-        if(principal != null && item != null) {
+        if (principal != null && item != null) {
             model.addAttribute("item", item);
             User owner = (User) appUserService.loadUserByUsername(principal.getName());
             model.addAttribute("basket", owner.getBasket());
@@ -131,14 +136,16 @@ public class ItemController {
         }
         return "redirect:/kolcsonzes";
     }
+
     @PostMapping(path = {"/kolcsonzes/putInTheBasket", "/kolcsonzes/kereses/putInTheBasket"})
     public String putInTheBasket(@RequestParam("item_id") Long id, Principal principal) {
         User owner = (User) appUserService.loadUserByUsername(principal.getName());
         Item item = itemRepository.findByItem_id(id);
-            owner.getBasket().add(id);
-            appUserRepository.save(owner);
+        owner.getBasket().add(id);
+        appUserRepository.save(owner);
         return "redirect:/kolcsonzes";
     }
+
     @PostMapping("kosar/delete")
     public String removeFromBasket(@RequestParam("item_id") Long id, Principal principal) {
         User owner = (User) appUserService.loadUserByUsername(principal.getName());
@@ -146,11 +153,12 @@ public class ItemController {
         appUserRepository.save(owner);
         return "redirect:/kosar";
     }
+
     @GetMapping(path = "/kosar")
     public String showBasket(Principal principal, Model model) {
         User owner = (User) appUserService.loadUserByUsername(principal.getName());
-        List <Item> itemsInTheBasket = owner.getBasket().stream().map(x -> {
-            if(itemRepository.findById(x).isPresent()) {
+        List<Item> itemsInTheBasket = owner.getBasket().stream().map(x -> {
+            if (itemRepository.findById(x).isPresent()) {
                 return itemRepository.findById(x).get();
             } else {
                 return null;
@@ -160,7 +168,82 @@ public class ItemController {
         return "basket";
     }
 
+    @GetMapping("/admin/termekmodositas/{id}")
+    public String showmodifyItem(@PathVariable("id") Long id, Model model) {
+        Item item = itemRepository.findByItem_id(id);
+        model.addAttribute("item", item);
+        model.addAttribute("newItem", new ItemForm());
+        String itemType = String.valueOf(item.getClass()).toLowerCase();
+        model.addAttribute("itemType", itemType);
+        return "item-edit2";
+    }
 
+    @PostMapping("/admin/termekmodositas/{id}")
+    public String modifyItem(@PathVariable("id") Long id,
+                             Model model,
+                             @ModelAttribute("newItem")
+                             @Validated
+                             ItemForm itemForm,
+                             BindingResult bindingResult) {
 
+        Item item = itemRepository.findByItem_id(id);
+        model.addAttribute("item", item);
+        String itemType = String.valueOf(item.getClass()).toLowerCase();
+        switch (itemType) {
+            case "class com.project.anyahajo.model.book":
+                itemType = "book";
+                break;
+            case "class com.project.anyahajo.model.carrier":
+                itemType = "carrier";
+                break;
+            case "class com.project.anyahajo.model.babycare":
+                itemType = "babycare";
+                break;
+        }
+        model.addAttribute("itemType", itemType);
 
+        if (bindingResult.hasErrors()) {
+            System.out.println(bindingResult);
+            return "admin-add-item";
+        }
+        if (item instanceof Babycare) {
+            if (!itemForm.getBabycareBrand().isEmpty()) {
+                ((Babycare) item).setBabycareBrand(itemForm.getBabycareBrand());
+            }
+        } else if (item instanceof Book) {
+            if (!itemForm.getAuthor().isEmpty()) {
+                ((Book) item).setAuthor(itemForm.getAuthor());
+            }
+        } else {
+            if (!itemForm.getCarrierBrand().isEmpty()) {
+                ((Carrier) item).setCarrierBrand(itemForm.getCarrierBrand());
+            }
+            if (!itemForm.getCarrierType().isEmpty()) {
+                ((Carrier) item).setCarrierType(itemForm.getCarrierType());
+            }
+            if (!itemForm.getSize().isEmpty()) {
+                ((Carrier) item).setSize(itemForm.getSize());
+            }
+        }
+
+        if (!itemForm.getName().isEmpty()) {
+            item.setName(itemForm.getName());
+        }
+        if (!itemForm.getAvailability().isEmpty()) {
+            item.setAvailability(itemForm.getAvailability());
+        }
+        if (!itemForm.getDescription().isEmpty()) {
+            item.setDescription(itemForm.getDescription());
+        }
+        if (itemForm.pictureIsEmpty()) {
+            item.setPicture(itemForm.getPicture());
+        }
+        if (itemForm.getIsActive().describeConstable().isPresent()) {
+            item.setActive(itemForm.getIsActive());
+        }
+
+        itemRepository.save(item);
+
+        return "redirect:/item";
+    }
 }

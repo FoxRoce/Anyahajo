@@ -9,6 +9,7 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 
 @Getter
 @Setter
@@ -30,5 +31,8 @@ public class ItemForm {
     private String carrierBrand = null;
     private String size = null;
 
+    public boolean pictureIsEmpty() {
+        return Arrays.toString(this.picture).isEmpty();
+    }
 
 }

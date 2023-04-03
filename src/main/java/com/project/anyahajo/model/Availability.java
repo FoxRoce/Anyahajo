@@ -19,4 +19,8 @@ public enum Availability {
         }
         return null;
     }
+
+    public boolean isEmpty() {
+        return String.valueOf(this).isEmpty();
+    }
 }
