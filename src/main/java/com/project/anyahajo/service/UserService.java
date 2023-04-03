@@ -20,6 +20,8 @@ public interface UserService {
 
     User findUserByUserEmail(String email);
 
+    User findpasswordtoken(String token);
+
     UserForm mapToUserForm(User userGet);
 
     Object mapToUser(UserForm oldUser);
