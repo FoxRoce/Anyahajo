@@ -147,7 +147,7 @@ body{
         <span>Leirás: </span>
         <span th:text="${item.description}">Leiras</span>
         <br>
-        <p th:text="${item.picture}">Kep</p>
+        <img th:src="@{/all-items/img/{id}(id=${item.item_id})}" alt="item picture" width="150" height="150"/>
         <p th:text="${item.isActive} ? 'Aktív' : 'Inaktív' ">Elerheto-e</p>
 
         <div th:if="${item instanceof T(com.project.anyahajo.model.Book)}">
