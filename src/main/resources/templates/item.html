@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -31,7 +31,7 @@
             <p class="info">A termék neve: </p>
             <p class="item" data-th-text="${item.name}" ></p>
             <p class="info">A termék elérhetősége: </p>
-            <p class="item"  data-th-text="${item.availability}"></p>
+            <p class="item"  data-th-text="${item.availability.getHunName}"></p>
             <p class="info">A termék leírása: </p>
             <p class="item"  data-th-text="${item.description}"></p>
 
@@ -46,20 +46,9 @@
 
             </form>
 
-<!--            <form-->
-<!--                    data-sec-authorize="isAuthenticated()"-->
-<!--                    data-th-unless="${#lists.contains(basket, item.item_id)}"-->
-
-<!--                    method="post"-->
-<!--                    data-th-action="@{(${#lists.contains(basket, id)} ? '/kosar/delete' : '/kolcsonzes/putInTheBasket')}"-->
-<!--                    action="/kolcsonzes/putInTheBasket"-->
-<!--            >-->
-<!--                <input type="hidden" name="item_id" data-th-value="${item.getItem_id()}">-->
-<!--                <input type="submit" data-th-unless="${#lists.contains(basket, item.item_id)}" value="Kosárba teszem">-->
-<!--                <input type="submit" data-th-if="${#lists.contains(basket, item.item_id)}" value="Kiveszem a kosárból">-->
-
-<!--            </form>-->
-
+            <div sec:authorize="hasRole('ADMIN')">
+                <a data-th-href="@{${'/admin/termekmodositas/' + item.item_id}}"><b><button>Termék módosítása</button></b></a>
+            </div>
             <a href="/kolcsonzes" data-th-href="@{/kolcsonzes}">
                 <input type="submit" value="Termékek listája">
             </a>

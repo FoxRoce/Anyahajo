@@ -1,6 +1,7 @@
 package com.project.anyahajo.model;
 
 public enum Availability {
+
     Available("Szabad"),
     Reserved("Foglalt"),
     NotAvailable("Nem elérhető");
@@ -22,5 +23,9 @@ public enum Availability {
             }
         }
         return null;
+    }
+
+    public boolean isEmpty() {
+        return String.valueOf(this).isEmpty();
     }
 }

@@ -6,6 +6,10 @@ public enum CarrierType {
     Buckle("Csatos"),
     OtherShaped("Egyéb formázott");
 
+    public String getHunName() {
+        return hunName;
+    }
+
     public final String hunName;
 
     CarrierType(String hunName) {
@@ -14,10 +18,14 @@ public enum CarrierType {
 
     public CarrierType getByHunName(String hunName) {
         for (CarrierType c : CarrierType.values()) {
-            if (c.name().equals(hunName)){
+            if (c.name().equals(hunName)) {
                 return c;
             }
         }
         return null;
+    }
+
+    public boolean isEmpty() {
+        return String.valueOf(this).isEmpty();
     }
 }

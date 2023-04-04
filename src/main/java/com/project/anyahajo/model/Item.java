@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Optional;
 
 @Getter
@@ -13,7 +14,6 @@ import java.util.Optional;
 @Entity
 @Table(name = "ah_item")
 public class Item {
-//    itemController - postMapping - saveItem
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

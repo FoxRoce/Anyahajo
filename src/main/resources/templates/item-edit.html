@@ -1,91 +1,128 @@
-<html
-        xmlns:th="http://thymeleaf.org"
-        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-        layout:decorate="~{layout}">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <title>Adatmódosítások</title>
+    <meta charset="UTF-8">
+    <title>Termék adatmódosítás</title>
+  <style>
+    body{
+      font-family:sans-serif;
+      background: -webkit-linear-gradient(to right, #a75888, #1f88b4);
+      background: linear-gradient(to right, #a75888, #1f88b4);
+    }
+    form {
+      max-width: 1400px;
+      height: auto;
+      margin: 0 auto;
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      background-color: rgba(11, 15, 13, 0.582);
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 10px rgba(0,0,0,.1);
+    }
+    h1 {
+      color: #eeeef3;
+      font-size: 2em;
+    }
+    label {
+      display: block;
+      margin-bottom: 0.5em;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 0.5em;
+      font-size: 1em;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      margin-bottom: 1em;
+    }
+    select {
+      width: 100%;
+      padding: 0.5em;
+      font-size: 1em;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      margin-bottom: 1em;
+    }
+  </style>
 </head>
-<body class="d-flex flex-column h-100">
-<h1>Adatok módosítása</h1>
-<main class="flex-shrink-0">
-  <section layout:fragment="body" class="py-5">
-    <div class="container">
-      <form role="form" method="post" th:action="@{/user/{userId}/edit(userId=${user.id})}" th:object="${user}">
-        <input type="hidden" th:field="*{id}">
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <label for="name">Termék neve</label>
-            <input
-                    type="text"
-                    class="form-control"
-                    id="name"
-                    name="name"
-                    th:field="*{name}"
-                    placeholder="Termék neve">
-            <p th:if="${#fields.hasErrors('name')}" class="text-danger" th:errors="*{name}"></p>
-          </div>
-          <div class="form-group col-md-6">
-            <label for="description">Leírás</label>
-            <input
-                    type="text"
-                    class="form-control"
-                    id="description"
-                    name="description"
-                    th:field="*{description}"
-                    placeholder="Leírás">
-            <p th:if="${#fields.hasErrors('description')}" class="text-danger" th:errors="*{description}"></p>
-          </div>
-          <div th:if="${item instanceof T(com.project.anyahajo.model.Book)}">
-          <div class="form-group col-md-6">
-            <label for="author">Szerző</label>
-            <input
-                    type="text"
-                    class="form-control"
-                    id="author"
-                    name="author"
-                    th:field="*{author}"
-                    placeholder="Szerző">
-            <p th:if="${#fields.hasErrors('author')}" class="text-danger" th:errors="*{author}"></p>
-          </div>
-          </div>
-<!--          <div class="form-group col-md-6">-->
-<!--            <label for="phoneNumber">Telefonszám</label>-->
-<!--            <input-->
-<!--                    type="text"-->
-<!--                    class="form-control"-->
-<!--                    id="phoneNumber"-->
-<!--                    name="phoneNumber"-->
-<!--                    th:field="*{phoneNumber}"-->
-<!--                    placeholder="Telefonszám">-->
-<!--            <p th:if="${#fields.hasErrors('phoneNumber')}" class="text-danger" th:errors="*{phoneNumber}"></p>-->
-<!--          </div>-->
-<!--          <div class="form-group col-md-6">-->
-<!--            <label for="password">Új Jelszó</label>-->
-<!--            <input-->
-<!--                    type="text"-->
-<!--                    class="form-control"-->
-<!--                    id="password"-->
-<!--                    name="password"-->
-<!--                    placeholder="Új Jelszó">-->
-<!--            <p th:if="${#fields.hasErrors('password')}" class="text-danger" th:errors="*{password}"></p>-->
-<!--          </div>-->
-<!--          <div class="form-group col-md-6">-->
-<!--            <label for="passwordCheck">Új jelszó megerősítés</label>-->
-<!--            <input-->
-<!--                    type="text"-->
-<!--                    class="form-control"-->
-<!--                    id="passwordCheck"-->
-<!--                    name="passwordCheck"-->
-<!--                    th:field="*{passwordCheck}"-->
-<!--                    placeholder="Új jelszó megerősítés">-->
-<!--            <p th:if="${#fields.hasErrors('passwordCheck')}" class="text-danger" th:errors="*{passwordCheck}"></p>-->
-<!--          </div>-->
-<!--        </div>-->
+<body>
+<h1>Termék módosítása</h1>
+<form data-th-object="${newItem}" data-th-action="@{'/admin/termekmodositas/' + ${item.item_id}}" action="/admin/termekmodositas/${id}" method="post">
 
-        <button type="submit" class="btn btn-primary">Mentés</button>
-      </form>
-    </div>
-  </section>
-</main>
+  <p>Termék neve:</p>
+  <p data-th-text="${item.name}"></p>
+  <label for="name">Új név:</label>
+  <input id="name" type="text" data-th-field="*{name}"><br><br>
+
+  <p>Leírás:</p>
+  <p data-th-text="${item.description}"></p>
+  <label for="description">Új leírás:</label>
+  <input id="description" type="text" data-th-field="*{description}"><br><br>
+
+<!--  <p>Kép:</p>-->
+<!--  <p data-th-text="${item.picture}"></p>-->
+<!--  <label for="picture">Új kép:</label>-->
+<!--  <input id="picture" type="text" data-th-field="*{picture}">-->
+<!--  <p-->
+<!--          style="color: red"-->
+<!--          data-th-if="${#fields.hasErrors('picture')}"-->
+<!--          data-th-error="*{picture}"-->
+<!--  ></p>-->
+
+  <p>Termék állapota:</p>
+  <p data-th-text="Aktív" data-th-if="${item.isActive}"></p>
+  <p data-th-text="Passzív" data-th-unless="${item.isActive}"></p>
+  <label for="isActive">Termék állapotának módosítása:</label>
+  <select name="isActive" id="isActive">
+    <option value="true">Aktív</option>
+    <option value="false">Passzív</option>
+  </select>
+
+  <div th:if="${item instanceof T(com.project.anyahajo.model.Book)}">
+    <p>Szerző:</p>
+    <p data-th-text="${item.author}"></p>
+    <label for="author">Szerző módosítása:</label>
+    <input id="author" type="text" data-th-field="*{author}">
+    <p style="color: red" data-th-if="${#fields.hasErrors('author')}" data-th-error="*{author}"></p>
+  </div>
+
+  <div th:if="${item instanceof T(com.project.anyahajo.model.Carrier)}">
+
+    <p>Típus:</p>
+    <p data-th-text="${item.carrierType}"></p>
+    <label for="carrierType">Típus módosítása:</label>
+    <select id="carrierType" name="carrierType">
+      <option value="">Choose an option</option>
+      <option value="Wrap">Wrap</option>
+      <option value="Buckle">Buckle</option>
+      <option value="OtherShaped">OtherShaped</option>
+    </select><br><br>
+
+    <p>Márka:</p>
+    <p data-th-text="${item.carrierBrand}"></p>
+    <label for="carrierBrand">Márka módosítása:</label>
+    <input id="carrierBrand" type="text" data-th-field="*{carrierBrand}">
+    <p style="color: red" data-th-if="${#fields.hasErrors('carrierBrand')}" data-th-error="*{carrierBrand}"></p>
+
+    <p>Méret:</p>
+    <p data-th-text="${item.size}"></p>
+    <label for="size">Méret módosítása:</label>
+    <input id="size" type="text" data-th-field="*{size}">
+    <p style="color: red" data-th-if="${#fields.hasErrors('size')}" data-th-error="*{size}"></p>
+  </div>
+
+  <div th:if="${item instanceof T(com.project.anyahajo.model.Babycare)}">
+    <p>Márka:</p>
+    <p data-th-text="${item.babycareBrand}"></p>
+    <label for="babycareBrand">Márka módosítása:</label>
+    <input id="babycareBrand" type="text" data-th-field="*{babycareBrand}">
+    <p style="color: red" data-th-if="${#fields.hasErrors('babycareBrand')}" data-th-error="*{babycareBrand}"></p>
+  </div>
+
+  <input type="submit" value="Save">
+</form>
 </body>
 </html>

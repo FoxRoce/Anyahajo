@@ -11,11 +11,9 @@ import lombok.Setter;
 @Setter
 public class RegistrationForm {
 
-//    @NotBlank
-//    private String name;
-
     private String lastName;
     private String firstName;
+
     @Email
     @NotBlank
     private String email;

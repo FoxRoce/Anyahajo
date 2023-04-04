@@ -3,7 +3,98 @@
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
         layout:decorate="~{layout}">
 <head>
+  <meta charset="UTF-8">
   <title>Adatmódosítások</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      color: #333;
+      background: -webkit-linear-gradient(to right, #a75888, #1f88b4);
+      background: linear-gradient(to right, #a75888, #1f88b4);
+    }
+
+    /* Center the h1 element */
+    h1 {
+      text-align: center;
+    }
+
+    /* Style the form elements */
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.5rem;
+      font-size: 1rem;
+      line-height: 1.5;
+      color: #333;
+      border: 1px solid #ccc;
+      border-radius: 0.25rem;
+      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+
+    input:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+
+    /* Style the error messages */
+    .text-danger {
+      color: #dc3545;
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
+    }
+
+    /* Style the submit button */
+    .btn-primary {
+      display: block;
+      width: 100%;
+      padding: 0.5rem;
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.5;
+      text-align: center;
+      color: #fff;
+      background-color: #007bff;
+      border: 1px solid #007bff;
+      border-radius: 0.25rem;
+      transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+    }
+    .btn-primary:hover {
+      color: #fff;
+      background-color: #0069d9;
+      border-color: #0062cc;
+    }
+
+    .btn-primary:focus, .btn-primary.focus {
+      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+    }
+
+    .btn-primary.disabled, .btn-primary:disabled {
+      color: #fff;
+      background-color: #007bff;
+      border-color: #007bff;
+    }
+
+    .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active,
+    .show > .btn-primary.dropdown-toggle {
+      color: #fff;
+      background-color: #0062cc;
+      border-color: #005cbf;
+    }
+
+    .btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus,
+    .show > .btn-primary.dropdown-toggle:focus {
+      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+    }
+  </style>
 </head>
 <body class="d-flex flex-column h-100">
 <h1>Adatok módosítása</h1>
@@ -11,7 +102,6 @@
   <section layout:fragment="body" class="py-5">
     <div class="container">
       <form role="form" method="post" th:action="@{/user/edit}" th:object="${user}">
-<!--        <input type="hidden" th:field="*{id}">-->
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="name.lastName">Vezetéknév</label>
@@ -67,17 +157,6 @@
                     placeholder="Új Jelszó">
             <p th:if="${#fields.hasErrors('password')}" class="text-danger" th:errors="*{password}"></p>
           </div>
-<!--          <div class="form-group col-md-6">-->
-<!--            <label for="passwordCheck">Új jelszó megerősítés</label>-->
-<!--            <input-->
-<!--                    type="text"-->
-<!--                    class="form-control"-->
-<!--                    id="passwordCheck"-->
-<!--                    name="passwordCheck"-->
-<!--                    th:field="*{passwordCheck}"-->
-<!--                    placeholder="Új jelszó megerősítés">-->
-<!--            <p th:if="${#fields.hasErrors('passwordCheck')}" class="text-danger" th:errors="*{passwordCheck}"></p>-->
-<!--          </div>-->
         </div>
 
         <button type="submit" class="btn btn-primary">Mentés</button>
