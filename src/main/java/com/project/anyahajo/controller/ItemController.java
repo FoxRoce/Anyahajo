@@ -186,10 +186,15 @@ public class ItemController {
     }
 
     @GetMapping(path = {"/kolcsonzes/kolcsonozheto"})
-    public String listOnlyRentable(Model model) {
+    public String listOnlyRentable(Model model, Principal principal) {
         List<Item> items = itemRepository.findRentable(Availability.Available);
         model.addAttribute("items", items);
-        return "all-items";
+        model.addAttribute("searchData", new SearchForm("", ""));
+        if (principal != null) {
+            User owner = (User) appUserService.loadUserByUsername(principal.getName());
+            model.addAttribute("basket", owner.getBasket());
+        }
+        return "all-items-rentable";
     }
 
 
