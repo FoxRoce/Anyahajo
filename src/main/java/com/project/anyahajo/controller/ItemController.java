@@ -217,10 +217,9 @@ public class ItemController {
                              @Validated
                              ItemForm itemForm,
                              BindingResult bindingResult) throws IOException {
-        System.out.println("********************************");
-        System.out.println(id + ":");
+
         Item item = itemRepository.findByItem_id(Long.parseLong(id));
-        System.out.println("ittenvan: " + item);
+
         model.addAttribute("item", item);
         String itemType = String.valueOf(item.getClass()).toLowerCase();
         switch (itemType) {
@@ -259,17 +258,7 @@ public class ItemController {
                 ((Carrier) item).setSize(itemForm.getSize());
             }
         }
-    @GetMapping(path = {"/kolcsonzes/kolcsonozheto"})
-    public String listOnlyRentable(Model model, Principal principal) {
-        List<Item> items = itemRepository.findRentable(Availability.Available);
-        model.addAttribute("items", items);
-        model.addAttribute("searchData", new SearchForm("", ""));
-        if (principal != null) {
-            User owner = (User) appUserService.loadUserByUsername(principal.getName());
-            model.addAttribute("basket", owner.getBasket());
-        }
-        return "all-items-rentable";
-    }
+
 
         if (!itemForm.getName().isEmpty()) {
             item.setName(itemForm.getName());
@@ -290,5 +279,17 @@ public class ItemController {
         itemRepository.save(item);
 
         return "redirect:/kolcsonzes";
+    }
+
+    @GetMapping(path = {"/kolcsonzes/kolcsonozheto"})
+    public String listOnlyRentable(Model model, Principal principal) {
+        List<Item> items = itemRepository.findRentable(Availability.Available);
+        model.addAttribute("items", items);
+        model.addAttribute("searchData", new SearchForm("", ""));
+        if (principal != null) {
+            User owner = (User) appUserService.loadUserByUsername(principal.getName());
+            model.addAttribute("basket", owner.getBasket());
+        }
+        return "all-items-rentable";
     }
 }
