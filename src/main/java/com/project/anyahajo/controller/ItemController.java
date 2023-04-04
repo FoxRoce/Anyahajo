@@ -185,7 +185,12 @@ public class ItemController {
         return "basket";
     }
 
-
+    @GetMapping(path = {"/kolcsonzes/kolcsonozheto"})
+    public String listOnlyRentable(Model model) {
+        List<Item> items = itemRepository.findRentable(Availability.Available);
+        model.addAttribute("items", items);
+        return "all-items";
+    }
 
 
 }

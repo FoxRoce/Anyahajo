@@ -1,5 +1,6 @@
 package com.project.anyahajo.repository;
 
+import com.project.anyahajo.model.Availability;
 import com.project.anyahajo.model.Item;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -23,5 +24,10 @@ public interface ItemRepository extends JpaRepository<Item,Long> {
 
     @Query("select i from Item i where i.item_id = ?1")
     Item findByItem_id(Long item_id);
+
+    @Query("select i from Item i where i.availability = ?1 and i.isActive = true")
+    List<Item> findRentable(Availability availability);
+
+
 
 }
