@@ -113,49 +113,6 @@
     <input id="size" type="text" data-th-field="*{size}">
     <p style="color: red" data-th-if="${#fields.hasErrors('size')}" data-th-error="*{size}"></p>
   </div>
-<body class="d-flex flex-column h-100">
-<h1>Adatok módosítása</h1>
-<main class="flex-shrink-0">
-  <section layout:fragment="body" class="py-5">
-    <div class="container">
-      <form role="form" method="post" th:action="@{/user/{userId}/edit(userId=${user.id})}" th:object="${user}">
-        <input type="hidden" th:field="*{id}">
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <label for="name">Termék neve</label>
-            <input
-                    type="text"
-                    class="form-control"
-                    id="name"
-                    name="name"
-                    th:field="*{name}"
-                    placeholder="Termék neve">
-            <p th:if="${#fields.hasErrors('name')}" class="text-danger" th:errors="*{name}"></p>
-          </div>
-          <div class="form-group col-md-6">
-            <label for="description">Leírás</label>
-            <input
-                    type="text"
-                    class="form-control"
-                    id="description"
-                    name="description"
-                    th:field="*{description}"
-                    placeholder="Leírás">
-            <p th:if="${#fields.hasErrors('description')}" class="text-danger" th:errors="*{description}"></p>
-          </div>
-          <div th:if="${item instanceof T(com.project.anyahajo.model.Book)}">
-          <div class="form-group col-md-6">
-            <label for="author">Szerző</label>
-            <input
-                    type="text"
-                    class="form-control"
-                    id="author"
-                    name="author"
-                    th:field="*{author}"
-                    placeholder="Szerző">
-            <p th:if="${#fields.hasErrors('author')}" class="text-danger" th:errors="*{author}"></p>
-          </div>
-          </div>
 
   <div th:if="${item instanceof T(com.project.anyahajo.model.Babycare)}">
     <p>Márka:</p>
@@ -167,6 +124,5 @@
 
   <input type="submit" value="Save">
 </form>
-
 </body>
 </html>

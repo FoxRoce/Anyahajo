@@ -181,9 +181,19 @@ public class AdminController {
             newRent.setExtended(false);
         }
 
-        newRent.setPrice(rentForm.getPrice());
+        if (newRent.getPrice() == null){
+            newRent.setPrice(0);
+        } else {
+            newRent.setPrice(newRent.getPrice());
+        }
+
+        if (newRent.getPayBackAmount() == null){
+            newRent.setPayBackAmount(0);
+        } else {
+            newRent.setPayBackAmount(newRent.getPayBackAmount());
+        }
+
         newRent.setDeposit(rentForm.getDeposit());
-        newRent.setPayBackAmount(rentForm.getPayBackAmount());
 
         rentService.save(newRent);
 
@@ -411,6 +421,98 @@ public class AdminController {
         List<Rent> rents = rentService.findExpired();
         model.addAttribute("rents", rents);
         return "all-rents";
+    }
+
+    @GetMapping("/termekmodositas/{id}")
+    public String showmodifyItem(@PathVariable("id") String id, Model model) {
+        Item item = itemService.findByItem_id(Long.parseLong(id));
+        model.addAttribute("item", item);
+        model.addAttribute("newItem", new ItemForm());
+        String itemType = String.valueOf(item.getClass()).toLowerCase();
+        switch (itemType) {
+            case "class com.project.anyahajo.model.book":
+                itemType = "book";
+                break;
+            case "class com.project.anyahajo.model.carrier":
+                itemType = "carrier";
+                break;
+            case "class com.project.anyahajo.model.babycare":
+                itemType = "babycare";
+                break;
+        }
+        model.addAttribute("itemType", itemType);
+        return "item-edit";
+    }
+
+    @PostMapping("/termekmodositas/{id}")
+    public String modifyItem(@PathVariable("id") String id,
+                             Model model,
+                             @ModelAttribute("newItem")
+                             @Validated
+                             ItemForm itemForm,
+                             BindingResult bindingResult) throws IOException {
+        System.out.println("********************************");
+        System.out.println(id + ":");
+        Item item = itemService.findByItem_id(Long.parseLong(id));
+        System.out.println("ittenvan: " + item);
+        model.addAttribute("item", item);
+        String itemType = String.valueOf(item.getClass()).toLowerCase();
+        switch (itemType) {
+            case "class com.project.anyahajo.model.book":
+                itemType = "book";
+                break;
+            case "class com.project.anyahajo.model.carrier":
+                itemType = "carrier";
+                break;
+            case "class com.project.anyahajo.model.babycare":
+                itemType = "babycare";
+                break;
+        }
+        model.addAttribute("itemType", itemType);
+
+        if (bindingResult.hasErrors()) {
+            System.out.println(bindingResult);
+            return "item-edit";
+        }
+        if (item instanceof Babycare) {
+            if (!itemForm.getBabycareBrand().isEmpty()) {
+                ((Babycare) item).setBabycareBrand(itemForm.getBabycareBrand());
+            }
+        } else if (item instanceof Book) {
+            if (!itemForm.getAuthor().isEmpty()) {
+                ((Book) item).setAuthor(itemForm.getAuthor());
+            }
+        } else {
+            if (!itemForm.getCarrierBrand().isEmpty()) {
+                ((Carrier) item).setCarrierBrand(itemForm.getCarrierBrand());
+            }
+            if (itemForm.getCarrierType() != null) {
+                ((Carrier) item).setCarrierType(itemForm.getCarrierType());
+            }
+            if (!itemForm.getSize().isEmpty()) {
+                ((Carrier) item).setSize(itemForm.getSize());
+            }
+        }
+
+        if (!itemForm.getName().isEmpty()) {
+            item.setName(itemForm.getName());
+        }
+//        if (!itemForm.getAvailability().isEmpty()) {
+//            item.setAvailability(itemForm.getAvailability());
+//        }
+        if (!itemForm.getDescription().isEmpty()) {
+            item.setDescription(itemForm.getDescription());
+        }
+//        if (itemForm.pictureIsEmpty()) {
+//            item.setPicture(itemForm.getPicture().getBytes());
+//        }
+        if (itemForm.getIsActive().describeConstable().isPresent()) {
+            item.setActive(itemForm.getIsActive());
+        }
+
+        itemService.save(item);
+
+        return "redirect:/kolcsonzes";
     }
 
 }
