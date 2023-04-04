@@ -16,10 +16,49 @@
         {
             background: -webkit-linear-gradient(to right, #a75888, #1f88b4);
             background: linear-gradient(to right, #a75888, #1f88b4);
+            text-align: center;
+            color: #fff;
+            font-size: 30px;
+        }
+
+        ul.menu {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #a75888;
+        }
+
+        li.bar {
+            float: left;
+            border-right:1px solid #bbb;
+        }
+
+        li.bar:last-child {
+            border-right: none;
+        }
+
+        li.bar a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        li.bar a:hover:not(.active) {
+            background-color: #1f88b4;
+        }
+
+        .active {
+            background-color: #1f88b4;
         }
     </style>
 </head>
 <body>
+<ul class="menu">
+    <li class="bar"><a class="active" data-th-href="@{'/#menu'}" href="/#menu">Vissza</a></li>
+</ul>
 <p>A kölcsönzési igényedet sikeresen elküldted.</p>
 <!--    <p>Az alábbi termékekkel kapcsolatos kölcsönzési igényedet sikeresen elküldted.</p>-->
 <!--    <p>Termék neve:</p>-->

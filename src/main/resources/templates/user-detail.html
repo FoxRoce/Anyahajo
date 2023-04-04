@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Felhasználó</title>
+    <meta charset="UTF-8">
+    <title>Felhasználó</title>
 
     <style>
         table, th, td {
@@ -17,25 +17,81 @@
         {
             background: -webkit-linear-gradient(to right, #a75888, #1f88b4);
             background: linear-gradient(to right, #a75888, #1f88b4);
+            margin-top: 40px;
         }
 
+
+        ul.menu {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #a75888;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1;
+        }
+
+        li.bar {
+            float: left;
+            border-right:1px solid #bbb;
+        }
+
+        li.bar:last-child {
+            border-right: none;
+        }
+
+        li.bar a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        li.bar a:hover:not(.active) {
+            background-color: #1f88b4;
+        }
+
+        .active {
+            background-color: #1f88b4;
+        }
+
+        h1{
+            color: white;
+            text-align: center;
+        }
+
+        table{
+            color: #fff;
+        }
+
+        span{
+            color: #fff;
+            font-size: 25px;
+        }
     </style>
 </head>
 <body>
+<ul class="menu">
+    <li class="bar"><a class="active" data-th-href="@{'/#menu'}" href="/#menu">Vissza</a></li>
+</ul>
 <h1>Kölcsönzései</h1>
-    <span>Név: </span>
-    <span th:text="${user.name}">Név</span>
+<span>Név: </span>
+<span th:text="${user.name}">Név</span>
 <br>
-    <span>E-mail: </span>
-    <span th:text="${user.email}">E-mail</span>
+<span>E-mail: </span>
+<span th:text="${user.email}">E-mail</span>
 <br>
-    <span>Telefonszám: </span>
-    <span th:text="${user.phoneNumber}">Telefonszám</span>
+<span>Telefonszám: </span>
+<span th:text="${user.phoneNumber}">Telefonszám</span>
 <br>
-    </form>
+</form>
 
 <p th:if="${#lists.isEmpty(rents)}">
-  Nincsenek kolcsonzesek
+    Nincsenek kolcsonzesek
 </p>
 <table th:unless="${#lists.isEmpty(rents)}">
     <tr>
