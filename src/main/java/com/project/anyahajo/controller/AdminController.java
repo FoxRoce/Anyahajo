@@ -3,6 +3,7 @@ package com.project.anyahajo.controller;
 import com.project.anyahajo.auth.EmailSender;
 import com.project.anyahajo.form.ItemForm;
 import com.project.anyahajo.form.RentForm;
+import com.project.anyahajo.form.ResetForm;
 import com.project.anyahajo.form.UserForm;
 import com.project.anyahajo.model.*;
 import com.project.anyahajo.service.ItemService;
@@ -137,12 +138,9 @@ public class AdminController {
     }
     @GetMapping(path = {"/add_new_rent"})
     public String addNewRent(
-            @RequestParam(required = false) Long iid,
             Model model
     ) {
-        RentForm rf = new RentForm();
-        rf.setItem(itemService.findByItem_id(iid));
-        model.addAttribute("newRent", rf);
+        model.addAttribute("newRent", new ResetForm());
         List<Item> items = itemService.findAll();
         model.addAttribute("items", items);
         List<User> users = userService.findAll();
