@@ -46,7 +46,10 @@ public class UserController {
     }
 
     @GetMapping("/user/edit")
-    public String editUserForm(Principal principal, Model model) {
+    public String editUserForm(
+            Principal principal,
+            Model model
+    ) {
         User userGet = (User) userService.loadUserByUsername(principal.getName());
         UserForm user = userService.mapToUserForm(userGet);
         model.addAttribute("user", user);
@@ -54,11 +57,12 @@ public class UserController {
     }
 
     @PostMapping("/user/edit")
-    public String updateClub(@Validated @ModelAttribute("user") UserForm user,
-                             BindingResult bindingResult,
-                             Model model,
-                             Principal principal) {
-
+    public String updateClub(
+            @Validated @ModelAttribute("user") UserForm user,
+            BindingResult bindingResult,
+            Model model,
+            Principal principal
+    ) {
         if(bindingResult.hasErrors()) {
             model.addAttribute("user", user);
             return "user-edit";

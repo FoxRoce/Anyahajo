@@ -1,9 +1,6 @@
 package com.project.anyahajo.controller;
 
 import com.project.anyahajo.model.*;
-import com.project.anyahajo.repository.UserRepository;
-import com.project.anyahajo.repository.ItemRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,10 +13,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -29,9 +26,15 @@ public class ItemController {
     private ItemService itemService;
     @NonNull
     private UserService userService;
+    private record SearchForm(String text, String itemType){};
+
+
 
     @GetMapping(path = {"/kolcsonzes"})
-    public String listItems(Model model, Principal principal) {
+    public String listItems(
+            Model model,
+            Principal principal
+    ) {
         List<Item> items = itemService.findAll();
         model.addAttribute("items", items);
         model.addAttribute("searchData", new SearchForm("", ""));
@@ -41,12 +44,11 @@ public class ItemController {
         }
         return "all-items";
     }
+
     @GetMapping(path = {"/books"})
     public String listItems() {
         return "redirect:/kolcsonzes?itemType=Book";
     }
-
-    private record SearchForm(String text, String itemType){};
 
     @PostMapping("/kolcsonzes/kereses")
     public String searchItems(
@@ -68,56 +70,12 @@ public class ItemController {
         return "all-items";
     }
 
-    @GetMapping(path = {"/admin/ujTargyFelvetel"})
-    public String newItem(Model model) {
-        model.addAttribute("newItem", new ItemForm());
-        return "admin-add-item";
-    }
-
-    @PostMapping(path = {"/admin/ujTargyFelvetel"})
-    public String saveItem(
-            @ModelAttribute("newItem")
-            @Validated
-            ItemForm itemForm,
-            BindingResult bindingResult
-    ) throws IOException {
-
-        if (bindingResult.hasErrors()) {
-            System.out.println(bindingResult);
-            return "admin-add-item";
-        }
-
-        Item entity;
-
-        if (!itemForm.getBabycareBrand().isEmpty()) {
-            entity = new Babycare();
-            ((Babycare) entity).setBabycareBrand(itemForm.getBabycareBrand());
-        } else if (!itemForm.getAuthor().isEmpty()) {
-            entity = new Book();
-            ((Book) entity).setAuthor(itemForm.getAuthor());
-        } else if (!itemForm.getCarrierBrand().isEmpty()) {
-            entity = new Carrier();
-            ((Carrier) entity).setCarrierBrand(itemForm.getCarrierBrand());
-            ((Carrier) entity).setCarrierType(itemForm.getCarrierType());
-            ((Carrier) entity).setSize(itemForm.getSize());
-        } else {
-            entity = new Item();
-        }
-
-        entity.setName(itemForm.getName());
-        entity.setAvailability(itemForm.getAvailability());
-        entity.setDescription(itemForm.getDescription());
-        entity.setActive(itemForm.getIsActive());
-        entity.setPicture(itemForm.getPicture().getBytes());
-
-        itemRepository.save(entity);
-
-        return "redirect:/kolcsonzes";
-    }
 
     @GetMapping("/all-items/img/{id}")
-    public ResponseEntity<byte[]> getPictureById(@PathVariable Long id) {
-        Optional<Item> item = itemRepository.findById(id);
+    public ResponseEntity<byte[]> getPictureById(
+            @PathVariable Long id
+    ) {
+        Optional<Item> item = itemService.findById(id);
 
         if (item.isPresent()) {
             HttpHeaders headers = new HttpHeaders();
@@ -128,8 +86,13 @@ public class ItemController {
 
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
+
     @GetMapping("/item/{id}")
-    public String getItem(@PathVariable("id") String id, Model model, Principal principal) {
+    public String getItem(
+            @PathVariable("id") String id,
+            Model model,
+            Principal principal
+    ) {
         Item item = itemService.findByItem_id(Long.parseLong(id));
         if(principal != null && item != null) {
             model.addAttribute("item", item);
@@ -145,23 +108,23 @@ public class ItemController {
     }
 
     @PostMapping(path = {"/kolcsonzes/putInTheBasket", "/kolcsonzes/kereses/putInTheBasket"})
-    public String putInTheBasket(@RequestParam("item_id") Long id, Principal principal) {
+    public String putInTheBasket(
+            @RequestParam("item_id") Long id,
+            Principal principal
+    ) {
         User owner = (User) userService.loadUserByUsername(principal.getName());
             owner.getBasket().add(id);
             userService.save(owner);
         return "redirect:/kolcsonzes";
     }
 
-    @PostMapping("kosar/delete")
-    public String removeFromBasket(@RequestParam("item_id") Long id, Principal principal) {
-        User owner = (User) userService.loadUserByUsername(principal.getName());
-        owner.getBasket().remove(id);
-        userService.save(owner);
-        return "redirect:/kosar";
-    }
+
 
     @GetMapping(path = "/kosar")
-    public String showBasket(Principal principal, Model model) {
+    public String showBasket(
+            Principal principal,
+            Model model
+    ) {
         User owner = (User) userService.loadUserByUsername(principal.getName());
         List <Item> itemsInTheBasket = owner.getBasket().stream().map(x -> {
             if(itemService.findById(x).isPresent()) {

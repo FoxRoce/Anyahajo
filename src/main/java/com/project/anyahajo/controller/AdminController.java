@@ -16,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
@@ -37,7 +38,9 @@ public class AdminController {
 
 
     @GetMapping("")
-    public String getAdminPage(Principal principal) {
+    public String getAdminPage(
+            Principal principal
+    ) {
         User user = (User) userService.loadUserByUsername(principal.getName());
         if(user.getRole().equals(Role.ADMIN)) {
             return "admin";
@@ -47,7 +50,9 @@ public class AdminController {
     }
 
     @GetMapping(path = {"/users"})
-    public String listUsers(Model model) {
+    public String listUsers(
+            Model model
+    ) {
         List<UserForm> users = userService.findAllUsers();
         model.addAttribute("users", users);
         return "all-users";
@@ -68,13 +73,19 @@ public class AdminController {
 
 
     @GetMapping(path = {"/ujTargyFelvetel"})
-    public String newItem(Model model) {
+    public String newItem(
+            Model model
+    ) {
         model.addAttribute("newItem", new ItemForm());
         return "admin-add-item";
     }
 
     @PostMapping("/ujTargyFelvetel")
-    public String saveItem(@ModelAttribute("newItem") @Validated ItemForm itemForm, BindingResult bindingResult) {
+    public String saveItem(
+            @ModelAttribute("newItem")
+            @Validated ItemForm itemForm,
+            BindingResult bindingResult
+    )throws IOException {
         if (bindingResult.hasErrors()) {
             System.out.println(bindingResult);
             return "admin-add-item";
@@ -108,16 +119,18 @@ public class AdminController {
         }
     }
 
-    private void setItemProperties(Item item, ItemForm itemForm) {
+    private void setItemProperties(Item item, ItemForm itemForm) throws IOException {
         item.setName(itemForm.getName());
         item.setAvailability(itemForm.getAvailability());
         item.setDescription(itemForm.getDescription());
-        item.setPicture(itemForm.getPicture());
+        item.setPicture(itemForm.getPicture().getBytes());
         item.setActive(itemForm.getIsActive());
     }
 
     @GetMapping(path = {"/rents"})
-    public String listRents(Model model) {
+    public String listRents(
+            Model model
+    ) {
         List<Rent> rents = rentService.findAll();
         model.addAttribute("rents", rents);
         return "all-rents";
@@ -401,7 +414,5 @@ public class AdminController {
         model.addAttribute("rents", rents);
         return "all-rents";
     }
-
-
 
 }
