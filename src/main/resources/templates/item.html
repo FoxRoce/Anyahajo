@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -46,6 +46,9 @@
 
             </form>
 
+            <div sec:authorize="hasRole('ADMIN')">
+                <a data-th-href="@{${'/admin/termekmodositas/' + item.item_id}}"><b><button>Termék módosítása</button></b></a>
+            </div>
             <a href="/kolcsonzes" data-th-href="@{/kolcsonzes}">
                 <input type="submit" value="Termékek listája">
             </a>

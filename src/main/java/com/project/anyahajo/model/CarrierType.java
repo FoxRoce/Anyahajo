@@ -18,10 +18,14 @@ public enum CarrierType {
 
     public CarrierType getByHunName(String hunName) {
         for (CarrierType c : CarrierType.values()) {
-            if (c.name().equals(hunName)){
+            if (c.name().equals(hunName)) {
                 return c;
             }
         }
         return null;
+    }
+
+    public boolean isEmpty() {
+        return String.valueOf(this).isEmpty();
     }
 }
