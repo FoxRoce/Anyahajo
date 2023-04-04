@@ -1,6 +1,13 @@
 package com.project.anyahajo.controller;
 
 import com.project.anyahajo.model.*;
+import com.project.anyahajo.repository.UserRepository;
+import com.project.anyahajo.repository.ItemRepository;
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import com.project.anyahajo.service.ItemService;
 import com.project.anyahajo.service.UserService;
 import lombok.NonNull;
@@ -9,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 import java.util.Objects;
@@ -60,7 +68,66 @@ public class ItemController {
         return "all-items";
     }
 
+    @GetMapping(path = {"/admin/ujTargyFelvetel"})
+    public String newItem(Model model) {
+        model.addAttribute("newItem", new ItemForm());
+        return "admin-add-item";
+    }
 
+    @PostMapping(path = {"/admin/ujTargyFelvetel"})
+    public String saveItem(
+            @ModelAttribute("newItem")
+            @Validated
+            ItemForm itemForm,
+            BindingResult bindingResult
+    ) throws IOException {
+
+        if (bindingResult.hasErrors()) {
+            System.out.println(bindingResult);
+            return "admin-add-item";
+        }
+
+        Item entity;
+
+        if (!itemForm.getBabycareBrand().isEmpty()) {
+            entity = new Babycare();
+            ((Babycare) entity).setBabycareBrand(itemForm.getBabycareBrand());
+        } else if (!itemForm.getAuthor().isEmpty()) {
+            entity = new Book();
+            ((Book) entity).setAuthor(itemForm.getAuthor());
+        } else if (!itemForm.getCarrierBrand().isEmpty()) {
+            entity = new Carrier();
+            ((Carrier) entity).setCarrierBrand(itemForm.getCarrierBrand());
+            ((Carrier) entity).setCarrierType(itemForm.getCarrierType());
+            ((Carrier) entity).setSize(itemForm.getSize());
+        } else {
+            entity = new Item();
+        }
+
+        entity.setName(itemForm.getName());
+        entity.setAvailability(itemForm.getAvailability());
+        entity.setDescription(itemForm.getDescription());
+        entity.setActive(itemForm.getIsActive());
+        entity.setPicture(itemForm.getPicture().getBytes());
+
+        itemRepository.save(entity);
+
+        return "redirect:/kolcsonzes";
+    }
+
+    @GetMapping("/all-items/img/{id}")
+    public ResponseEntity<byte[]> getPictureById(@PathVariable Long id) {
+        Optional<Item> item = itemRepository.findById(id);
+
+        if (item.isPresent()) {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.IMAGE_JPEG);
+
+            return new ResponseEntity<>(item.get().getPicture(), headers, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    }
     @GetMapping("/item/{id}")
     public String getItem(@PathVariable("id") String id, Model model, Principal principal) {
         Item item = itemService.findByItem_id(Long.parseLong(id));

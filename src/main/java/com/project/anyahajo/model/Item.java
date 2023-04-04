@@ -22,6 +22,10 @@ public class Item {
     private Availability availability;
     private String name;
     private String description;
-    private Byte[] picture;
+
+    @Lob
+    @Column(length=1000000)
+    private byte[] picture;
+
     private boolean isActive = false;
 }

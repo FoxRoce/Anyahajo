@@ -39,22 +39,22 @@
 </p>
 <table th:unless="${#lists.isEmpty(rents)}">
     <tr>
-        <td>Termék neve</td>
-        <td>Termék elérhetősége</td>
-        <td>Kölcsönzés kezdete</td>
-        <td>Kölcsönzés lejárta</td>
-        <td>Van-e hosszabbítás</td>
-        <td>Kölcsönzési díj</td>
-        <td>Kauvió</td>
-        <td>Visszafizetendő összeg</td>
+        <td><b>Termék neve</b></td>
+        <td><b>Termék elérhetősége</b></td>
+        <td><b>Kölcsönzés kezdete</b></td>
+        <td><b>Kölcsönzés lejárta</b></td>
+        <td><b>Van-e hosszabbítás</b></td>
+        <td><b>Kölcsönzési díj</b></td>
+        <td><b>Kaució</b></td>
+        <td><b>Visszafizetendő összeg</b></td>
     </tr>
 
     <tr th:each="rent: ${rents}">
         <td th:text="${rent.item.name}"></td>
-        <td th:text="${rent.item.availability}"></td>
+        <td th:text="${rent.item.availability.getHunName()}"></td>
         <td th:text="${rent.startOfRent}"></td>
         <td th:text="${rent.endOfRent}"></td>
-        <td th:text="${rent.isExtended}"></td>
+        <td th:text="${rent.isExtended} ? 'Van' : 'Nincs'"></td>
         <td th:text="${rent.price}"></td>
         <td th:text="${rent.deposit}"></td>
         <td th:text="${rent.payBackAmount}"></td>

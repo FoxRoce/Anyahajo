@@ -31,7 +31,8 @@ public class SecurityConfig {
                         "/kolcsonzes/kereses",
                         "/item/{id}",
                         "/forgot-password/**",
-                        "/enable-user/**"
+                        "/enable-user/**",
+                        "/all-items/img/{id}"
                 )
                 .permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
@@ -48,4 +49,3 @@ public class SecurityConfig {
         return http.build();
     }
 }
-
