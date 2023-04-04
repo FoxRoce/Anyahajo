@@ -1,5 +1,6 @@
 package com.project.anyahajo.service.impl;
 
+import com.project.anyahajo.model.Availability;
 import com.project.anyahajo.model.Item;
 import com.project.anyahajo.repository.ItemRepository;
 import com.project.anyahajo.service.ItemService;
@@ -49,5 +50,10 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public List<Item> findBySearch(String text, Class<?> forName) {
         return itemRepository.findBySearch(text,forName);
+    }
+
+    @Override
+    public List<Item> findRentable(Availability available) {
+        return itemRepository.findRentable(available);
     }
 }

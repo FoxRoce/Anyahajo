@@ -424,7 +424,10 @@ public class AdminController {
     }
 
     @GetMapping("/termekmodositas/{id}")
-    public String showmodifyItem(@PathVariable("id") String id, Model model) {
+    public String showmodifyItem(
+            @PathVariable("id") String id,
+            Model model
+    ) {
         Item item = itemService.findByItem_id(Long.parseLong(id));
         model.addAttribute("item", item);
         model.addAttribute("newItem", new ItemForm());
@@ -450,11 +453,10 @@ public class AdminController {
                              @ModelAttribute("newItem")
                              @Validated
                              ItemForm itemForm,
-                             BindingResult bindingResult) throws IOException {
-        System.out.println("********************************");
-        System.out.println(id + ":");
+                             BindingResult bindingResult
+    ) throws IOException {
         Item item = itemService.findByItem_id(Long.parseLong(id));
-        System.out.println("ittenvan: " + item);
+
         model.addAttribute("item", item);
         String itemType = String.valueOf(item.getClass()).toLowerCase();
         switch (itemType) {
@@ -493,6 +495,7 @@ public class AdminController {
                 ((Carrier) item).setSize(itemForm.getSize());
             }
         }
+
 
         if (!itemForm.getName().isEmpty()) {
             item.setName(itemForm.getName());

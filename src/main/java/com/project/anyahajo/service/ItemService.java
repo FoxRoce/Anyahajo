@@ -1,5 +1,6 @@
 package com.project.anyahajo.service;
 
+import com.project.anyahajo.model.Availability;
 import com.project.anyahajo.model.Item;
 
 import java.util.List;
@@ -19,4 +20,6 @@ public interface ItemService {
     List<Item> findByText(String text);
 
     List<Item> findBySearch(String text, Class<?> forName);
+
+    List<Item> findRentable(Availability available);
 }

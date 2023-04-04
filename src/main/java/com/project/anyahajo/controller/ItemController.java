@@ -139,105 +139,14 @@ public class ItemController {
         return "basket";
     }
 
-    @GetMapping("/admin/termekmodositas/{id}")
-    public String showmodifyItem(@PathVariable("id") String id, Model model) {
-        Item item = itemRepository.findByItem_id(Long.parseLong(id));
-        model.addAttribute("item", item);
-        model.addAttribute("newItem", new ItemForm());
-        String itemType = String.valueOf(item.getClass()).toLowerCase();
-        switch (itemType) {
-            case "class com.project.anyahajo.model.book":
-                itemType = "book";
-                break;
-            case "class com.project.anyahajo.model.carrier":
-                itemType = "carrier";
-                break;
-            case "class com.project.anyahajo.model.babycare":
-                itemType = "babycare";
-                break;
-        }
-        model.addAttribute("itemType", itemType);
-        return "item-edit";
-    }
-
-    @PostMapping("/admin/termekmodositas/{id}")
-    public String modifyItem(@PathVariable("id") String id,
-                             Model model,
-                             @ModelAttribute("newItem")
-                             @Validated
-                             ItemForm itemForm,
-                             BindingResult bindingResult) throws IOException {
-
-        Item item = itemRepository.findByItem_id(Long.parseLong(id));
-
-        model.addAttribute("item", item);
-        String itemType = String.valueOf(item.getClass()).toLowerCase();
-        switch (itemType) {
-            case "class com.project.anyahajo.model.book":
-                itemType = "book";
-                break;
-            case "class com.project.anyahajo.model.carrier":
-                itemType = "carrier";
-                break;
-            case "class com.project.anyahajo.model.babycare":
-                itemType = "babycare";
-                break;
-        }
-        model.addAttribute("itemType", itemType);
-
-        if (bindingResult.hasErrors()) {
-            System.out.println(bindingResult);
-            return "item-edit";
-        }
-        if (item instanceof Babycare) {
-            if (!itemForm.getBabycareBrand().isEmpty()) {
-                ((Babycare) item).setBabycareBrand(itemForm.getBabycareBrand());
-            }
-        } else if (item instanceof Book) {
-            if (!itemForm.getAuthor().isEmpty()) {
-                ((Book) item).setAuthor(itemForm.getAuthor());
-            }
-        } else {
-            if (!itemForm.getCarrierBrand().isEmpty()) {
-                ((Carrier) item).setCarrierBrand(itemForm.getCarrierBrand());
-            }
-            if (itemForm.getCarrierType() != null) {
-                ((Carrier) item).setCarrierType(itemForm.getCarrierType());
-            }
-            if (!itemForm.getSize().isEmpty()) {
-                ((Carrier) item).setSize(itemForm.getSize());
-            }
-        }
-
-
-        if (!itemForm.getName().isEmpty()) {
-            item.setName(itemForm.getName());
-        }
-//        if (!itemForm.getAvailability().isEmpty()) {
-//            item.setAvailability(itemForm.getAvailability());
-//        }
-        if (!itemForm.getDescription().isEmpty()) {
-            item.setDescription(itemForm.getDescription());
-        }
-//        if (itemForm.pictureIsEmpty()) {
-//            item.setPicture(itemForm.getPicture().getBytes());
-//        }
-        if (itemForm.getIsActive().describeConstable().isPresent()) {
-            item.setActive(itemForm.getIsActive());
-        }
-
-        itemRepository.save(item);
-
-        return "redirect:/kolcsonzes";
-    }
 
     @GetMapping(path = {"/kolcsonzes/kolcsonozheto"})
     public String listOnlyRentable(Model model, Principal principal) {
-        List<Item> items = itemRepository.findRentable(Availability.Available);
+        List<Item> items = itemService.findRentable(Availability.Available);
         model.addAttribute("items", items);
         model.addAttribute("searchData", new SearchForm("", ""));
         if (principal != null) {
-            User owner = (User) appUserService.loadUserByUsername(principal.getName());
+            User owner = (User) userService.loadUserByUsername(principal.getName());
             model.addAttribute("basket", owner.getBasket());
         }
         return "all-items-rentable";
