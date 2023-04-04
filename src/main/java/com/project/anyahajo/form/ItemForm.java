@@ -9,6 +9,7 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Arrays;
 
@@ -32,8 +33,8 @@ public class ItemForm {
     private String carrierBrand = null;
     private String size = null;
 
-    public boolean pictureIsEmpty() {
-        return Arrays.toString(this.picture).isEmpty();
+    public boolean pictureIsEmpty() throws IOException {
+        return Arrays.toString(this.picture.getBytes()).isEmpty();
     }
 
 }

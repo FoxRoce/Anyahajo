@@ -5,7 +5,6 @@ import com.project.anyahajo.form.ItemForm;
 import com.project.anyahajo.model.*;
 import com.project.anyahajo.repository.UserRepository;
 import com.project.anyahajo.repository.ItemRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -208,7 +207,7 @@ public class ItemController {
                 break;
         }
         model.addAttribute("itemType", itemType);
-        return "item-edit2";
+        return "item-edit";
     }
 
     @PostMapping("/admin/termekmodositas/{id}")
@@ -217,9 +216,11 @@ public class ItemController {
                              @ModelAttribute("newItem")
                              @Validated
                              ItemForm itemForm,
-                             BindingResult bindingResult) {
-
+                             BindingResult bindingResult) throws IOException {
+        System.out.println("********************************");
+        System.out.println(id + ":");
         Item item = itemRepository.findByItem_id(Long.parseLong(id));
+        System.out.println("ittenvan: " + item);
         model.addAttribute("item", item);
         String itemType = String.valueOf(item.getClass()).toLowerCase();
         switch (itemType) {
@@ -237,7 +238,7 @@ public class ItemController {
 
         if (bindingResult.hasErrors()) {
             System.out.println(bindingResult);
-            return "item-edit2";
+            return "item-edit";
         }
         if (item instanceof Babycare) {
             if (!itemForm.getBabycareBrand().isEmpty()) {
@@ -251,7 +252,7 @@ public class ItemController {
             if (!itemForm.getCarrierBrand().isEmpty()) {
                 ((Carrier) item).setCarrierBrand(itemForm.getCarrierBrand());
             }
-            if (!itemForm.getCarrierType().isEmpty()) {
+            if (itemForm.getCarrierType() != null) {
                 ((Carrier) item).setCarrierType(itemForm.getCarrierType());
             }
             if (!itemForm.getSize().isEmpty()) {
@@ -268,9 +269,9 @@ public class ItemController {
         if (!itemForm.getDescription().isEmpty()) {
             item.setDescription(itemForm.getDescription());
         }
-        if (itemForm.pictureIsEmpty()) {
-            item.setPicture(itemForm.getPicture());
-        }
+//        if (itemForm.pictureIsEmpty()) {
+//            item.setPicture(itemForm.getPicture().getBytes());
+//        }
         if (itemForm.getIsActive().describeConstable().isPresent()) {
             item.setActive(itemForm.getIsActive());
         }
