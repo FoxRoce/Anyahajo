@@ -73,44 +73,47 @@ public class AdminController {
         return "admin-add-item";
     }
 
-    @PostMapping(path = {"/ujTargyFelvetel"})
-    public String saveItem(
-            @ModelAttribute("newItem")
-            @Validated
-            ItemForm itemForm,
-            BindingResult bindingResult
-    ) {
+    @PostMapping("/ujTargyFelvetel")
+    public String saveItem(@ModelAttribute("newItem") @Validated ItemForm itemForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             System.out.println(bindingResult);
             return "admin-add-item";
         }
 
-        Item entity;
-
-        if (!itemForm.getBabycareBrand().isEmpty()) {
-            entity = new Babycare();
-            ((Babycare) entity).setBabycareBrand(itemForm.getBabycareBrand());
-        } else if (!itemForm.getAuthor().isEmpty()) {
-            entity = new Book();
-            ((Book) entity).setAuthor(itemForm.getAuthor());
-        } else if (!itemForm.getCarrierBrand().isEmpty()) {
-            entity = new Carrier();
-            ((Carrier) entity).setCarrierBrand(itemForm.getCarrierBrand());
-            ((Carrier) entity).setCarrierType(itemForm.getCarrierType());
-            ((Carrier) entity).setSize(itemForm.getSize());
-        } else {
-            entity = new Item();
-        }
-
-        entity.setName(itemForm.getName());
-        entity.setAvailability(itemForm.getAvailability());
-        entity.setDescription(itemForm.getDescription());
-        entity.setPicture(itemForm.getPicture());
-        entity.setActive(itemForm.getIsActive());
+        Item entity = createItemFromForm(itemForm);
+        setItemProperties(entity, itemForm);
 
         itemService.save(entity);
 
         return "redirect:/kolcsonzes";
+    }
+
+    private Item createItemFromForm(ItemForm itemForm) {
+        if (!itemForm.getBabycareBrand().isEmpty()) {
+            Babycare babycare = new Babycare();
+            babycare.setBabycareBrand(itemForm.getBabycareBrand());
+            return babycare;
+        } else if (!itemForm.getAuthor().isEmpty()) {
+            Book book = new Book();
+            book.setAuthor(itemForm.getAuthor());
+            return book;
+        } else if (!itemForm.getCarrierBrand().isEmpty()) {
+            Carrier carrier = new Carrier();
+            carrier.setCarrierBrand(itemForm.getCarrierBrand());
+            carrier.setCarrierType(itemForm.getCarrierType());
+            carrier.setSize(itemForm.getSize());
+            return carrier;
+        } else {
+            return new Item();
+        }
+    }
+
+    private void setItemProperties(Item item, ItemForm itemForm) {
+        item.setName(itemForm.getName());
+        item.setAvailability(itemForm.getAvailability());
+        item.setDescription(itemForm.getDescription());
+        item.setPicture(itemForm.getPicture());
+        item.setActive(itemForm.getIsActive());
     }
 
     @GetMapping(path = {"/rents"})
@@ -189,12 +192,6 @@ public class AdminController {
         return "redirect:/admin/rents";
     }
 
-    @PostMapping("/rents/{id}/reserve")
-    public String updateRentReserve(
-            @PathVariable("id") Long id
-    ) {
-        return "redirect:/admin/add_new_rent?iid={id}";
-    }
 
     @PostMapping("/rents/{id}/accept")
     public String updateRentAccept(
@@ -279,11 +276,7 @@ public class AdminController {
 
         rent.setPrice(price);
 
-        if (rent.getDeposit() - rent.getPrice() >= 0){
-            rent.setPayBackAmount(rent.getDeposit() - rent.getPrice());
-        } else {
-            rent.setPayBackAmount(0);
-        }
+        rent.setPayBackAmount(Math.max(rent.getDeposit() - rent.getPrice(), 0));
 
         String emailBody = "Kedves vásárló!\n\n"
                 + rent.getItem().getName() + " nevű tárgyra vissza lett hozva." +

@@ -100,14 +100,8 @@
                 action="/kolcsonzes/putInTheBasket">
             <input type="hidden" name="item_id" data-th-value="${item.getItem_id()}">
             <input type="submit" data-th-unless="${#lists.contains(basket, item.getItem_id())}" value="Kosárba teszem">
-
         </form>
 
-        <div sec:authorize="hasRole('ADMIN')" class="nav_list_item">
-            <form th:action="@{'/admin/rents/'+${item.item_id}+'/reserve'}" method="post">
-                <button type="submit" name="Make rent">Make rent</button>
-            </form>
-        </div>
     </li>
 </ul>
 </body>
