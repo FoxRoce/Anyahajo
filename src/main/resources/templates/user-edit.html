@@ -18,11 +18,13 @@
     /* Center the h1 element */
     h1 {
       text-align: center;
+      color: #fff
     }
 
     /* Style the form elements */
     .form-group {
       margin-bottom: 1rem;
+      color: #fff;
     }
 
     label {
@@ -94,9 +96,47 @@
     .show > .btn-primary.dropdown-toggle:focus {
       box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
     }
+
+    ul.menu {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #a75888;
+    }
+
+    li.bar {
+      float: left;
+      border-right:1px solid #bbb;
+    }
+
+    li.bar:last-child {
+      border-right: none;
+    }
+
+    li.bar a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+
+    li.bar a:hover:not(.active) {
+      background-color: #1f88b4;
+    }
+
+    .active {
+      background-color: #1f88b4;
+    }
   </style>
 </head>
 <body class="d-flex flex-column h-100">
+<ul class="menu">
+  <li class="bar"><a class="active" data-th-href="@{'/#menu'}" href="/#menu">Vissza</a></li>
+  <li class="bar"><a data-th-href="@{'/kolcsonzes'}">Termékek</a></li>
+  <li class="bar"><a data-th-href="@{'/rents'}" href="/home">Rendeléseim</a></li>
+</ul>
 <h1>Adatok módosítása</h1>
 <main class="flex-shrink-0">
   <section layout:fragment="body" class="py-5">

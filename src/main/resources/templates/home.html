@@ -172,6 +172,12 @@
                     <div sec:authorize="isAuthenticated()" class = 'nav_list_item'>
                         <li><a data-th-href="@{'/user/edit'}">Adatok módosítása</a></li>
                     </div>
+                    <div sec:authorize="isAuthenticated()" class = 'nav_list_item'>
+                        <li><a data-th-href="@{'/kosar'}">Kosár</a></li>
+                    </div>
+                    <div sec:authorize="isAuthenticated()" class = 'nav_list_item'>
+                        <li><a data-th-href="@{'/rents'}">Rendeléseim</a></li>
+                    </div>
                     <div  sec:authorize="hasRole('ADMIN')" class="nav_list_item">
                         <li><a data-th-href="@{'/admin'}" href="/admin">Admin oldal</a></li>
                     </div>

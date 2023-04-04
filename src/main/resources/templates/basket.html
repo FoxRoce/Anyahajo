@@ -12,15 +12,53 @@
             margin-left: auto;
             margin-right: auto;
         }
-         body
-         {
-             background: -webkit-linear-gradient(to right, #a75888, #1f88b4);
-             background: linear-gradient(to right, #a75888, #1f88b4);
-         }
+        body
+        {
+            background: -webkit-linear-gradient(to right, #a75888, #1f88b4);
+            background: linear-gradient(to right, #a75888, #1f88b4);
+        }
+
+        ul.menu {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #a75888;
+        }
+
+        li.bar {
+            float: left;
+            border-right:1px solid #bbb;
+        }
+
+        li.bar:last-child {
+            border-right: none;
+        }
+
+        li.bar a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        li.bar a:hover:not(.active) {
+            background-color: #1f88b4;
+        }
+
+        .active {
+            background-color: #1f88b4;
+        }
     </style>
 
 </head>
 <body>
+<ul class="menu">
+    <li class="bar"><a class="active" data-th-href="@{'/#menu'}" href="/#menu">Vissza</a></li>
+    <li class="bar"><a data-th-href="@{/kolcsonzes}">Termékek listája</a></li>
+    <li class="bar"><a data-th-href="@{'/#menu'}" href="/#menu">Vissza</a></li>
+</ul>
 <h1>A kosár tartalma:</h1>
 <p data-th-if="${#lists.isEmpty(itemsInTheBasket)}">
     Üres a kosarad.
@@ -54,8 +92,5 @@
 <form method="post" data-th-action="@{/kolcsonzes/igenyles}" action="/kolcsonzes/igenyles">
     <input data-th-unless="${#lists.isEmpty(itemsInTheBasket)}" type="submit" value="Kölcsönzési igény leadása">
 </form>
-<a href="/kolcsonzes" data-th-href="@{/kolcsonzes}">
-    <button>Termékek listája</button>
-</a>
 </body>
 </html>
