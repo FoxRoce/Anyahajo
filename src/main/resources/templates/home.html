@@ -77,7 +77,7 @@
             animation: 2s slideUp ease forwards .5s;
             position: relative;
         }
-      .nav_list_itemb{
+      .nav_list_item{
           text-decoration: none;
           font-size: 25px;
           color: #fff;
@@ -161,9 +161,6 @@
                         <li><a data-th-href="@{'/home'}">Főoldal</a></li>
                     </div>
                     <div class = 'nav_list_item'>
-                        <li><a href="https://www.anyahajokozpont.hu/sample-page/">About</a></li>
-                    </div>
-                    <div class = 'nav_list_item'>
                         <li><a data-th-href="@{'/kolcsonzes'}">Termékek</a></li>
                     </div>
                     <div sec:authorize="!isAuthenticated()" class = 'nav_list_item'>
@@ -172,14 +169,20 @@
                     <div sec:authorize="!isAuthenticated()" class = 'nav_list_item'>
                         <li><a data-th-href="@{'/register'}">Regisztráció</a></li>
                     </div>
+                    <div sec:authorize="isAuthenticated()" class = 'nav_list_item'>
+                        <li><a data-th-href="@{'/user/edit'}">Adatok módosítása</a></li>
+                    </div>
                     <div  sec:authorize="hasRole('ADMIN')" class="nav_list_item">
                         <li><a data-th-href="@{'/admin'}" href="/admin">Admin oldal</a></li>
                     </div>
-                    <div sec:authorize="isAuthenticated()" class = 'nav_list_item'>
-                        <li><a data-th-href="@{'/logout'}">Kijelentkezés</a></li>
+                    <div class = 'nav_list_item'>
+                        <li><a href="https://www.anyahajokozpont.hu/egyesulet-rolunk/">Rólunk</a></li>
                     </div>
                     <div class = 'nav_list_item'>
                         <li><a data-th-href="@{'https://www.anyahajokozpont.hu/'}">Vissza az Anyahajó oldalára</a></li>
+                    </div>
+                    <div sec:authorize="isAuthenticated()" class = 'nav_list_item'>
+                        <li><a data-th-href="@{'/logout'}">Kijelentkezés</a></li>
                     </div>
 
                 </ul>
