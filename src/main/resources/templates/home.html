@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="hu"  xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <style>
@@ -18,17 +18,9 @@
             font-family:'Helvetica Neue', sans-serif;
         }
 
-        h1 a {
-            font-size: 80px;
-            color: #fff;
-            text-decoration: none;
-            text-transform: uppercase;
-        }
 
-        .popover {
-            display: none;
-            box-shadow: 0px 6px 8px rgba(19, 19, 19, .7);
-        }
+
+
 
         .popover:target {
             position: absolute;
@@ -77,11 +69,16 @@
             animation: 2s slideUp ease forwards .5s;
             position: relative;
         }
-      .nav_list_item{
-          text-decoration: none;
-          font-size: 25px;
-          color: #fff;
-      }
+        .nav_list_item{
+            text-decoration: none;
+            font-size: 25px;
+            color: #fff;
+        }
+        .nav_list_log{
+            text-decoration: none;
+            font-size: 25px;
+            color: black;
+        }
 
         .nav_list li::before {
             content: '';
@@ -116,7 +113,7 @@
             align-items: center;
             justify-content: center;
             background-color: #a75888;
-            color: #1f88b4;
+            color: #a75888;
             content: "×";
             cursor: pointer;
             opacity: 0;
@@ -147,28 +144,17 @@
 </head>
 <body>
 <div class="container">
-    <h1>
-        <a href="#menu">Kattints ide</a>
-    </h1>
+
 
     <div class="popover" id="menu">
         <div class = 'content'>
             <a href="#" class="close"></a>
             <div class = 'nav'>
                 <ul class = 'nav_list'>
-
-                    <div class = 'nav_list_item'>
-                        <li><a data-th-href="@{'/home'}">Főoldal</a></li>
-                    </div>
                     <div class = 'nav_list_item'>
                         <li><a data-th-href="@{'/kolcsonzes'}">Termékek</a></li>
                     </div>
-                    <div sec:authorize="!isAuthenticated()" class = 'nav_list_item'>
-                        <li><a data-th-href="@{'/login'}">Bejelentkezés</a></li>
-                    </div>
-                    <div sec:authorize="!isAuthenticated()" class = 'nav_list_item'>
-                        <li><a data-th-href="@{'/register'}">Regisztráció</a></li>
-                    </div>
+
                     <div sec:authorize="isAuthenticated()" class = 'nav_list_item'>
                         <li><a data-th-href="@{'/user/edit'}">Adatok módosítása</a></li>
                     </div>
@@ -187,7 +173,14 @@
                     <div class = 'nav_list_item'>
                         <li><a data-th-href="@{'https://www.anyahajokozpont.hu/'}">Vissza az Anyahajó oldalára</a></li>
                     </div>
-                    <div sec:authorize="isAuthenticated()" class = 'nav_list_item'>
+
+                    <div sec:authorize="!isAuthenticated()" class = 'nav_list_log'>
+                        <li><a data-th-href="@{'/login'}">Bejelentkezés</a></li>
+                    </div>
+                    <div sec:authorize="!isAuthenticated()" class = 'nav_list_log'>
+                        <li><a data-th-href="@{'/register'}">Regisztráció</a></li>
+                    </div>
+                    <div sec:authorize="isAuthenticated()" class = 'nav_list_log'>
                         <li><a data-th-href="@{'/logout'}">Kijelentkezés</a></li>
                     </div>
 
