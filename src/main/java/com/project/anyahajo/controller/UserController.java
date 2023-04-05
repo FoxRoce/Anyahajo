@@ -27,24 +27,6 @@ public class UserController {
 
 
 
-    @PostMapping("/users/{id}/role")
-    public String updateUserRole(
-            @PathVariable("id") Long id
-    ) {
-        User user =(User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (user.getUser_id().equals(id)){
-            return "redirect:/admin/users";
-        }
-
-        if (userService.findUserByUser_id(id).getRole().equals(Role.USER)){
-            userService.updateUserRole(id,Role.ADMIN);
-        } else {
-            userService.updateUserRole(id,Role.USER);
-        }
-
-        return "redirect:/admin/users";
-    }
-
     @GetMapping("/user/edit")
     public String editUserForm(
             Principal principal,

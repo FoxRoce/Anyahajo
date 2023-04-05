@@ -11,6 +11,7 @@ import com.project.anyahajo.service.RentService;
 import com.project.anyahajo.service.UserService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -126,6 +127,24 @@ public class AdminController {
         item.setDescription(itemForm.getDescription());
         item.setPicture(itemForm.getPicture().getBytes());
         item.setActive(itemForm.getIsActive());
+    }
+
+    @PostMapping("/users/{id}/role")
+    public String updateUserRole(
+            @PathVariable("id") Long id
+    ) {
+        User user =(User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (user.getUser_id().equals(id)){
+            return "redirect:/admin/users";
+        }
+
+        if (userService.findUserByUser_id(id).getRole().equals(Role.USER)){
+            userService.updateUserRole(id,Role.ADMIN);
+        } else {
+            userService.updateUserRole(id,Role.USER);
+        }
+
+        return "redirect:/admin/users";
     }
 
     @GetMapping(path = {"/rents"})
