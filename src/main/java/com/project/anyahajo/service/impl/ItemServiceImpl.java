@@ -25,6 +25,10 @@ public class ItemServiceImpl implements ItemService {
         itemRepository.save(entity);
     }
 
+    @Override
+    public void deleteAll() {
+        itemRepository.deleteAll();
+    }
 
 
     @Override
@@ -56,4 +60,6 @@ public class ItemServiceImpl implements ItemService {
     public List<Item> findRentable(Availability available) {
         return itemRepository.findRentable(available);
     }
+
+
 }

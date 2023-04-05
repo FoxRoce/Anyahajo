@@ -115,7 +115,7 @@
         <td><div sec:authorize="hasRole('ADMIN')" th:if="${rent.item.availability == T(com.project.anyahajo.model.Availability).Reserved}">
             <form th:action="@{'/admin/rents/'+${rent.rent_id}+'/accept'}" method="post">
                 <input type="number" id="deposit" name="deposit" required>
-                <button type="submit" name="accept">Elfogad</button>
+                <button type="submit" name="accept">Elfogadás kaukcióval</button>
             </form>
             <form th:action="@{'/admin/rents/'+${rent.rent_id}+'/decline'}" method="post">
                 <button type="submit" name="decline">Visszautasít</button>
@@ -158,7 +158,7 @@
             <form th:action="@{'/admin/rents/'+${rent.rent_id}+'/back'}" method="post">
                 <input type="number" id="price" name="price" required>
                 <input type="date" id="historyDate" name="historyDate" required th:min="${rent.startOfRent}">
-                <button type="submit" name="Brought back">Kattints ide, ha a tételt visszahozták</button>
+                <button type="submit" name="Brought back">Kattints ide, ha a tételt visszahozták, kölcsönzési díjjal</button>
             </form>
         </div>
         </td>
