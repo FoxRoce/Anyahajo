@@ -22,4 +22,6 @@ public interface ItemService {
     List<Item> findBySearch(String text, Class<?> forName);
 
     List<Item> findRentable(Availability available);
+
+    void deleteAll();
 }
