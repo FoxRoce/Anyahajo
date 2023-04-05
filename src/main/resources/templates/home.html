@@ -20,14 +20,15 @@
 
         h1 a {
             font-size: 80px;
-            color: #fff;
+            color: #1f88b4;
             text-decoration: none;
             text-transform: uppercase;
         }
 
         .popover {
-            display: none;
-            box-shadow: 0px 6px 8px rgba(19, 19, 19, .7);
+            min-width: 99%;
+
+
         }
 
         .popover:target {
@@ -46,7 +47,7 @@
             align-items: center;
             justify-content: center;
             position: relative;
-            width: 0;
+            margin: auto;
             height: 0;
             color: #fff;
             background: #a75888;
@@ -77,11 +78,11 @@
             animation: 2s slideUp ease forwards .5s;
             position: relative;
         }
-      .nav_list_item{
-          text-decoration: none;
-          font-size: 25px;
-          color: #fff;
-      }
+        .nav_list_itemb{
+            text-decoration: none;
+            font-size: 25px;
+            color: #fff;
+        }
 
         .nav_list li::before {
             content: '';
@@ -116,8 +117,6 @@
             align-items: center;
             justify-content: center;
             background-color: #a75888;
-            color: #1f88b4;
-            content: "×";
             cursor: pointer;
             opacity: 0;
             animation: 1s fadeIn ease forwards .5s;
@@ -147,21 +146,22 @@
 </head>
 <body>
 <div class="container">
-    <h1>
-        <a href="#menu">Kattints ide</a>
-    </h1>
+
 
     <div class="popover" id="menu">
         <div class = 'content'>
             <a href="#" class="close"></a>
             <div class = 'nav'>
                 <ul class = 'nav_list'>
-
                     <div class = 'nav_list_item'>
-                        <li><a data-th-href="@{'/home'}">Főoldal</a></li>
+                        <li><a href="https://www.anyahajokozpont.hu/sample-page/">Rólunk</a></li>
                     </div>
                     <div class = 'nav_list_item'>
                         <li><a data-th-href="@{'/kolcsonzes'}">Termékek</a></li>
+                    </div>
+
+                    <div  sec:authorize="hasRole('ADMIN')" class="nav_list_item">
+                        <li><a data-th-href="@{'/admin'}" href="/admin">Admin oldal</a></li>
                     </div>
                     <div sec:authorize="!isAuthenticated()" class = 'nav_list_item'>
                         <li><a data-th-href="@{'/login'}">Bejelentkezés</a></li>
@@ -170,25 +170,10 @@
                         <li><a data-th-href="@{'/register'}">Regisztráció</a></li>
                     </div>
                     <div sec:authorize="isAuthenticated()" class = 'nav_list_item'>
-                        <li><a data-th-href="@{'/user/edit'}">Adatok módosítása</a></li>
-                    </div>
-                    <div sec:authorize="isAuthenticated()" class = 'nav_list_item'>
-                        <li><a data-th-href="@{'/kosar'}">Kosár</a></li>
-                    </div>
-                    <div sec:authorize="isAuthenticated()" class = 'nav_list_item'>
-                        <li><a data-th-href="@{'/rents'}">Rendeléseim</a></li>
-                    </div>
-                    <div  sec:authorize="hasRole('ADMIN')" class="nav_list_item">
-                        <li><a data-th-href="@{'/admin'}" href="/admin">Admin oldal</a></li>
-                    </div>
-                    <div class = 'nav_list_item'>
-                        <li><a href="https://www.anyahajokozpont.hu/egyesulet-rolunk/">Rólunk</a></li>
-                    </div>
-                    <div class = 'nav_list_item'>
-                        <li><a data-th-href="@{'https://www.anyahajokozpont.hu/'}">Vissza az Anyahajó oldalára</a></li>
-                    </div>
-                    <div sec:authorize="isAuthenticated()" class = 'nav_list_item'>
                         <li><a data-th-href="@{'/logout'}">Kijelentkezés</a></li>
+                    </div>
+                    <div class = 'nav_list_item'>
+                        <li><a data-th-href="@{'https://www.anyahajokozpont.hu/'}">Vissza a Főoldalra</a></li>
                     </div>
 
                 </ul>
