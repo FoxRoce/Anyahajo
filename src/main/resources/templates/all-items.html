@@ -76,7 +76,7 @@
         <p th:text="${item.item_id}">Id</p>
         <p th:text="${item.availability}">Foglalas</p>
         <p th:text="${item.description}">Leiras</p>
-        <img th:src="@{/static/{filename}(filename=${item.picture})}" alt="Kép" />
+        <img th:src="@{/{filename}(filename=${item.picture})}" alt="Kép" />
         <p th:text="${item.isActive}">Elerheto-e</p>
 
         <div th:if="${item instanceof T(com.project.anyahajo.model.Book)}">

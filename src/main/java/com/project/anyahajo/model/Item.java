@@ -23,6 +23,6 @@ public class Item {
     private Availability availability;
     private String name;
     private String description;
-    private byte[] picture;
+    private String picture;
     private boolean isActive = false;
 }

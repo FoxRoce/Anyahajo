@@ -20,10 +20,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.Principal;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 public class ItemController {
@@ -35,7 +32,7 @@ public class ItemController {
     @NonNull
     private AppUserService appUserService;
 
-    private static final String FOLDER_PATH = "src/main/resources/static/images/";
+    private static final String FOLDER_PATH = "/images/";
 
     public ItemController(ItemRepository itemRepository, UserRepository appUserRepository, AppUserService appUserService) {
         this.itemRepository = itemRepository;
@@ -91,7 +88,7 @@ public class ItemController {
             BindingResult bindingResult,
             @RequestParam("file") MultipartFile file
     ) {
-        Path folderPath = Paths.get("src/main/resources/static/images/");
+        Path folderPath = Paths.get("/images/");
         if (!Files.exists(folderPath)) {
             try {
                 Files.createDirectories(folderPath);
@@ -130,9 +127,9 @@ public class ItemController {
         if (!file.isEmpty()) {
             try {
                 byte[] bytes = file.getBytes();
-                Path path = Paths.get("src/main/resources/static/images/" + file.getOriginalFilename());
+                Path path = Paths.get("/images/" + file.getOriginalFilename());
                 Files.write(path, bytes);
-                entity.setPicture(path.toString().getBytes());
+                entity.setPicture(Arrays.toString(path.toString().getBytes()));
             } catch (IOException e) {
                 e.printStackTrace();
             }
