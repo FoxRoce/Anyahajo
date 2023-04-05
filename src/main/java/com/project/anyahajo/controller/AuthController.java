@@ -97,7 +97,7 @@ public class AuthController {
 
         }
 
-        return "redirect:/home";
+        return "redirect:/#menu";
     }
 
     @GetMapping("/enable-user/url={bob}")

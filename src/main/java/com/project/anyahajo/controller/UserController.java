@@ -88,7 +88,7 @@ public class UserController {
         userService.save(newUser);
 
 
-        return "redirect:/home";
+        return "redirect:/#menu";
     }
 
 }

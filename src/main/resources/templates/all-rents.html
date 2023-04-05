@@ -13,10 +13,16 @@
             margin-left: auto;
             margin-right: auto;
         }
-        body
-        {
-            background: -webkit-linear-gradient(to right, #a75888, #1f88b4);
+        body {
             background: linear-gradient(to right, #a75888, #1f88b4);
+            background-size: 200% 100%;
+
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         ul.menu {
@@ -25,6 +31,19 @@
             padding: 0;
             overflow: hidden;
             background-color: #a75888;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: -webkit-linear-gradient(to right, #a75888, #1f88b4);
+            background: linear-gradient(to right, #a75888, #1f88b4);
+            background-size: 200% 100%;
+            transition: background-color 0.5s ease;
+            z-index: 1;
+        }
+
+        a {
+            color: #ecdea7;
         }
 
         li.bar {
@@ -42,14 +61,22 @@
             text-align: center;
             padding: 14px 16px;
             text-decoration: none;
+            background: #1f88b4;
         }
 
-        li.bar a:hover:not(.active) {
-            background-color: #1f88b4;
+        li.bar a:hover {
+            background: #a75888;
+            color:whitesmoke;
         }
 
         .active {
-            background-color: #1f88b4;
+            background: #1f88b4;
+            color:whitesmoke;
+        }
+
+        .kosar{
+            background: #1f88b4;
+            color:whitesmoke;
         }
         h1{
             text-align: center;
@@ -63,15 +90,20 @@
             text-align: center;
             color: #fff;
         }
+
+
+        }
     </style>
 
 </head>
 <body>
 <ul class="menu">
-    <li class="bar"><a class="active" data-th-href="@{'/#menu'}" href="/#menu">Vissza</a></li>
-    <li class="bar" style="float:right"><a data-th-href="@{'/kosar'}" href="/kosar">Kosár</a></li>
+    <li class="bar"><a class="active" data-th-href="@{'/#menu'}" href="/#menu">Főoldal</a></li>
+    <li class="bar"><a onclick="history.back()" href="#">Vissza</a></li>
+    <li class="bar"><a class="kosar" data-th-href="@{'/kosar'}" href="/kosar">Kosár</a></li>
 </ul>
-<h1>Kölcsönzések: </h1>
+<br>
+<h1>Kölcsönzések </h1>
 
 <form action="">
     <select name="rents" onchange="location = this.value;">

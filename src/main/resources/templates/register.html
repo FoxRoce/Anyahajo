@@ -99,12 +99,70 @@
         width: 20rem;
       }
     }
+
+    ul.menu {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #a75888;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: -webkit-linear-gradient(to right, #a75888, #1f88b4);
+      background: linear-gradient(to right, #a75888, #1f88b4);
+      transition: background-color 0.5s ease;
+      z-index: 1;
+    }
+
+    a {
+      color: #ecdea7;
+    }
+
+    li.bar {
+      float: left;
+      border-right:1px solid #bbb;
+    }
+
+    li.bar:last-child {
+      border-right: none;
+    }
+
+    li.bar a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      background: #1f88b4;
+    }
+
+    li.bar a:hover {
+      background: #a75888;
+      color:whitesmoke;
+    }
+
+    .active {
+      background: #1f88b4;
+      color:whitesmoke;
+    }
+
+    .kosar{
+      background: #1f88b4;
+      color:whitesmoke;
+    }
   </style>
 
   <title>Login page in HTML</title>
 </head>
 <body>
-<h1>Belépés az Anyahajó kölcsönzés oldalára</h1>
+<ul class="menu">
+  <li class="bar"><a class="active" data-th-href="@{'/#menu'}" href="/#menu">Főoldal</a></li>
+  <li class="bar"><a onclick="history.back()" href="#">Vissza</a></li>
+</ul>
+<br>
+<h1>Regisztráció az Anyahajó kölcsönzés oldalára</h1>
 <form data-th-object="${newUser}" data-th-action="@{register}" action="/register" method="post">
   <div class="container">
     <h1>Regisztráció</h1>
@@ -143,7 +201,6 @@
   </div>
   <div class="container signin">
     <p>Már van fiókja?<a data-th-href="@{'/login_page'}">Belépés</a>.</p>
-    <a data-th-href="@{'/home'}">Vissza a főoldalra.</a>
   </div>
 </form>
 </body>

@@ -4,6 +4,65 @@
   <meta charset="UTF-8">
   <title>Kölcsönzések</title>
   <style>
+    body{
+      font-family:sans-serif;
+      background: -webkit-linear-gradient(to right, #a75888, #1f88b4);
+      background: linear-gradient(to right, #a75888, #1f88b4);
+      color:whitesmoke;
+      margin-top: 40px;
+    }
+    ul.menu {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #a75888;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: -webkit-linear-gradient(to right, #a75888, #1f88b4);
+      background: linear-gradient(to right, #a75888, #1f88b4);
+      transition: background-color 0.5s ease;
+      z-index: 1;
+    }
+
+    a {
+      color: #ecdea7;
+    }
+
+    li.bar {
+      float: left;
+      border-right:1px solid #bbb;
+    }
+
+    li.bar:last-child {
+      border-right: none;
+    }
+
+    li.bar a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      background: #1f88b4;
+    }
+
+    li.bar a:hover {
+      background: #a75888;
+      color:whitesmoke;
+    }
+
+    .active {
+      background: #1f88b4;
+      color:whitesmoke;
+    }
+
+    .kosar{
+      background: #1f88b4;
+      color:whitesmoke;
+    }
 
     h1 {
       text-align: center;
@@ -30,17 +89,20 @@
       border: 1px solid #ccc;
     }
 
-    ul {
+    ul.items {
       list-style-type: none;
       padding: 0;
     }
 
-    li {
+    li.item {
       margin-bottom: 20px;
       padding: 10px;
       border-radius: 5px;
       box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
-      background-color: rgba(162, 211, 239, 0.24);
+      font-family:sans-serif;
+      background: -webkit-linear-gradient(to right, #1f88b4, #a75888);
+      background: linear-gradient(to right, #1f88b4, #a75888);
+      color:whitesmoke;
     }
 
     b {
@@ -51,20 +113,28 @@
     p {
       margin: 0;
     }
-    a{
-      /*text-decoration:none;*/
-      color: #030804;
+    label{
+      font-size: 21px;
+    }
+    span{
+      font-size: 18px;
     }
   </style>
 </head>
 <body>
-<h1>Kölcsönzés lista:</h1>
+
+<ul class="menu">
+  <li class="bar"><a class="active" data-th-href="@{'/#menu'}" href="/#menu">Főoldal</a></li>
+  <li class="bar"><a onclick="history.back()" href="#">Vissza</a></li>
+  <li class="bar"><a class="kosar" data-th-href="@{'/kosar'}" href="/kosar">Kosár</a></li>
+</ul>
+<h1>Termékek</h1>
 
 <div>
   <form th:action="@{/kolcsonzes/kereses}" data-th-object="${searchData}" method="post" class="form-inline my-2 my-lg-0 mb-3">
     <input name="text" th:field="*{text}" class="form-control mr-sm-2 mb-5" type="search" placeholder="Keresés" aria-label="Search">
 
-    <label for="item-type">Szűrés típusonként:</label>
+    <label for="item-type">Szűrés típusonként</label>
     <select id="item-type" th:field="*{itemType}" name="itemType" onchange="this.form.submit()">
       <option value="">Válassz egy opciót</option>
       <option value="*">Minden</option>
@@ -78,21 +148,21 @@
 <a th:href="@{'/kolcsonzes'}"><button>Minden tárgy</button></a>
 
 
-<p th:if="${#lists.isEmpty(items)}">Nincs kolcsonozheto targy</p>
+<p th:if="${#lists.isEmpty(items)}">NNincs kölcsönözhető tárgy</p>
 
-<ul data-th-unless="${#lists.isEmpty(items)}">
-  <li data-th-each="item: ${items}">
+<ul class="items" data-th-unless="${#lists.isEmpty(items)}">
+  <li class="item" data-th-each="item: ${items}">
     <a data-th-href="@{${'/item/' + item.item_id}}"><b><p data-th-text="${item.name}">Targy nev</p></b></a>
     <p th:text="${item.availability.getHunName()}">Foglalas</p>
     <span>Leirás: </span>
-    <span th:text="${item.description}">Leiras</span>
+    <span th:text="${item.description}">Leírás</span>
     <br>
-    <p th:text="${item.picture}">Kep</p>
-    <p th:text="${item.isActive} ? 'Aktív' : 'Inaktív' ">Elerheto-e</p>
+    <p th:text="${item.picture}">Kép</p>
+    <p th:text="${item.isActive} ? 'Aktív' : 'Inaktív' ">Elérhető-e</p>
 
     <div th:if="${item instanceof T(com.project.anyahajo.model.Book)}">
       <span>Szerző: </span>
-      <span th:text="${item.author}">Szerzo</span>
+      <span th:text="${item.author}">Szerző</span>
       <br>
     </div>
 
@@ -101,16 +171,16 @@
       <span th:text="${item.carrierBrand}">Marka</span>
       <br>
       <span>Méret: </span>
-      <span th:text="${item.size}">Meret</span>
+      <span th:text="${item.size}">Méret</span>
       <br>
       <span>Típus: </span>
-      <span th:text="${item.carrierType.getHunName()}">Tipus</span>
+      <span th:text="${item.carrierType.getHunName()}">Típus</span>
       <br>
     </div>
 
     <div th:if="${item instanceof T(com.project.anyahajo.model.Babycare)}">
       <span>Márka: </span>
-      <span th:text="${item.babycareBrand}">Marka</span>
+      <span th:text="${item.babycareBrand}">Márka</span>
       <br>
     </div>
 
@@ -124,18 +194,6 @@
       <input type="submit" data-th-unless="${#lists.contains(basket, item.getItem_id())}" value="Kosárba teszem">
 
     </form>
-
-    <!--        <form-->
-    <!--                data-sec-authorize="isAuthenticated()"-->
-    <!--                data-th-unless="${#lists.contains(basket, item.item_id)}"-->
-    <!--                method="post"-->
-    <!--                data-th-action="@{(${#lists.contains(basket, id)} ? '/kosar/delete' : '/kolcsonzes/putInTheBasket')}"-->
-    <!--                action="/kolcsonzes/putInTheBasket">-->
-    <!--            <input type="hidden" name="item_id" data-th-value="${item.getItem_id()}">-->
-    <!--            <input type="submit" data-th-unless="${#lists.contains(basket, item.item_id)}" value="Kosárba teszem">-->
-    <!--            <input type="submit" data-th-if="${#lists.contains(basket, item.item_id)}" value="Kiveszem a kosárból">-->
-
-    <!--        </form>-->
 
   </li>
 </ul>

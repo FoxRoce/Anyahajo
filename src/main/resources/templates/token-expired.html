@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Hiba</title>
     <style>
         body{
             font-family:sans-serif;
@@ -10,12 +10,73 @@
             color:whitesmoke;
             margin-top: 40px;
         }
+
+        ul.menu {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #a75888;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: -webkit-linear-gradient(to right, #a75888, #1f88b4);
+            background: linear-gradient(to right, #a75888, #1f88b4);
+            transition: background-color 0.5s ease;
+            z-index: 1;
+        }
+
+        a {
+            color: #ecdea7;
+        }
+
+        li.bar {
+            float: left;
+            border-right:1px solid #bbb;
+        }
+
+        li.bar:last-child {
+            border-right: none;
+        }
+
+        li.bar a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            background: #1f88b4;
+        }
+
+        li.bar a:hover {
+            background: #a75888;
+            color:whitesmoke;
+        }
+
+        .active {
+            background: #1f88b4;
+            color:whitesmoke;
+        }
+
+        .kosar{
+            background: #1f88b4;
+            color:whitesmoke;
+        }
+
+        h1{
+            color: #fff;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
-<h1>A keresett link lejárt vagy nem elerheto</h1>
-<a href="login.html"><button type="submit">vissza a bejelentkezéshez</button> </a>
-<a href="register.html.html"><button type="submit">vissza a regisztrációhoz</button> </a>
-<a href="home.html"><button type="submit">vissza a főoldalhoz</button> </a>
+<ul class="menu">
+    <li class="bar"><a class="active" data-th-href="@{'/#menu'}" href="/#menu">Főoldal</a></li>
+    <li class="bar"><a class="kosar" data-th-href="@{'/login'}" href="/login">Bejelentkezés</a></li>
+    <li class="bar"><a class="kosar" data-th-href="@{'/register'}" href="/register">Bejelentkezés</a></li>
+</ul>
+<br>
+<h1>A keresett link lejárt vagy nem elérhető!</h1>
 </body>
 </html>

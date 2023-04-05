@@ -21,7 +21,8 @@
             top: 0;
             left: 0;
             width: 100%;
-            background-color: rgba(167, 88, 136, 0.8);
+            background: -webkit-linear-gradient(to right, #a75888, #1f88b4);
+            background: linear-gradient(to right, #a75888, #1f88b4);
             transition: background-color 0.5s ease;
             z-index: 1;
         }
@@ -45,23 +46,21 @@
             text-align: center;
             padding: 14px 16px;
             text-decoration: none;
+            background: #1f88b4;
         }
 
-        li.bar a:hover:not(.active) {
-            background: -webkit-linear-gradient(to right, #1f88b4, #a75888);
-            background: linear-gradient(to right, #1f88b4, #a75888);
+        li.bar a:hover {
+            background: #a75888;
             color:whitesmoke;
         }
 
         .active {
-            background: -webkit-linear-gradient(to right, #1f88b4, #a75888);
-            background: linear-gradient(to right, #1f88b4, #a75888);
+            background: #1f88b4;
             color:whitesmoke;
         }
 
         .kosar{
-            background: -webkit-linear-gradient(to right, #a75888, #1f88b4);
-            background: linear-gradient(to right, #a75888, #1f88b4);
+            background: #1f88b4;
             color:whitesmoke;
         }
 
@@ -72,12 +71,12 @@
         form {
             margin-bottom: 20px;
         }
-body{
-    font-family:sans-serif;
-    background: -webkit-linear-gradient(to right, #a75888, #1f88b4);
-    background: linear-gradient(to right, #a75888, #1f88b4);
+        body{
+            font-family:sans-serif;
+            background: -webkit-linear-gradient(to right, #a75888, #1f88b4);
+            background: linear-gradient(to right, #a75888, #1f88b4);
 
-}
+        }
         label {
             display: block;
             margin-bottom: 5px;
@@ -114,21 +113,27 @@ body{
         p {
             margin: 0;
         }
+        label{
+            font-size: 21px;
+        }
+        span{
+            font-size: 18px;
+        }
     </style>
 </head>
 <body>
 
 <ul class="menu">
-    <li class="bar"><a class="active" data-th-href="@{'/#menu'}" href="/#menu">Vissza</a></li>
-    <li class="bar"><a data-th-href="@{'https://www.anyahajokozpont.hu/'}">AnyaHajóOldala</a></li>
-    <li class="bar" style="float:right"><a class="kosar" data-th-href="@{'/kosar'}" href="/kosar">Kosár</a></li>
+    <li class="bar"><a class="active" data-th-href="@{'/#menu'}" href="/#menu">Főoldal</a></li>
+    <li class="bar"><a onclick="history.back()" href="#">Vissza</a></li>
+    <li class="bar"><a class="kosar" data-th-href="@{'/kosar'}" href="/kosar">Kosár</a></li>
 </ul>
 <h1>Termékek</h1>
 <div>
     <form th:action="@{/kolcsonzes/kereses}" data-th-object="${searchData}" method="post" class="form-inline my-2 my-lg-0 mb-3" enctype="multipart/form-data">
         <input name="text" th:field="*{text}" class="form-control mr-sm-2 mb-5" type="search" placeholder="Keresés" aria-label="Search">
 
-        <label for="item-type">Szűrés típusonként:</label>
+        <label for="item-type">Szűrés típusonként</label>
         <select id="item-type" th:field="*{itemType}" name="itemType" onchange="this.form.submit()">
             <option value="">Válassz egy opciót</option>
             <option value="*">Minden</option>
@@ -147,34 +152,34 @@ body{
 <ul class="items" data-th-unless="${#lists.isEmpty(items)}">
     <li class="item" data-th-each="item: ${items}">
         <a data-th-href="@{${'/item/' + item.item_id}}"><b><p data-th-text="${item.name}">Targy nev</p></b></a>
-        <p th:text="${item.availability.getHunName()}">Foglalas</p>
+        <p th:text="${item.availability.getHunName()}">Foglalás</p>
         <span>Leirás: </span>
-        <span th:text="${item.description}">Leiras</span>
+        <span th:text="${item.description}">Leírás</span>
         <br>
         <img th:src="@{/all-items/img/{id}(id=${item.item_id})}" alt="item picture" width="150" height="150"/>
-        <p th:text="${item.isActive} ? 'Aktív' : 'Inaktív' ">Elerheto-e</p>
+        <p th:text="${item.isActive} ? 'Aktív' : 'Inaktív' ">Elérhető-e</p>
 
         <div th:if="${item instanceof T(com.project.anyahajo.model.Book)}">
             <span>Szerző: </span>
-            <span th:text="${item.author}">Szerzo</span>
+            <span th:text="${item.author}">Szerző</span>
             <br>
         </div>
 
         <div th:if="${item instanceof T(com.project.anyahajo.model.Carrier)}">
             <span>Márka: </span>
-            <span th:text="${item.carrierBrand}">Marka</span>
+            <span th:text="${item.carrierBrand}">Márka</span>
             <br>
             <span>Méret: </span>
-            <span th:text="${item.size}">Meret</span>
+            <span th:text="${item.size}">Méret</span>
             <br>
             <span>Típus: </span>
-            <span th:text="${item.carrierType.getHunName()}">Tipus</span>
+            <span th:text="${item.carrierType.getHunName()}">Típus</span>
             <br>
         </div>
 
         <div th:if="${item instanceof T(com.project.anyahajo.model.Babycare)}">
             <span>Márka: </span>
-            <span th:text="${item.babycareBrand}">Marka</span>
+            <span th:text="${item.babycareBrand}">Márka</span>
             <br>
         </div>
 
