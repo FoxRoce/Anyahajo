@@ -74,6 +74,28 @@
             <p class="info">A termék leírása: </p>
             <p class="item"  data-th-text="${item.description}"></p>
 
+            <div th:if="${item instanceof T(com.project.anyahajo.model.Book)}">
+                <p>Szerző: </p>
+                <p th:text="${item.author}">Szerzo</p>
+                <br>
+            </div>
+
+            <div th:if="${item instanceof T(com.project.anyahajo.model.Carrier)}">
+                <p>Márka: </p>
+                <p th:text="${item.carrierBrand}">Marka</p>
+                <p>Méret: </p>
+                <p th:text="${item.size}">Meret</p>
+                <p>Típus: </p>
+                <p th:text="${item.carrierType.getHunName()}">Tipus</p>
+                <br>
+            </div>
+
+            <div th:if="${item instanceof T(com.project.anyahajo.model.Babycare)}">
+                <p>Márka: </p>
+                <p th:text="${item.babycareBrand}">Marka</p>
+                <br>
+            </div>
+
             <form
                     data-sec-authorize="isAuthenticated()"
                     data-th-if="${item.getAvailability() == T(com.project.anyahajo.model.Availability).Available}"

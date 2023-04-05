@@ -515,7 +515,8 @@ public class AdminController {
 
         itemService.save(item);
 
-        return "redirect:/kolcsonzes";
+        return "redirect:/item/" + id;
+//        return "redirect:/kolcsonzes";
     }
 
 }
