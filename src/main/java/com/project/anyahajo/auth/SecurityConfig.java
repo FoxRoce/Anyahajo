@@ -40,10 +40,10 @@ public class SecurityConfig {
                 .and()
                 .formLogin()
                     .loginPage("/login")
-                    .defaultSuccessUrl("/home")
+                    .defaultSuccessUrl("/#menu")
                     .permitAll()
                 .and()
-                .logout().logoutSuccessUrl("/home").permitAll()
+                .logout().logoutSuccessUrl("/#menu").permitAll()
                 .and();
         return http.build();
     }

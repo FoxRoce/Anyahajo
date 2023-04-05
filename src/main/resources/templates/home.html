@@ -59,13 +59,28 @@
             list-style-type: none;
         }
 
+        .nav_nav  {
+            list-style-type: none;
+        }
+
         .nav_list a {
             text-decoration: none;
             font-size: 35px;
             color: #fff;
         }
 
+        .nav_nav a {
+            text-decoration: none;
+            font-size: 35px;
+            color: #030804;
+        }
+
         .nav_list_item {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .nav_list_log {
             height: 100%;
             overflow: hidden;
         }
@@ -78,10 +93,25 @@
             animation: 2s slideUp ease forwards .5s;
             position: relative;
         }
-        .nav_list_itemb{
+
+        .nav_nav li {
+            padding: 15px 0;
+            text-transform: uppercase;
+            transform: translateY(200px);
+            opacity: 0;
+            animation: 2s slideUp ease forwards .5s;
+            position: relative;
+        }
+        .nav_list_item{
             text-decoration: none;
             font-size: 25px;
             color: #fff;
+        }
+
+        .nav_list_log{
+            text-decoration: none;
+            font-size: 25px;
+            color: #030804;
         }
 
         .nav_list li::before {
@@ -95,7 +125,22 @@
             transition: all .5s ease;
         }
 
+        .nav_nav li::before {
+            content: '';
+            position: absolute;
+            height: 2px;
+            width: 0px;
+            left: 0;
+            bottom: 10px;
+            background: #1f88b4;
+            transition: all .5s ease;
+        }
+
         .nav_list li:hover:before {
+            width: 100%;
+        }
+
+        .nav_nav li:hover:before {
             width: 100%;
         }
 
@@ -142,7 +187,7 @@
             }
         }
     </style>
-    <title>Title</title>
+    <title>Anyahajó kölcsönzés oldala</title>
 </head>
 <body>
 <div class="container">
@@ -154,7 +199,10 @@
             <div class = 'nav'>
                 <ul class = 'nav_list'>
                     <div class = 'nav_list_item'>
-                        <li><a href="https://www.anyahajokozpont.hu/sample-page/">Rólunk</a></li>
+                        <li><a data-th-href="@{'https://www.anyahajokozpont.hu/'}">Főoldal</a></li>
+                    </div>
+                    <div class = 'nav_list_item'>
+                        <li><a href="https://www.anyahajokozpont.hu/egyesulet-rolunk/">Rólunk</a></li>
                     </div>
                     <div class = 'nav_list_item'>
                         <li><a data-th-href="@{'/kolcsonzes'}">Termékek</a></li>
@@ -163,19 +211,26 @@
                     <div  sec:authorize="hasRole('ADMIN')" class="nav_list_item">
                         <li><a data-th-href="@{'/admin'}" href="/admin">Admin oldal</a></li>
                     </div>
-                    <div sec:authorize="!isAuthenticated()" class = 'nav_list_item'>
-                        <li><a data-th-href="@{'/login'}">Bejelentkezés</a></li>
+                    <div sec:authorize="isAuthenticated()" class = 'nav_list_item'>
+                        <li><a data-th-href="@{'/kosar'}">Kosár</a></li>
                     </div>
-                    <div sec:authorize="!isAuthenticated()" class = 'nav_list_item'>
-                        <li><a data-th-href="@{'/register'}">Regisztráció</a></li>
+                    <div sec:authorize="isAuthenticated()" class = 'nav_list_log'>
+                        <li><a data-th-href="@{'/rents'}">Rendeléseim</a></li>
                     </div>
                     <div sec:authorize="isAuthenticated()" class = 'nav_list_item'>
+                        <li><a data-th-href="@{'/user/edit'}">Adatok módosítása</a></li>
+                    </div>
+                </ul>
+                <ul class="nav_nav">
+                    <div sec:authorize="!isAuthenticated()" class = 'nav_list_log'>
+                        <li><a data-th-href="@{'/login'}">Bejelentkezés</a></li>
+                    </div>
+                    <div sec:authorize="!isAuthenticated()" class = 'nav_list_log'>
+                        <li><a data-th-href="@{'/register'}">Regisztráció</a></li>
+                    </div>
+                    <div sec:authorize="isAuthenticated()" class = 'nav_list_log'>
                         <li><a data-th-href="@{'/logout'}">Kijelentkezés</a></li>
                     </div>
-                    <div class = 'nav_list_item'>
-                        <li><a data-th-href="@{'https://www.anyahajokozpont.hu/'}">Vissza a Főoldalra</a></li>
-                    </div>
-
                 </ul>
             </div>
         </div>

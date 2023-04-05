@@ -32,7 +32,7 @@ public class AuthController {
     private final EmailSender emailSender;
 
 
-    @GetMapping(path = {"", "/", "/home"})
+    @GetMapping(path = {"", "/", "/home", "/#menu"})
     public String getHomePage() {
         return "home";
     }
@@ -97,7 +97,7 @@ public class AuthController {
 
         }
 
-        return "redirect:/home";
+        return "redirect:/#menu";
     }
 
     @GetMapping("/enable-user/url={bob}")

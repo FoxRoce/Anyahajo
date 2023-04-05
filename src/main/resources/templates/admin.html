@@ -36,7 +36,7 @@
             align-items: center;
             justify-content: center;
             position: relative;
-            width: 0;
+            margin: auto;
             height: 0;
             color: #fff;
             background: #a75888;
@@ -102,8 +102,6 @@
             align-items: center;
             justify-content: center;
             background-color: #a75888;
-            color: #1f88b4;
-            content: "×";
             cursor: pointer;
             opacity: 0;
             animation: 1s fadeIn ease forwards .5s;
@@ -156,7 +154,7 @@
                         <li><a data-th-href="@{'/admin/rents'}" href="/admin/rents">Kölcsönzések</a></li>
                     </div>
                     <div class = 'nav_list_item'>
-                        <li><a data-th-href="@{'/home'}" href="/home">Kezdő oldal</a></li>
+                        <li><a data-th-href="@{'/#menu'}" href="/#menu">Kezdő oldal</a></li>
                     </div>
 
 

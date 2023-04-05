@@ -59,7 +59,14 @@
       top: 0;
       left: 0;
       width: 100%;
+      background: -webkit-linear-gradient(to right, #a75888, #1f88b4);
+      background: linear-gradient(to right, #a75888, #1f88b4);
+      transition: background-color 0.5s ease;
       z-index: 1;
+    }
+
+    a {
+      color: #ecdea7;
     }
 
     li.bar {
@@ -77,25 +84,34 @@
       text-align: center;
       padding: 14px 16px;
       text-decoration: none;
+      background: #1f88b4;
     }
 
-    li.bar a:hover:not(.active) {
-      background-color: #1f88b4;
+    li.bar a:hover {
+      background: #a75888;
+      color:whitesmoke;
     }
 
     .active {
-      background-color: #1f88b4;
+      background: #1f88b4;
+      color:whitesmoke;
+    }
+
+    .kosar{
+      background: #1f88b4;
+      color:whitesmoke;
     }
     h1{
       text-align: center;
-      color: #fff;
     }
   </style>
 </head>
 <body>
 <ul class="menu">
-  <li class="bar"><a class="active" data-th-href="@{'/#menu'}" href="/#menu">Vissza</a></li>
+  <li class="bar"><a class="active" data-th-href="@{'/#menu'}" href="/#menu">Főoldal</a></li>
+  <li class="bar"><a onclick="history.back()" href="#">Vissza</a></li>
 </ul>
+<br>
 <h1>Termék módosítása</h1>
 <form data-th-object="${newItem}" data-th-action="@{'/admin/termekmodositas/' + ${item.item_id}}" action="/admin/termekmodositas/${id}" method="post">
 
@@ -108,16 +124,6 @@
   <p data-th-text="${item.description}"></p>
   <label for="description">Új leírás:</label>
   <input id="description" type="text" data-th-field="*{description}"><br><br>
-
-  <!--  <p>Kép:</p>-->
-  <!--  <p data-th-text="${item.picture}"></p>-->
-  <!--  <label for="picture">Új kép:</label>-->
-  <!--  <input id="picture" type="text" data-th-field="*{picture}">-->
-  <!--  <p-->
-  <!--          style="color: red"-->
-  <!--          data-th-if="${#fields.hasErrors('picture')}"-->
-  <!--          data-th-error="*{picture}"-->
-  <!--  ></p>-->
 
   <p>Termék állapota:</p>
   <p data-th-text="Aktív" data-th-if="${item.isActive}"></p>

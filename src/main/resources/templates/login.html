@@ -91,7 +91,7 @@
     }
 
     .register a{
-      color: rgb(74, 146, 235);
+      color: #ecdea7;
     }
 
     .register a:link{
@@ -109,9 +109,18 @@
         width: 20rem;
       }
     }
+
+    a{
+      color: #ecdea7;
+    }
+
+
+    button{
+      color: #ecdea7;
+    }
   </style>
 
-  <title>Login page in HTML</title>
+  <title>Belépés az Anyahajó kölcsönzés oldalára</title>
 </head>
 <body>
 <h1>Belépés az Anyahajó kölcsönzés oldalára</h1>
@@ -141,7 +150,9 @@
     <p class="register">Még nem regisztrált? <a data-th-href="@{'/register'}">Regisztráljon itt!</a></p>
   </div>
   <div>
-    <a href="/forgot-password">Forgot Password?</a>
+    <a href="/forgot-password">Elfelejtette a jelszavát?</a>
+    <br>
+    <a onclick="history.back()" href="#">Vissza</a>
   </div>
 </form>
 </body>
