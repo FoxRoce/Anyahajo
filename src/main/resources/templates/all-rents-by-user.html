@@ -49,7 +49,7 @@
     <td>Kölcsönzési díj</td>
     <td>Kaució díja</td>
     <td>Kaucióból visszafizetendő összeg</td>
-    <td>History</td>
+    <td>Visszavétel dátuma</td>
   </tr>
 
   <tr th:each="rent: ${rents}">
@@ -57,10 +57,10 @@
     <td th:text="${rent.user.name} ? ${rent.user.name} : 'User has no name'"></td>
 
     <td th:text="${rent.item.name}"></td>
-    <td th:text="${rent.item.availability}"></td>
+    <td th:text="${rent.item.availability. getHunName}"></td>
     <td th:text="${rent.startOfRent}"></td>
     <td th:text="${rent.endOfRent}"></td>
-    <td th:text="${rent.isExtended}"></td>
+    <td th:text="${rent.isExtended} ? 'Igen' : 'Nem'"></td>
     <td th:text="${rent.price} + ' Ft'"></td>
     <td th:text="${rent.deposit} + ' Ft'"></td>
     <td th:text="${rent.payBackAmount} + ' Ft'"></td>
