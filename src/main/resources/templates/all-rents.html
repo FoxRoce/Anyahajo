@@ -149,9 +149,9 @@
         </div>
         </td>
 
-        <td th:text="${rent.price}"></td>
-        <td th:text="${rent.deposit}"></td>
-        <td th:text="${rent.payBackAmount}"></td>
+        <td th:text="${rent.price} + ' Ft'"></td>
+        <td th:text="${rent.deposit} + ' Ft'"></td>
+        <td th:text="${rent.payBackAmount} + ' Ft'"></td>
 
         <td th:text="${rent.history}"></td>
         <td><div sec:authorize="hasRole('ADMIN')" th:if="${rent.history == null} and ${rent.endOfRent != null}">
