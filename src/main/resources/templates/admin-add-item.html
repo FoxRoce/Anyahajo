@@ -102,7 +102,7 @@
 </head>
 <body>
 <h1>Új tárgy felvétel</h1>
-<form data-th-object="${newItem}" data-th-action="@{/admin/ujTargyFelvetel}" action="/admin/ujTargyFelvetel" method="post">
+<form data-th-object="${newItem}" data-th-action="@{/admin/ujTargyFelvetel}" action="/admin/ujTargyFelvetel" method="post" enctype="multipart/form-data">
 
     <label for="type">Típus</label>
     <select id="type" name="type" onchange="showFields()">
@@ -136,7 +136,9 @@
             data-th-error="*{description}"
     ></p>
 
-    <label for="picture">Kép</label> <input id="picture" type="file" name="picture" accept="image/*" data-th-field="*{picture}" multiple="multiple"> <p style="color: red" data-th-if="${#fields.hasErrors('picture')}" data-th-error="*{picture}"></p>
+    <label for="picture">Kép</label>
+    <input id="picture" type="file" name="picture" accept="image/*" data-th-field="*{picture}" multiple="multiple">
+    <p style="color: red" data-th-if="${#fields.hasErrors('picture')}" data-th-error="*{picture}"></p>
 
     <label for="isActive">Aktív?:</label>
     <select name="isActive" id="isActive">
