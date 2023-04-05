@@ -61,9 +61,9 @@
     <td th:text="${rent.startOfRent}"></td>
     <td th:text="${rent.endOfRent}"></td>
     <td th:text="${rent.isExtended}"></td>
-    <td th:text="${rent.price}"></td>
-    <td th:text="${rent.deposit}"></td>
-    <td th:text="${rent.payBackAmount}"></td>
+    <td th:text="${rent.price} + ' Ft'"></td>
+    <td th:text="${rent.deposit} + ' Ft'"></td>
+    <td th:text="${rent.payBackAmount} + ' Ft'"></td>
     <td th:text="${rent.history}"></td>
 
   </tr>

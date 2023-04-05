@@ -9,6 +9,7 @@
         {
             background: -webkit-linear-gradient(to right, #a75888, #1f88b4);
             background: linear-gradient(to right, #a75888, #1f88b4);
+            text-align: center;
         }
         .info{
             font-family:sans-serif;
@@ -20,10 +21,48 @@
             color: lightgoldenrodyellow;
         }
 
+        ul.menu {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #a75888;
+        }
+
+        li.bar {
+            float: left;
+            border-right:1px solid #bbb;
+        }
+
+        li.bar:last-child {
+            border-right: none;
+        }
+
+        li.bar a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        li.bar a:hover:not(.active) {
+            background-color: #1f88b4;
+        }
+
+        .active {
+            background-color: #1f88b4;
+        }
+
     </style>
     <title data-th-text="${item.name}"></title>
 </head>
 <body>
+<ul class="menu">
+    <li class="bar"><a class="active" data-th-href="@{'/#menu'}" href="/#menu">Főoldal</a></li>
+    <li class="bar"><a href="/kolcsonzes" data-th-href="@{/kolcsonzes}">Vissza</a></li>
+    <li class="bar" style="float:right"><a data-th-href="@{'/basket'}" href="/basket">Kosár</a></li>
+</ul>
 <div class="center">
     <div class="item">
         <img th:src="@{/all-items/img/{id}(id=${item.item_id})}" alt="item picture" width="300" height="300"/>
@@ -49,12 +88,6 @@
             <div sec:authorize="hasRole('ADMIN')">
                 <a data-th-href="@{${'/admin/termekmodositas/' + item.item_id}}"><b><button>Termék módosítása</button></b></a>
             </div>
-            <a href="/kolcsonzes" data-th-href="@{/kolcsonzes}">
-                <input type="submit" value="Termékek listája">
-            </a>
-            <a href="/home" data-th-href="@{/home}">
-                <input type="submit" value="Home">
-            </a>
         </div>
     </div>
 </div>

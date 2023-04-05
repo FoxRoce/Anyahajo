@@ -4,6 +4,62 @@
     <meta charset="UTF-8">
     <title>Kölcsönzések</title>
     <style>
+        body{
+            font-family:sans-serif;
+            background: -webkit-linear-gradient(to right, #a75888, #1f88b4);
+            background: linear-gradient(to right, #a75888, #1f88b4);
+            color:whitesmoke;
+            margin-top: 40px;
+        }
+        ul.menu {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #a75888;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(167, 88, 136, 0.8);
+            transition: background-color 0.5s ease;
+            z-index: 1;
+        }
+
+        li.bar {
+            float: left;
+            border-right:1px solid #bbb;
+        }
+
+        li.bar:last-child {
+            border-right: none;
+        }
+
+        li.bar a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        li.bar a:hover:not(.active) {
+            background: -webkit-linear-gradient(to right, #1f88b4, #a75888);
+            background: linear-gradient(to right, #1f88b4, #a75888);
+            color:whitesmoke;
+        }
+
+        .active {
+            background: -webkit-linear-gradient(to right, #1f88b4, #a75888);
+            background: linear-gradient(to right, #1f88b4, #a75888);
+            color:whitesmoke;
+        }
+
+        .kosar{
+            background: -webkit-linear-gradient(to right, #a75888, #1f88b4);
+            background: linear-gradient(to right, #a75888, #1f88b4);
+            color:whitesmoke;
+        }
 
         h1 {
             text-align: center;
@@ -30,17 +86,20 @@ body{
             border: 1px solid #ccc;
         }
 
-        ul {
+        ul.items {
             list-style-type: none;
             padding: 0;
         }
 
-        li {
+        li.item {
             margin-bottom: 20px;
             padding: 10px;
             border-radius: 5px;
             box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
-            background-color: rgba(162, 211, 239, 0.24);
+            font-family:sans-serif;
+            background: -webkit-linear-gradient(to right, #1f88b4, #a75888);
+            background: linear-gradient(to right, #1f88b4, #a75888);
+            color:whitesmoke;
         }
 
         b {
@@ -51,15 +110,16 @@ body{
         p {
             margin: 0;
         }
-        a{
-            /*text-decoration:none;*/
-            color: #030804;
-        }
     </style>
 </head>
 <body>
-<h1>Kölcsönzés lista:</h1>
 
+<ul class="menu">
+    <li class="bar"><a class="active" data-th-href="@{'/#menu'}" href="/#menu">Vissza</a></li>
+    <li class="bar"><a data-th-href="@{'https://www.anyahajokozpont.hu/'}">AnyaHajóOldala</a></li>
+    <li class="bar" style="float:right"><a class="kosar" data-th-href="@{'/kosar'}" href="/kosar">Kosár</a></li>
+</ul>
+<h1>Termékek</h1>
 <div>
     <form th:action="@{/kolcsonzes/kereses}" data-th-object="${searchData}" method="post" class="form-inline my-2 my-lg-0 mb-3" enctype="multipart/form-data">
         <input name="text" th:field="*{text}" class="form-control mr-sm-2 mb-5" type="search" placeholder="Keresés" aria-label="Search">
@@ -80,14 +140,14 @@ body{
 
 <p th:if="${#lists.isEmpty(items)}">Nincs kolcsonozheto targy</p>
 
-<ul data-th-unless="${#lists.isEmpty(items)}">
-    <li data-th-each="item: ${items}">
+<ul class="items" data-th-unless="${#lists.isEmpty(items)}">
+    <li class="item" data-th-each="item: ${items}">
         <a data-th-href="@{${'/item/' + item.item_id}}"><b><p data-th-text="${item.name}">Targy nev</p></b></a>
         <p th:text="${item.availability.getHunName()}">Foglalas</p>
         <span>Leirás: </span>
         <span th:text="${item.description}">Leiras</span>
         <br>
-        <p th:text="${item.picture}">Kep</p>
+        <img th:src="@{/all-items/img/{id}(id=${item.item_id})}" alt="item picture" width="150" height="150"/>
         <p th:text="${item.isActive} ? 'Aktív' : 'Inaktív' ">Elerheto-e</p>
 
         <div th:if="${item instanceof T(com.project.anyahajo.model.Book)}">

@@ -28,7 +28,7 @@ public class SecurityConfig {
                         "/register",
                         "/books",
                         "/kolcsonzes/**",
-                        "/item/{id}",
+                        "/item/**",
                         "/forgot-password/**",
                         "/enable-user/**",
                         "/all-items/img/{id}"
