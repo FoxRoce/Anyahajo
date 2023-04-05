@@ -78,7 +78,7 @@
             animation: 2s slideUp ease forwards .5s;
             position: relative;
         }
-        .nav_list_itemb{
+        .nav_list_item{
             text-decoration: none;
             font-size: 25px;
             color: #fff;
@@ -154,6 +154,9 @@
             <div class = 'nav'>
                 <ul class = 'nav_list'>
                     <div class = 'nav_list_item'>
+                        <li><a data-th-href="@{'https://www.anyahajokozpont.hu/'}">Főoldal</a></li>
+                    </div>
+                    <div class = 'nav_list_item'>
                         <li><a href="https://www.anyahajokozpont.hu/sample-page/">Rólunk</a></li>
                     </div>
                     <div class = 'nav_list_item'>
@@ -162,6 +165,12 @@
 
                     <div  sec:authorize="hasRole('ADMIN')" class="nav_list_item">
                         <li><a data-th-href="@{'/admin'}" href="/admin">Admin oldal</a></li>
+                    </div>
+                    <div sec:authorize="isAuthenticated()" class = 'nav_list_item'>
+                        <li><a data-th-href="@{'/kosar'}">Kosár</a></li>
+                    </div>
+                    <div sec:authorize="isAuthenticated()" class = 'nav_list_item'>
+                        <li><a data-th-href="@{'/user/edit'}">Adatok módosítása</a></li>
                     </div>
                     <div sec:authorize="!isAuthenticated()" class = 'nav_list_item'>
                         <li><a data-th-href="@{'/login'}">Bejelentkezés</a></li>
@@ -172,9 +181,7 @@
                     <div sec:authorize="isAuthenticated()" class = 'nav_list_item'>
                         <li><a data-th-href="@{'/logout'}">Kijelentkezés</a></li>
                     </div>
-                    <div class = 'nav_list_item'>
-                        <li><a data-th-href="@{'https://www.anyahajokozpont.hu/'}">Vissza a Főoldalra</a></li>
-                    </div>
+
 
                 </ul>
             </div>
