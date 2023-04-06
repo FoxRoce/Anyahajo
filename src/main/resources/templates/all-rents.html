@@ -147,7 +147,7 @@
         <td><div sec:authorize="hasRole('ADMIN')" th:if="${rent.item.availability == T(com.project.anyahajo.model.Availability).Reserved}">
             <form th:action="@{'/admin/rents/'+${rent.rent_id}+'/accept'}" method="post">
                 <input type="number" id="deposit" name="deposit" required>
-                <button type="submit" name="accept">Elfogadás kaukcióval</button>
+                <button type="submit" name="accept">Elfogadás kaucióval</button>
             </form>
             <form th:action="@{'/admin/rents/'+${rent.rent_id}+'/decline'}" method="post">
                 <button type="submit" name="decline">Visszautasít</button>

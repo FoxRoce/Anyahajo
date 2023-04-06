@@ -148,7 +148,7 @@
 <br>
 <h1>Új foglalás hozzáadása</h1>
 <form data-th-object="${newRent}" data-th-action="@{/admin/add_new_rent}" action="/admin/add_new_rent" method="post">
-    <label for="item">Item:</label>
+    <label for="item">Termék:</label>
     <select id="item" name="item">
         <option value="">Válassz egy tételt</option>
         <th:block th:each="item : ${items}">
