@@ -198,6 +198,10 @@
             <a href="#" class="close"></a>
             <div class = 'nav'>
                 <ul class = 'nav_list'>
+
+                    <div sec:authorize="isAuthenticated()" class = 'nav_list_log'>
+                        <li><h2>Hello [[${user}]]!</h2></li>
+                    </div>
                     <div class = 'nav_list_item'>
                         <li><a data-th-href="@{'https://www.anyahajokozpont.hu/'}">Főoldal</a></li>
                     </div>

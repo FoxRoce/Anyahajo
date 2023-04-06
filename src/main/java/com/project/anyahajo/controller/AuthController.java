@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.security.Principal;
 import java.util.UUID;
 
 @Controller
@@ -33,7 +34,11 @@ public class AuthController {
 
 
     @GetMapping(path = {"", "/", "/home", "/#menu"})
-    public String getHomePage() {
+    public String getHomePage(Model model, Principal principal) {
+        if (principal != null){
+            User user = (User) userService.loadUserByUsername(principal.getName());
+            model.addAttribute("user", user.getName());
+        }
         return "home";
     }
 
